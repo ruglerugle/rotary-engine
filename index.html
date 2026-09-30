@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2836">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>ロータリーエンジン、作図の書 ― 全7ステージの無料学習ゲーム</title>
+<meta name="description" content="三角おむすびのローターと繭形のハウジング。ロータリーエンジンの形を、定規ではなく数学の式で描けるようになる全7ステージの無料学習サイト。角度から座標を取り出す cos・sin、偏心量 e と創成半径 R、歯車 2:3 と α/3、頂点が描くペリトロコイド、ローターの円弧近似、部屋の面積と排気量 654cc、完成図の SVG 保存まで。ねこ博士とうさ美が案内します。">
+<link rel="canonical" href="https://rotary-engine.habatakijuku.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ロータリーエンジン、作図の書">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="ロータリーエンジン、作図の書 ― 全7ステージの無料学習ゲーム">
+<meta property="og:description" content="おむすび形のローターと繭形のハウジングを、2つの数 e と R から式だけで描く。中学数学でたどるロータリーエンジンの作図。">
+<meta property="og:url" content="https://rotary-engine.habatakijuku.com/">
+<meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "ロータリーエンジン、作図の書",
+  "alternateName": "ROTARY QUEST",
+  "description": "ロータリーエンジン（ヴァンケルエンジン）のハウジング（ペリトロコイド）とローターの形を、偏心量 e と創成半径 R の2つの数から中学数学（座標・cos と sin・三平方の定理）だけで描けるようになる全7ステージの無料学習サイト。歯車比 2:3 と α/3 の法則、包絡線と円弧近似、靴ひも公式による部屋の面積と排気量、4行程、完成図の SVG 保存まで。",
+  "url": "https://rotary-engine.habatakijuku.com/",
+  "inLanguage": "ja",
+  "learningResourceType": "learning activity",
+  "educationalLevel": "中学生以上",
+  "teaches": "ロータリーエンジンの作図（座標と媒介変数・cos と sin・偏心量と創成半径・遊星歯車と回転比・ペリトロコイド・包絡線と円弧近似・靴ひも公式・排気量と圧縮比・4行程・点火プラグと吸排気口の配置）",
+  "isAccessibleForFree": true,
+  "author": { "@type": "Person", "name": "ruglerugle" }
+}
+</script>
+<style>
+  .hero-engine{width:min(100%,300px);height:auto;display:block;margin:0 auto 6px;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar" aria-label="サイト情報">
+    <span class="brand-badge" aria-hidden="true">🔧</span>
+    <span class="brand-copy">
+      <strong>ロータリーエンジン、作図の書</strong>
+      <small>ROTARY QUEST</small>
+    </span>
+    <a class="head-reset" style="margin-left:auto" href="https://quantum-mechanics.habatakijuku.com/" title="姉妹シリーズ『量子力学、冒険の書』へ">⚛ 量子の冒険の書</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <canvas class="hero-engine" id="hero-cv" width="300" height="300" aria-hidden="true"></canvas>
+      <h1><span class="line">おむすびが回る理由を、</span><span class="line accent">式だけで描く。</span></h1>
+      <p>三角おむすびのローターが、繭形の部屋の中をはみ出しも隙間もなく回り続ける。あの不思議な形は、誰かが手で描いたものではなく、<span class="nowrap">たった2つの数</span>から計算で決まっている。このクエストでは、角度から座標を取り出す道具（cos と sin）と三平方の定理だけを使って、ハウジングの繭形、ローターのおむすび形、歯車の大きさ、部屋の体積、点火プラグと吸排気口の位置まで、ロータリーエンジンの図面を自分の手で描けるようになる。最後には、自分で決めた寸法の完成図を保存できる。</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="board" aria-labelledby="quest-heading">
+      <div class="board-head">
+        <div><h2 id="quest-heading">クエストを選ぼう！</h2></div>
+        <p>ステージ1から順番にクリアしよう（前のステージをクリアすると次が解放されます）。必要な数学は中学レベル。cos と sin は STAGE1 で学びます</p>
+      </div>
+
+      <div class="quest-grid">
+        <a class="quest-card" href="stage1.html" data-stage="1" style="--accent:#2f6f8f;--accent-bg:#e6f0f6">
+          <div class="q-top"><span class="q-num">1</span><span class="q-suit" aria-hidden="true">🍙</span></div>
+          <div class="q-meta"><span class="q-tag">座標と角度</span><span class="q-time">⏱ 約10分</span></div>
+          <div class="q-title">おむすびは、なぜ回る</div>
+          <p class="q-desc">ハウジング・ローター・偏心軸の名前を知り、「曲線を式で描く」とはどういうことかをつかむ。角度から座標を取り出す cos・sin を導入して、円を式で描く。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage2.html" data-stage="2" style="--accent:#b5504a;--accent-bg:#fdefed">
+          <div class="q-top"><span class="q-num">2</span><span class="q-suit" aria-hidden="true">🎯</span></div>
+          <div class="q-meta"><span class="q-tag">偏心量 e・創成半径 R</span><span class="q-time">⏱ 約10分</span></div>
+          <div class="q-title">中心がずれた軸</div>
+          <p class="q-desc">ローターの中心は、軸の中心から e だけずれて回る。形を決める2つの数 e と R を手に入れ、ドアの蝶番のたとえで「なぜずらすのか」を理解する。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage3.html" data-stage="3" style="--accent:#9a6a1c;--accent-bg:#fbf2df">
+          <div class="q-top"><span class="q-num">3</span><span class="q-suit" aria-hidden="true">⚙️</span></div>
+          <div class="q-meta"><span class="q-tag">歯車 2:3</span><span class="q-time">⏱ 約13分</span></div>
+          <div class="q-title">ゆっくり回るローター</div>
+          <p class="q-desc">軸が3回転する間にローターは1回転。固定歯車とローターの内歯車の歯数比から、半径 2e・3e と「θ＝α/3」を自分で導き、3つの頂点の座標を完成させる。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage4.html" data-stage="4" style="--accent:#3f5fa6;--accent-bg:#e9eef9">
+          <div class="q-top"><span class="q-num">4</span><span class="q-suit" aria-hidden="true">🥚</span></div>
+          <div class="q-meta"><span class="q-tag">ペリトロコイド</span><span class="q-time">⏱ 約13分</span></div>
+          <div class="q-title">頂点が描く曲線</div>
+          <p class="q-desc">頂点の軌跡がそのまま繭形のハウジングになる。三平方の定理で r²＝R²＋e²＋2eR cos 2θ を導き、ふくらみが2つになる理由と、R/e で形が変わる様子を確かめる。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage5.html" data-stage="5" style="--accent:#2f8f65;--accent-bg:#eaf7ef">
+          <div class="q-top"><span class="q-num">5</span><span class="q-suit" aria-hidden="true">🔪</span></div>
+          <div class="q-meta"><span class="q-tag">包絡線と円弧近似</span><span class="q-time">⏱ 約13分</span></div>
+          <div class="q-title">ローターを削り出す</div>
+          <p class="q-desc">ローターに乗って見ると、ハウジングがローターを削っていく。残った最大の形の辺の中点は R−2e。2頂点と中点を通る円弧の半径を三平方の定理で求める。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage6.html" data-stage="6" style="--accent:#a63f6f;--accent-bg:#fbe9f1">
+          <div class="q-top"><span class="q-num">6</span><span class="q-suit" aria-hidden="true">🔥</span></div>
+          <div class="q-meta"><span class="q-tag">面積と排気量</span><span class="q-time">⏱ 約12分</span></div>
+          <div class="q-title">3つの部屋、4つの行程</div>
+          <p class="q-desc">部屋の面積を靴ひも公式で計算すると、最大と最小の差からマツダ 13B の排気量 654 cc がそのまま出てくる。4行程は軸 270° ずつ、軸1回転ごとに爆発1回。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage7.html" data-stage="7" style="--accent:#7a6a2f;--accent-bg:#f7f3e2">
+          <div class="q-top"><span class="q-num">7</span><span class="q-suit" aria-hidden="true">📐</span></div>
+          <div class="q-meta"><span class="q-tag">完成図・SVG保存</span><span class="q-time">⏱ 約12分</span></div>
+          <div class="q-title">完成図を描く</div>
+          <p class="q-desc">歯車、偏心軸、点火プラグ、吸気口と排気口の位置を決めて完成図に。自分で選んだ e と R で図を描き、SVG として保存する。近似で省いた実物との違いもまとめる。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+      </div>
+    </section>
+
+    <div id="book-recommend"></div>
+  </main>
+
+  <footer>
+    <p>NO DOWNLOAD. NO REGISTRATION. JUST LEARN. &nbsp;© <span id="year"></span> ruglerugle</p>
+    <div class="footer-suits" aria-hidden="true"><span>🍙</span><span>⚙️</span><span>🥚</span><span>📐</span></div>
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<script src="js/progress.js"></script>
+<script src="js/rotary.js"></script>
+<script>RQ.initCoverPage();</script>
+<script>
+/* ヒーローのエンジン（ゆっくり回る） */
+(function(){
+  var cv=document.getElementById('hero-cv'); if(!cv) return;
+  var ctx=cv.getContext('2d'), e=15, R=105, alpha=0, dpr=Math.min(window.devicePixelRatio||1,2), size=300;
+  cv.width=size*dpr; cv.height=size*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  var st={ctx:ctx,W:size,H:size};
+  function draw(){
+    ctx.clearRect(0,0,size,size);
+    var v=RE.view(st, 2*(R+e)*1.08, 0, 0, size/2, size/2);
+    RE.drawEngine(ctx,v,e,R,alpha,{chambers:true,gears:false,housingWidth:3});
+  }
+  draw();
+  if(!RE.reducedMotion()){
+    var last=0; function loop(now){ var dt=last?Math.min((now-last)/1000,0.05):0; last=now; alpha+=dt*0.9; draw(); requestAnimationFrame(loop);} requestAnimationFrame(loop);
+  }
+})();
+</script>
+</body>
+</html>

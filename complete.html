@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2836">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>全ステージクリア ― ロータリーエンジン、作図の書</title>
+<meta name="description" content="ロータリーエンジン、作図の書、全7ステージクリアおめでとう。ここまでの旅を振り返ろう。">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://rotary-engine.habatakijuku.com/complete">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ロータリーエンジン、作図の書">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="全ステージクリア ― ロータリーエンジン、作図の書">
+<meta property="og:description" content="全7ステージクリアおめでとう。旅を振り返ろう。">
+<meta property="og:url" content="https://rotary-engine.habatakijuku.com/complete">
+<meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar" aria-label="サイト情報">
+    <span class="brand-badge" aria-hidden="true">🔧</span>
+    <span class="brand-copy">
+      <strong>ロータリーエンジン、作図の書</strong>
+      <small>ROTARY QUEST</small>
+    </span>
+    <a class="head-reset" style="margin-left:auto" href="https://quantum-mechanics.habatakijuku.com/" title="姉妹シリーズ『量子力学、冒険の書』へ">⚛ 量子の冒険の書</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <h1><span class="line">2つの数から、エンジンの図面が生まれた。</span></h1>
+      <p>角度から座標を取り出す cos と sin、中心のずれた軸、歯車の 2：3、頂点が描くペリトロコイド、ローターを削り出す包絡線、部屋の面積と排気量 654 cc、そして点火プラグと吸排気口の位置まで。きみは、偏心量 e と創成半径 R だけからロータリーエンジンの完成図を描けるようになった。旅の記録で振り返ろう。</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="board" aria-labelledby="recap-heading">
+      <div class="board-head">
+        <div><h2 id="recap-heading">ここまでの旅を振り返ろう</h2></div>
+      </div>
+
+      <div class="recap-list">
+        <div class="recap-item">
+          <span class="recap-num">1</span>
+          <div class="recap-body"><span class="recap-title">おむすびは、なぜ回る。</span> <span class="recap-desc">ハウジング・ローター・偏心軸。曲線は点の集まりで、点は座標で書ける。半径1の円の上で角度 θ の点の横座標が cos θ、縦座標が sin θ。半径 r・中心 (a, b) なら (a＋r cos θ, b＋r sin θ)。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">2</span>
+          <div class="recap-body"><span class="recap-title">中心がずれた軸。</span> <span class="recap-desc">ローターの中心 C は軸の中心 O から偏心量 e だけずれ、C＝(e cos α, e sin α) と回る。C から頂点までが創成半径 R。13B は e＝15 mm、R＝105 mm。ずれがなければ回す力にならない（ドアの蝶番）。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">3</span>
+          <div class="recap-body"><span class="recap-title">ゆっくり回るローター。</span> <span class="recap-desc">固定歯車（半径 2e）とローターの内歯車（半径 3e）、歯数比 2：3。腕に乗って見ると固定歯車が逆向きに1周して見え、ローターは腕から見て逆に 2/3 周。地面から見ると 1/3 周、θ＝α/3。頂点は (e cos α＋R cos(α/3＋120°k), …)。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">4</span>
+          <div class="recap-body"><span class="recap-title">頂点が描く曲線。</span> <span class="recap-desc">壁の形＝頂点の軌跡＝ペリトロコイド x＝R cos θ＋e cos 3θ、y＝R sin θ＋e sin 3θ。三平方の定理で r²＝R²＋e²＋2eR cos 2θ、最大 R＋e・最小 R−e。3θ と θ の差 2θ が2つのふくらみを作る。K＝R/e は実機で 6〜8。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">5</span>
+          <div class="recap-body"><span class="recap-title">ローターを削り出す。</span> <span class="recap-desc">ローターに乗って見ると、ハウジングが通った場所が削られ、残った形が最大のローター（包絡線）。辺の中点は中心から R−2e、矢高 s＝R/2−2e、円弧の半径 ρ＝(h²＋s²)/(2s)（h＝R√3/2）。13B で ρ＝195 mm。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">6</span>
+          <div class="recap-body"><span class="recap-title">3つの部屋、4つの行程。</span> <span class="recap-desc">部屋の面積は多角形近似＋靴ひも公式。体積＝面積×幅 b。最大と最小の差が排気量で、辺の形によらず 3√3·e·R·b＝654 cc（13B）。4行程は軸 270° ずつ、1周期は軸3回転。3つの部屋で軸1回転ごとに爆発1回。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">7</span>
+          <div class="recap-body"><span class="recap-title">完成図を描く。</span> <span class="recap-desc">歯車（2e・3e）と偏心軸を重ね、部屋がいちばん小さくなるくびれ側に点火プラグ2本、反対側のくびれの手前に排気口・先に吸気口。近似で省いたのはシールの厚みぶんの平行曲線と辺のくぼみ。骨格はすべて式のとおり。</span></div>
+        </div>
+      </div>
+
+      <div class="complete-actions">
+        <a class="btn btn-primary" href="stage7.html">📐 作図ツールでもう一度描く →</a>
+        <a class="btn" href="https://quantum-mechanics.habatakijuku.com/" target="_blank" rel="noopener">⚛ 量子力学、冒険の書へ →</a>
+      </div>
+
+      <div class="complete-actions">
+        <a class="btn btn-primary" id="btn-share" href="#" target="_blank" rel="noopener">𝕏 クリアをシェアする</a>
+        <a class="btn" href="index.html">トップに戻る →</a>
+        <button class="btn" id="btn-reset-all">🔄 進捗をリセットして最初から</button>
+      </div>
+    </section>
+
+    <div id="book-recommend"></div>
+  </main>
+
+  <footer>
+    <p>NO DOWNLOAD. NO REGISTRATION. JUST LEARN. &nbsp;© <span id="year"></span> ruglerugle</p>
+    <div class="footer-suits" aria-hidden="true"><span>🍙</span><span>⚙️</span><span>🥚</span><span>📐</span></div>
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById("btn-share").href =
+    "https://twitter.com/intent/tweet?text=" +
+    encodeURIComponent("ロータリーエンジン作図の全7ステージをクリア！ e と R の2つの数からハウジングの繭形とローターのおむすび形を式だけで描けるようになりました🍙⚙️") +
+    "&url=" + encodeURIComponent("https://rotary-engine.habatakijuku.com/");
+</script>
+<script src="js/progress.js"></script>
+<script>RQ.initCompletePage();</script>
+</body>
+</html>

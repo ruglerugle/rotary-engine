@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2836">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE2 中心がずれた軸 ― ロータリーエンジン、作図の書</title>
+<meta name="description" content="ロータリーエンジンの偏心軸（エキセントリックシャフト）は、ローターの中心を出力軸の中心からずらして回す。そのずれ「偏心量 e」と、ローター中心から頂点までの「創成半径 R」という2つの寸法で形が決まることを学び、ローター中心の動きを (e cos α, e sin α) と式で書く。なぜ中心をずらす必要があるのかも、ドアの蝶番のたとえで理解する。">
+<link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage2">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ロータリーエンジン、作図の書">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE2 中心がずれた軸 ― ロータリーエンジン、作図の書">
+<meta property="og:description" content="出力軸の中心 O からずれて回るローターの中心 C。偏心量 e と創成半径 R、ロータリーエンジンの形を決める2つの数を手に入れる。">
+<meta property="og:url" content="https://rotary-engine.habatakijuku.com/stage2">
+<meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .sim-controls{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+  .sim-controls .btn{font-size:12.5px;padding:.45rem .8rem}
+  .sim-controls .btn[aria-pressed="true"]{background:linear-gradient(#7a9cc4,#3d5f88);border-color:#2d4a6e;color:#fff}
+  .sim-controls .btn:disabled{opacity:.35}
+  .sim-controls .grp-label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-controls label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:var(--ink)}
+  .sim-controls input[type=range]{width:150px;accent-color:#3d5f88}
+  .sim-controls input[type=number]{width:70px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;font-size:13px;font-weight:800;color:var(--ink);background:#fff}
+  .sim-controls output{font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right;color:#2d4a6e}
+  .sim-play{padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
+  .cv-wrap{width:100%}
+  .cv-wrap canvas{display:block;width:100%;height:auto;border-radius:8px}
+  .readout{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;margin-top:8px;font-size:12.5px;font-weight:800;color:#2d4a6e;font-variant-numeric:tabular-nums}
+  .readout span b{color:var(--ink)}
+  .note-box{background:#fffbe8;border:1px solid #e3d48f;border-radius:10px;padding:12px 14px;margin:12px 0;font-size:13.5px;line-height:1.75;color:#3a3210;font-weight:700}
+  .note-box .nb-title{display:block;font-weight:950;margin-bottom:4px;color:#7a5a08}
+  .kw{color:#2d4a6e}
+  .qlink{color:var(--gold-dark);text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🔧</a> <span>ロータリーエンジン、作図の書</span></div>
+      <div class="brand-sub">STAGE 2 ― 中心がずれた軸 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <a class="head-reset" href="https://quantum-mechanics.habatakijuku.com/" title="姉妹シリーズ『量子力学、冒険の書』へ">⚛ 量子の冒険の書</a>
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 2</span><h1 class="chapter-title">中心がずれた軸</h1>
+        <div class="chapter-sub">偏心量 e と創成半径 R</div>
+      </div>
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">偏心軸の役割を理解しよう。偏心量 e と創成半径 R の意味、出力軸が α 回ったときのローター中心の座標 (e cos α, e sin α)、そして「ローターが軸と同じ向きのまま回ったらエンジンにならない」理由を説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今日は偏心軸の話だ。ロータリーエンジンの出力軸（回転を外へ取り出す軸）の中心を <strong>O</strong> と呼ぼう。ローターは、この軸にただ刺さっているのではない。軸の途中に、<strong>中心をずらした太い円盤</strong>が付いていて、ローターはその円盤にはめ込まれている。だからローターの中心 <strong>C</strong> は、軸の中心 O から少し離れたところにある。この <strong>O と C の距離を偏心量（へんしんりょう）</strong>といい、記号 <strong>e</strong> で表す。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">軸が回ると、ずれた円盤も一緒に回るから、ローターの中心 C は、O のまわりを半径 e の円を描いて回る、ということですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう。出力軸が回った角度を <strong>α（アルファ）</strong>と書くことにすると、C の位置はSTAGE1の円の式そのものだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">半径 e の円の上で角度 α の点だから、<strong>C＝(e cos α, e sin α)</strong> です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。もう1つの寸法を決めよう。ローターの中心 C から3つの頂点までの距離を<strong>創成半径（そうせいはんけい）</strong>といい、記号 <strong>R</strong> で表す。「創成」は「形を生み出す」という意味で、この半径がハウジングの形を生み出すからそう呼ぶ。さて、実際の値を見てみよう。マツダのロータリーエンジン「13B」では、<strong>e＝15 mm、R＝105 mm</strong> だ。この旅では、この2つの数をずっと使う。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">偏心量はたった 15 mm なんですね。R の7分の1しかありません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">小さく見えるけれど、これがないとエンジンは回らない。なぜ中心をずらすのか、考えてみよう。ドアを思い浮かべてごらん。ドアを開けるとき、蝶番（ちょうつがい）のすぐそばを押しても、ほとんど動かない。蝶番から離れた取っ手を押すと軽く回る。<strong>ものを回すには、回転の中心から離れたところに力をかける必要がある</strong>んだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ローターは燃えたガスに押されるから、その力を軸の回転に変えたい。もしローターの中心が軸の中心 O とぴったり重なっていたら、蝶番を押しているのと同じで回らない。だから中心を e だけずらして、O から離れた C を押す形にしている、ということですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう。ピストンエンジンのクランク軸と同じ仕組みだよ。クランク軸も、中心からずれた腕の先をピストンが押すから回る。ロータリーエンジンでは、ローターがその腕の先に乗っている。腕の長さが e だ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="cv2" role="img" aria-label="出力軸の中心 O のまわりを、ローター中心 C が半径 e の円を描いて回る様子。C から距離 R の位置に頂点がある。ローターの向きを軸と同じにすると、頂点は半径 R+e の円を描く"></canvas></div>
+        <div class="sim-controls">
+          <label>軸の角度 α <input type="range" id="al2" min="0" max="360" value="40" step="1"> <output id="al2o">40°</output></label>
+          <label>偏心量 e <input type="range" id="e2" min="0" max="40" value="15" step="1"> <output id="e2o">15</output></label>
+        </div>
+        <div class="sim-controls">
+          <button class="btn" type="button" id="tri2" aria-pressed="false">ローターを軸と同じ向きで回してみる</button>
+          <button class="sim-play" id="play2" type="button" aria-pressed="false">▶ 動かす</button>
+        </div>
+        <div class="readout" id="ro2"></div>
+        <div class="diagram-caption">出力軸の中心 O（金色）のまわりを、ローターの中心 C（赤）が半径 e の円（赤の点線）を描いて回る。R＝105 mm は固定。「ローターを軸と同じ向きで回してみる」を押すと、頂点の軌跡（灰色の点線）が半径 R＋e のただの円になってしまう様子が見える</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">では、頂点の位置を式にしてみよう。頂点は C から距離 R のところにある。頂点の向き、つまり C から頂点へ向かう角度を、いったん β（ベータ）と呼んでおく。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">STAGE1の「中心が (a, b) の円」の式と同じです。中心が C＝(e cos α, e sin α) で半径 R だから、頂点は <strong>(e cos α＋R cos β, e sin α＋R sin β)</strong> です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう。あとは β、つまり<strong>ローターの向きが軸の角度 α とどう関係するか</strong>を決めれば、頂点の位置が α だけで書ける。試しに、いちばん単純な場合を考えてみようか。ローターが軸に固定されていて、軸と一緒に同じ向きで回るとしたら、β＝α だね。そのとき頂点はどんな道を描くかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">β＝α なら、頂点は (e cos α＋R cos α, e sin α＋R sin α)＝((e＋R) cos α, (e＋R) sin α)。これは<strong>半径 e＋R のただの円</strong>です。ハウジングがただの円になってしまいます。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そうなんだ。そしてハウジングが円だと、ローターの辺と壁の間の部屋の大きさが、回ってもまったく変わらない。エンジンは、部屋を大きくして混合気を吸い込み、小さくして圧縮し、燃やして大きくし、小さくして排気する――<strong>部屋の大きさの変化</strong>で動く機械だ。大きさが変わらない部屋では、何も起きない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ということは、ローターは軸と<strong>違う速さ</strong>で回らないといけないんですね。実物の映像で見た、おむすびがゆっくり回っているように見えるのは、そのせいですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いいところに気づいたね。次のステージでは、ローターの回り方を歯車で決める。そこで β と α の関係が出てきて、頂点の道は円ではなく、あの繭形になる。今日は、その準備として2つの数 e と R、そして「C は半径 e の円を描く」ことが手に入った。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果】</span>
+        <span class="step">出力軸の中心 O、ローターの中心 C。O と C の距離が<strong>偏心量 e</strong>（13B では 15 mm）</span>
+        <span class="step">C から頂点までの距離が<strong>創成半径 R</strong>（13B では 105 mm）</span>
+        <span class="step">出力軸の角度を α とすると、ローター中心 <span class="nw">C＝(e cos α, e sin α)</span>：C は半径 e の円を描く</span>
+        <span class="step">頂点の向きを β とすると、頂点＝<span class="nw">(e cos α＋R cos β, e sin α＋R sin β)</span></span>
+        <span class="step">もし β＝α（ローターが軸と同じ向きで回る）なら頂点の軌跡は半径 R＋e の円になり、部屋の大きさが変わらず、エンジンにならない</span>
+      </div>
+
+      <h2 class="quiz-head">確認クイズ</h2>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 偏心量 e とは、どの長さのこと？</p>
+        <div class="choice-list">
+          <button class="choice-btn">ローターの中心から頂点までの距離</button>
+          <button class="choice-btn">ハウジングの幅の半分</button>
+          <button class="choice-btn">出力軸の中心 O からローターの中心 C までの距離</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 偏心量 e は、軸の中心とローターの中心のずれ。13B では 15 mm。ドアの取っ手と蝶番の距離のように、回す力を生むために必要なずれだ。</div>
+      </div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 出力軸が角度 α だけ回ったとき、ローターの中心 C の座標は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">(e cos α, e sin α)</button>
+          <button class="choice-btn">(R cos α, R sin α)</button>
+          <button class="choice-btn">(e cos 3α, e sin 3α)</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ C は O のまわりを半径 e の円を描いて回るので、STAGE1の円の式で半径を e にすればよい。</div>
+      </div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. もしローターが出力軸と同じ向き・同じ速さで回ったら、頂点の軌跡は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">繭形になる</button>
+          <button class="choice-btn">半径 R＋e の円になる</button>
+          <button class="choice-btn">半径 R−e の円になる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ β＝α のとき、頂点＝((e＋R) cos α, (e＋R) sin α) となり、ただの円。部屋の大きさが変わらないのでエンジンにならない。だからローターは軸と違う速さで回る必要がある。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage1.html">← 前のステージへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script src="js/rotary.js"></script>
+<script>RQ.initStagePage(2);</script>
+<script>
+
+(function(){
+  var alpha=40, e=15, R=105, showTri=false, st, C=RE.C;
+  function draw(st){
+    var ctx=st.ctx,W=st.W,H=st.H; ctx.clearRect(0,0,W,H); ctx.fillStyle=C.paper; ctx.fillRect(0,0,W,H);
+    var v=RE.view(st, 2*(R+42)*1.06, 0, 0, W*0.5, H*0.5);
+    RE.axes(ctx,v,R+60);
+    var a=RE.rad(alpha), c=RE.rotorCenter(e,a);
+    if(showTri){
+      RE.circle(ctx,v,{x:0,y:0},R+e,C.axis,1.4,[5,4]);
+      var tri=[0,1,2].map(function(k){var t=a+RE.TAU*k/3;return {x:c.x+R*Math.cos(t),y:c.y+R*Math.sin(t)};});
+      RE.path(ctx,v,tri,true); RE.fill(ctx,'rgba(219,230,241,.7)'); RE.stroke(ctx,C.rotor,2);
+      RE.label(ctx,v,{x:0,y:R+e},'頂点の軌跡：半径 R＋e の円',C.muted,0,-10,11,900);
+      RE.dot(ctx,v,tri[0],5,C.rotor,'#fff');
+    }
+    RE.circle(ctx,v,{x:0,y:0},e,C.ecc,1.6,[4,3]);
+    // 偏心の円盤
+    RE.circle(ctx,v,c,Math.max(e*1.15,8),C.ecc,1.6,null,'#f6d1cc');
+    RE.circle(ctx,v,{x:0,y:0},Math.max(e*0.55,5),C.gold,1.6,null,C.shaftFill);
+    RE.line(ctx,v,{x:0,y:0},c,C.ecc,2.2);
+    RE.dot(ctx,v,{x:0,y:0},4,C.gold); RE.dot(ctx,v,c,4,C.ecc);
+    RE.label(ctx,v,{x:0,y:0},'O',C.gold,-9,12,13,900);
+    RE.label(ctx,v,c,'C',C.ecc,10,-10,13,900);
+    var mid={x:c.x/2,y:c.y/2}; RE.label(ctx,v,mid,'e',C.ecc,-12*Math.sin(a)-2,-12*Math.cos(a),12,900);
+    if(alpha>2) RE.angleArc(ctx,v,{x:0,y:0},Math.max(e*v.s+14,22),0,a,C.gold);
+    RE.label(ctx,v,{x:0,y:0},'α',C.gold,(Math.max(e*v.s+14,22)+10)*Math.cos(a/2),-(Math.max(e*v.s+14,22)+10)*Math.sin(a/2),12,900);
+    // R の線（β=α の向きでも良いが、向きは未定なので 1 本だけ示す）
+    var bt=a; var p={x:c.x+R*Math.cos(bt),y:c.y+R*Math.sin(bt)};
+    RE.line(ctx,v,c,p,C.rotor,1.8,[6,4]); RE.dot(ctx,v,p,4,C.rotor);
+    RE.label(ctx,v,{x:(c.x+p.x)/2,y:(c.y+p.y)/2},'R',C.rotor,-12*Math.sin(bt),-12*Math.cos(bt),12,900);
+    RE.label(ctx,v,p,'頂点（向きは次のステージで決める）',C.rotor,0,(p.y>0?-12:14),10.5,800);
+    RE.text(ctx,10,14,'e = '+e+' mm,  R = '+R+' mm',C.ink,12,900,'left');
+    var ro=document.getElementById('ro2');
+    if(ro) ro.innerHTML='<span>C = (e cos α, e sin α) = (<b>'+RE.fmt(c.x,1)+'</b>, <b>'+RE.fmt(c.y,1)+'</b>)</span>';
+  }
+  st=RE.canvas('cv2',0.8,draw); if(!st) return;
+  var alEl=RE.bindRange('al2','al2o',function(x){return x+'°';},function(x){alpha=x;st.redraw();});
+  RE.bindRange('e2','e2o',null,function(x){e=x;st.redraw();});
+  var tb=document.getElementById('tri2'); tb.addEventListener('click',function(){showTri=!showTri;tb.setAttribute('aria-pressed',showTri?'true':'false');st.redraw();});
+  RE.player(document.getElementById('play2'),function(dt){alpha=(alpha+dt*70)%360;alEl.value=Math.round(alpha);document.getElementById('al2o').textContent=Math.round(alpha)+'°';st.redraw();});
+})();
+
+</script>
+</body>
+</html>

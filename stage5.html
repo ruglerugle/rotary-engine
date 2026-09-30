@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2836">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE5 ローターを削り出す ― ロータリーエンジン、作図の書</title>
+<meta name="description" content="ローターの辺は、どの回転位置でもハウジングからはみ出さない範囲で、できるだけ膨らませる。ローターに乗って見るとハウジングが動いて見え、通過した場所を削った残りがローターの形（包絡線）になる。辺の中点が中心から R−2e になる理由、正三角形の辺の中点 R/2 からの膨らみ s＝R/2−2e、そして2頂点と中点を通る円弧の半径 ρ を三平方の定理で求め、円弧で近似したローターを描く。">
+<link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage5">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ロータリーエンジン、作図の書">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE5 ローターを削り出す ― ロータリーエンジン、作図の書">
+<meta property="og:description" content="ローターに乗って見ると、ハウジングがローターを削っていく。残った形が最大のローター。辺の中点は R−2e、円弧の半径は三平方の定理で。">
+<meta property="og:url" content="https://rotary-engine.habatakijuku.com/stage5">
+<meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .sim-controls{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+  .sim-controls .btn{font-size:12.5px;padding:.45rem .8rem}
+  .sim-controls .btn[aria-pressed="true"]{background:linear-gradient(#7a9cc4,#3d5f88);border-color:#2d4a6e;color:#fff}
+  .sim-controls .btn:disabled{opacity:.35}
+  .sim-controls .grp-label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-controls label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:var(--ink)}
+  .sim-controls input[type=range]{width:150px;accent-color:#3d5f88}
+  .sim-controls input[type=number]{width:70px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;font-size:13px;font-weight:800;color:var(--ink);background:#fff}
+  .sim-controls output{font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right;color:#2d4a6e}
+  .sim-play{padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
+  .cv-wrap{width:100%}
+  .cv-wrap canvas{display:block;width:100%;height:auto;border-radius:8px}
+  .readout{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;margin-top:8px;font-size:12.5px;font-weight:800;color:#2d4a6e;font-variant-numeric:tabular-nums}
+  .readout span b{color:var(--ink)}
+  .note-box{background:#fffbe8;border:1px solid #e3d48f;border-radius:10px;padding:12px 14px;margin:12px 0;font-size:13.5px;line-height:1.75;color:#3a3210;font-weight:700}
+  .note-box .nb-title{display:block;font-weight:950;margin-bottom:4px;color:#7a5a08}
+  .kw{color:#2d4a6e}
+  .qlink{color:var(--gold-dark);text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🔧</a> <span>ロータリーエンジン、作図の書</span></div>
+      <div class="brand-sub">STAGE 5 ― ローターを削り出す ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <a class="head-reset" href="https://quantum-mechanics.habatakijuku.com/" title="姉妹シリーズ『量子力学、冒険の書』へ">⚛ 量子の冒険の書</a>
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 5</span><h1 class="chapter-title">ローターを削り出す</h1>
+        <div class="chapter-sub">はみ出さない最大の形と円弧近似</div>
+      </div>
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">ローターの辺の形を決めよう。「どの回転位置でもハウジングからはみ出さない最大の形」という条件、辺の中点が中心から R−2e になる理由、そして2頂点と中点を通る円弧の半径 ρ＝((R√3/2)²＋s²)÷(2s) の出どころを説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ハウジングが描けたので、今日はローターの辺を決めよう。3つの頂点の位置はもう決まっている。問題は、頂点と頂点をどんな線で結ぶかだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">まっすぐ結んで正三角形にしたら、だめですか？ 壁は外側にふくらんだ形なので、頂点が壁の上にあれば、直線の辺は壁の内側に収まると思います。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう、直線でも壁には当たらない。ただ、それだと辺と壁の間の部屋が大きすぎる。エンジンは部屋を小さくして混合気を圧縮する必要があるから、部屋がいちばん小さくなる瞬間に、できるだけ小さくしたい。つまり<strong>辺を外側にできるだけ膨らませたい</strong>。ただし条件がある。<strong>どの回転位置でも、ハウジングからはみ出さないこと</strong>だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ローターは回りながら位置も向きも変わるので、ある瞬間はみ出さなくても、別の瞬間にはみ出すかもしれない。全部の瞬間を調べないといけない、ということですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。それを一度に見る方法がある。STAGE3の「腕に乗って見る」と同じ発想で、今度は<strong>ローターに乗って見る</strong>んだ。ローターに乗った人には、ローターは止まって見えて、かわりにハウジングのほうが自分のまわりをぐるぐる動いて見える。ハウジングが通り過ぎた場所には、ローターの体があってはいけない。だから、ハウジングが通った場所を全部削っていくと、<strong>削られずに残った形が、はみ出さない最大のローター</strong>になる。この「動く曲線がぎりぎり触れていく境目の線」を、数学では<strong>包絡線（ほうらくせん）</strong>という。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="cv5a" role="img" aria-label="ローターに乗って見た図。ハウジングの輪郭がたくさんの回転位置で重ね描きされ、通過した場所が削られて、中央に三角おむすび形が残る。円弧で近似したローターを重ねて比べられる"></canvas></div>
+        <div class="sim-controls">
+          <label>重ねる位置の数 <input type="range" id="n5" min="1" max="72" value="1" step="1"> <output id="n5o">1</output></label>
+        </div>
+        <div class="sim-controls">
+          <button class="btn" type="button" id="arc5" aria-pressed="false">円弧で近似したローターを重ねる</button>
+          <button class="sim-play" id="play5a" type="button" aria-pressed="false">▶ 動かす</button>
+        </div>
+        <div class="diagram-caption">ローターに乗って見た図（ローターは止まっていて、ハウジングが動いて見える）。重ねる位置の数を増やすと、ハウジングが通った場所（灰色）が広がり、通らなかった場所（白）が三角おむすびの形に残る。これが「はみ出さない最大のローター」。青い線は、このステージの後半で作る円弧近似のローター</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">残った形は、正三角形の辺を外側にふくらませたおむすびになりました。辺の真ん中は、中心からどのくらいの距離まで残るんでしょうか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いちばん厳しいのは、ハウジングの<strong>くびれ</strong>が辺の真ん中に迫ってくる瞬間だ。くびれは、O から R−e のところにあったね（STAGE4）。頂点の1つが上のくびれにちょうど触れている瞬間を考えてみよう。そのとき、ローターの中心 C と、向かい側の辺の真ん中はどこにあるかな。ローターの角度 θ＝90° のときだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">θ＝90° なら α＝270° なので、C＝(e cos 270°, e sin 270°)＝(0, −e)。中心は O の真下 e のところです。頂点0 は C から真上（90°）に R だから (0, R−e)、たしかに上のくびれの位置です。向かい側の辺の真ん中は、C から見て頂点0 と反対の真下の向き。下のくびれは (0, −(R−e)) にあるので、C からそこまでの距離は (R−e)−e＝<strong>R−2e</strong>。13B なら 105−30＝<strong>75 mm</strong> です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう。そして、他のどの回転位置でも、辺の真ん中に壁がこれより近づくことはない。だから<strong>辺の中点は、ローターの中心から R−2e のところ</strong>まで膨らませていい。では、正三角形と比べてどれだけ膨らんだことになるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">正三角形の中心から辺の中点までの距離は、中心から頂点までの距離の半分です。中心は各中線を 2：1 に分けるので。だから R/2＝52.5 mm。膨らみの高さは 75−52.5＝<strong>22.5 mm</strong>。式で書くと (R−2e)−R/2＝<strong>R/2−2e</strong> です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。この膨らみの高さを、弓の「矢」にたとえて<strong>矢高（しこう）</strong>と呼び、記号 s で表そう。s＝R/2−2e だ。</div>
+        </div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">さて、包絡線の正確な形は、じつはかなり複雑な曲線で、式で書くと長くなる。そこで、この旅の約束どおり<strong>近似</strong>を使う。<strong>2つの頂点と、辺の中点の3点を通る円弧</strong>で辺を描くんだ。3点を通る円は1つに決まるから、円弧の半径さえ分かれば描ける。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">3点を通る円の半径……。弦（げん）の長さは正三角形の1辺です。正三角形の1辺は、頂点から中心までの距離 R を使うと、半分が R cos 30°＝R×(√3/2) なので、辺の半分の長さ h＝R√3/2 ≈ 90.9 mm。円弧の半径を ρ（ロー）とすると、円の中心は辺の中点の真下（ローターの中心側）に ρ−s のところにあるはずです。頂点は円の上にあるので、三平方の定理で、<br>ρ²＝h²＋(ρ−s)²<br>ρ²＝h²＋ρ²−2ρs＋s²<br>0＝h²−2ρs＋s²<br>ρ＝(h²＋s²)÷(2s)。<br>数を入れると、(8268.75＋506.25)÷45＝8775÷45＝<strong>195 mm</strong> です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう。<strong>ρ＝(h²＋s²)/(2s)</strong>、13B なら 195 mm。この半径の円弧を、3つの辺それぞれに描けばローターの完成だ。心配なのは、円弧が包絡線からはみ出さないかどうかだけれど、調べてみると円弧は包絡線よりわずかに内側（いちばん離れたところでも 2 mm 弱）に収まる。はみ出す心配はない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ぴったりではなく、少し内側なんですね。実物のローターも、この円弧なんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">実物の設計では包絡線に近い曲線を使うことが多いけれど、辺の面には燃焼室になる<strong>くぼみ</strong>が掘られていたり、密封部品の溝があったりして、そもそも「なめらかな1本の曲線」ではない。だから骨格として円弧を使う近似は、十分に実物らしい図になるよ。膨らみを自分で変えて、はみ出す様子も確かめておこう。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="cv5b" role="img" aria-label="辺の膨らみ（中点の距離 dm）をスライダーで変えながら、ローターが回る様子。膨らみが R−2e を超えると、壁からはみ出す部分が赤く表示される"></canvas></div>
+        <div class="sim-controls">
+          <label>辺の中点の距離 dm <input type="range" id="dm5" min="53" max="90" value="60" step="0.5"> <output id="dm5o">60</output></label>
+          <button class="btn" type="button" id="set5">R−2e にする</button>
+        </div>
+        <div class="sim-controls">
+          <label>軸の角度 α <input type="range" id="al5" min="0" max="1080" value="270" step="1"> <output id="al5o">270°</output></label>
+          <button class="sim-play" id="play5b" type="button" aria-pressed="false">▶ 動かす</button>
+        </div>
+        <div class="readout" id="ro5"></div>
+        <div class="diagram-caption">辺の中点の距離 dm を増やすとローターが太る。dm＝R−2e＝75 までは、どの角度でも壁の内側に収まる（余裕は 0 以上）。それを超えると、回転のどこかで壁からはみ出す（余裕がマイナスになり、はみ出す部分が赤く光る）。矢高 s＝dm−R/2、円弧の半径 ρ＝(h²＋s²)/(2s)</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果】</span>
+        <span class="step">辺の条件：どの回転位置でもハウジングからはみ出さない、最大の膨らみ</span>
+        <span class="step">ローターに乗って見ると、ハウジングが動いて見える。通過した場所を削った残り＝最大のローター（包絡線）</span>
+        <span class="step">辺の中点の距離：くびれが迫る瞬間（θ＝90°）に (R−e)−e より、<span class="nw">dm＝R−2e</span>（13B：75 mm）</span>
+        <span class="step">矢高 <span class="nw">s＝dm−R/2＝R/2−2e</span>（22.5 mm）、辺の半分 <span class="nw">h＝R√3/2</span>（90.9 mm）</span>
+        <span class="step">円弧近似の半径：三平方の定理 ρ²＝h²＋(ρ−s)² より <span class="nw">ρ＝(h²＋s²)/(2s)</span>（195 mm）。円弧は包絡線のわずか内側に収まる</span>
+      </div>
+
+      <h2 class="quiz-head">確認クイズ</h2>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. ローターの辺の形は、どんな条件で決める？</p>
+        <div class="choice-list">
+          <button class="choice-btn">できるだけまっすぐにする</button>
+          <button class="choice-btn">頂点と同じ円の上に乗せる</button>
+          <button class="choice-btn">どの回転位置でもハウジングからはみ出さない範囲で、最大に膨らませる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 部屋をしっかり小さく（圧縮）できるように膨らませたいが、回転のどの瞬間にも壁を突き抜けてはいけない。ローターに乗って見て、ハウジングが通らなかった場所が答えになる。</div>
+      </div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 辺の中点は、ローターの中心からどれだけの距離まで膨らませられる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">R−e</button>
+          <button class="choice-btn">R−2e</button>
+          <button class="choice-btn">R/2</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 頂点が片方のくびれに触れているとき、向かいの辺の中点にもう片方のくびれが迫る。くびれは O から R−e、中心 C はそこから e だけ遠いので R−2e。13B では 75 mm。</div>
+      </div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 弦の半分の長さが h、矢高が s のとき、円弧の半径 ρ は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">ρ＝(h²＋s²)÷(2s)</button>
+          <button class="choice-btn">ρ＝h＋s</button>
+          <button class="choice-btn">ρ＝h×s</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 円の中心は中点の真下 ρ−s のところにあり、頂点までの距離が ρ なので、ρ²＝h²＋(ρ−s)²。整理すると ρ＝(h²＋s²)/(2s)。13B では 195 mm。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage4.html">← 前のステージへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script src="js/rotary.js"></script>
+<script>RQ.initStagePage(5);</script>
+<script>
+
+/* 5a：ローターに乗って見る（包絡線） */
+(function(){
+  var e=15,R=105,nPos=1,showArc=false,st,C=RE.C;
+  function toRotor(p,th){var c=RE.rotorCenter(e,3*th);var x=p.x-c.x,y=p.y-c.y;var cs=Math.cos(-th),sn=Math.sin(-th);return {x:x*cs-y*sn,y:x*sn+y*cs};}
+  var housing=RE.housing(e,R,240);
+  function draw(st){
+    var ctx=st.ctx,W=st.W,H=st.H; ctx.clearRect(0,0,W,H); ctx.fillStyle=C.paper; ctx.fillRect(0,0,W,H);
+    var v=RE.view(st, 2*(R+2*e)*1.08, 0, 0, W*0.5, H*0.5);
+    // 通過領域：ハウジングの内側を白で塗り、外側を灰色にしたいので、逆に「ハウジングの外側」を各位置で灰色に塗る
+    // 実装：まず全体を白、次に各位置のハウジング内部を白で塗り重ね…では削れない。
+    // 代わりに「削られずに残る形」＝全位置のハウジング内部の共通部分。各位置について「外側」を灰色で塗る（evenodd で大きな矩形−ハウジング）。
+    ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+    for(var i=0;i<nPos;i++){
+      var th=RE.TAU*i/nPos;
+      var pts=housing.map(function(p){return toRotor(p,th);});
+      ctx.beginPath(); ctx.rect(0,0,W,H);
+      var q0=v.P(pts[0]); ctx.moveTo(q0.x,q0.y);
+      for(var j=1;j<pts.length;j++){var q=v.P(pts[j]);ctx.lineTo(q.x,q.y);} ctx.closePath();
+      ctx.fillStyle='rgba(120,128,140,'+(nPos<6?0.35:0.9/Math.min(nPos,12)+0.06)+')'; ctx.fill('evenodd');
+    }
+    // 現在（最後）の位置のハウジング輪郭
+    var thL=RE.TAU*(nPos-1)/nPos; var last=housing.map(function(p){return toRotor(p,thL);});
+    RE.path(ctx,v,last,true); RE.stroke(ctx,C.housing,1.6);
+    // ローター中心と頂点（ローター基準では固定）
+    for(var k=0;k<3;k++){var t=RE.TAU*k/3;RE.dot(ctx,v,{x:R*Math.cos(t),y:R*Math.sin(t)},4.5,C.rotor,'#fff');}
+    RE.dot(ctx,v,{x:0,y:0},4,C.ecc); RE.label(ctx,v,{x:0,y:0},'C',C.ecc,10,-8,12,900);
+    // O の位置（ローター基準では回る）
+    var o=toRotor({x:0,y:0},thL); RE.dot(ctx,v,o,3.5,C.gold); RE.label(ctx,v,o,'O',C.gold,9,9,11,900);
+    if(showArc){ var pts2=RE.rotorOutline(e,R,0,null,40); RE.path(ctx,v,pts2,true); RE.stroke(ctx,C.rotor,2.2); }
+    // 辺の中点までの距離
+    var m={x:(R-2*e)*Math.cos(Math.PI/3),y:(R-2*e)*Math.sin(Math.PI/3)};
+    RE.line(ctx,v,{x:0,y:0},m,C.ng,1.4,[4,3]); RE.dot(ctx,v,m,3.5,C.ng);
+    RE.label(ctx,v,{x:m.x/2,y:m.y/2},'R−2e',C.ng,14,6,11,900,'left');
+    RE.text(ctx,10,14,'ローターに乗って見る（重ねた位置：'+nPos+'）',C.ink,12,900,'left');
+  }
+  st=RE.canvas('cv5a',0.82,draw); if(!st) return;
+  var nEl=RE.bindRange('n5','n5o',null,function(x){nPos=x;st.redraw();});
+  var ab=document.getElementById('arc5'); ab.addEventListener('click',function(){showArc=!showArc;ab.setAttribute('aria-pressed',showArc?'true':'false');st.redraw();});
+  var acc=0;
+  RE.player(document.getElementById('play5a'),function(dt){acc+=dt*18; if(acc>=1){nPos=nPos+Math.floor(acc); acc-=Math.floor(acc); if(nPos>72) nPos=1; nEl.value=nPos; document.getElementById('n5o').textContent=nPos; st.redraw();}});
+})();
+
+/* 5b：膨らみを変えてはみ出しを確かめる */
+(function(){
+  var e=15,R=105,dm=60,alpha=270,st,C=RE.C,clear=0;
+  function calcClear(){ clear=RE.minClearance(e,R,dm,36); }
+  function draw(st){
+    var ctx=st.ctx,W=st.W,H=st.H; ctx.clearRect(0,0,W,H); ctx.fillStyle=C.paper; ctx.fillRect(0,0,W,H);
+    var v=RE.view(st, 2*(R+e)*1.1, 0, 0, W*0.5, H*0.5);
+    var a=RE.rad(alpha);
+    RE.drawEngine(ctx,v,e,R,a,{dm:dm,shaft:true});
+    // はみ出し部分を赤で
+    var pts=RE.rotorOutline(e,R,a,dm,40), bad=[];
+    pts.forEach(function(p){var ang=Math.atan2(p.y,p.x),rp=Math.sqrt(p.x*p.x+p.y*p.y);if(RE.radiusAt(e,R,ang)<rp) bad.push(p);});
+    bad.forEach(function(p){RE.dot(ctx,v,p,3.5,'rgba(200,67,63,.85)');});
+    // 中点と矢高
+    var c=RE.rotorCenter(e,a), th=a/3, mid=th+Math.PI/3, m={x:c.x+dm*Math.cos(mid),y:c.y+dm*Math.sin(mid)}, m0={x:c.x+R/2*Math.cos(mid),y:c.y+R/2*Math.sin(mid)};
+    RE.line(ctx,v,c,m0,C.muted,1.2,[3,3]); RE.line(ctx,v,m0,m,C.ng,2.2); RE.dot(ctx,v,m,3.5,C.ng);
+    RE.label(ctx,v,m,'s',C.ng,10*Math.cos(mid)+8,-10*Math.sin(mid),12,900);
+    var arc=RE.flankArc(R,dm);
+    RE.text(ctx,10,14,'dm = '+RE.fmt(dm,1)+' mm　s = '+RE.fmt(arc.s,1)+' mm　ρ = '+(isFinite(arc.rho)?RE.fmt(arc.rho,1):'∞')+' mm',C.ink,12,900,'left');
+    RE.text(ctx,10,H-12,'壁までの余裕（1回転ぶんの最小）: '+(clear>=0?'+':'')+RE.fmt(clear,2)+' mm '+(clear>=-0.01?'OK':'はみ出し！'),clear>=-0.01?C.ok:C.ng,12.5,900,'left');
+    var ro=document.getElementById('ro5');
+    if(ro) ro.innerHTML='<span>矢高 s = dm − R/2 = <b>'+RE.fmt(arc.s,1)+'</b> mm</span><span>h = R√3/2 = <b>'+RE.fmt(R*Math.sqrt(3)/2,1)+'</b> mm</span><span>ρ = (h²＋s²)/(2s) = <b>'+(isFinite(arc.rho)?RE.fmt(arc.rho,1):'∞')+'</b> mm</span><span>R−2e = <b>'+(R-2*e)+'</b> mm</span>';
+  }
+  calcClear();
+  st=RE.canvas('cv5b',0.82,draw); if(!st) return;
+  var dmEl=RE.bindRange('dm5','dm5o',function(x){return RE.fmt(x,1);},function(x){dm=x;calcClear();st.redraw();});
+  var alEl=RE.bindRange('al5','al5o',function(x){return x+'°';},function(x){alpha=x;st.redraw();});
+  document.getElementById('set5').addEventListener('click',function(){dm=R-2*e;dmEl.value=dm;document.getElementById('dm5o').textContent=RE.fmt(dm,1);calcClear();st.redraw();});
+  RE.player(document.getElementById('play5b'),function(dt){alpha=(alpha+dt*90)%1080;alEl.value=Math.round(alpha);document.getElementById('al5o').textContent=Math.round(alpha)+'°';st.redraw();});
+})();
+
+</script>
+</body>
+</html>

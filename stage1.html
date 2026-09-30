@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2836">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE1 おむすびは、なぜ回る ― ロータリーエンジン、作図の書</title>
+<meta name="description" content="ロータリーエンジンは、三角おむすび形のローターが繭形のハウジングの中で回るエンジン。その形を定規やコンパスではなく「式」で描くための最初の道具として、点を数の組（座標）で表す考え方と、角度から座標を取り出す cos・sin を中学生向けに導入し、円を式で描く練習をする。">
+<link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage1">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ロータリーエンジン、作図の書">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE1 おむすびは、なぜ回る ― ロータリーエンジン、作図の書">
+<meta property="og:description" content="三角おむすびのローターと繭形のハウジング。それを式で描くための最初の道具、角度から座標を取り出す cos・sin を学び、円を式で描く。">
+<meta property="og:url" content="https://rotary-engine.habatakijuku.com/stage1">
+<meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .sim-controls{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+  .sim-controls .btn{font-size:12.5px;padding:.45rem .8rem}
+  .sim-controls .btn[aria-pressed="true"]{background:linear-gradient(#7a9cc4,#3d5f88);border-color:#2d4a6e;color:#fff}
+  .sim-controls .btn:disabled{opacity:.35}
+  .sim-controls .grp-label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-controls label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:var(--ink)}
+  .sim-controls input[type=range]{width:150px;accent-color:#3d5f88}
+  .sim-controls input[type=number]{width:70px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;font-size:13px;font-weight:800;color:var(--ink);background:#fff}
+  .sim-controls output{font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right;color:#2d4a6e}
+  .sim-play{padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
+  .cv-wrap{width:100%}
+  .cv-wrap canvas{display:block;width:100%;height:auto;border-radius:8px}
+  .readout{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;margin-top:8px;font-size:12.5px;font-weight:800;color:#2d4a6e;font-variant-numeric:tabular-nums}
+  .readout span b{color:var(--ink)}
+  .note-box{background:#fffbe8;border:1px solid #e3d48f;border-radius:10px;padding:12px 14px;margin:12px 0;font-size:13.5px;line-height:1.75;color:#3a3210;font-weight:700}
+  .note-box .nb-title{display:block;font-weight:950;margin-bottom:4px;color:#7a5a08}
+  .kw{color:#2d4a6e}
+  .qlink{color:var(--gold-dark);text-decoration:underline}
+
+  .parts-svg .lb{fill:var(--muted);font-size:11px;font-weight:800}
+  .parts-svg .lbS{fill:#1b232c;font-size:12px;font-weight:900}
+  </style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🔧</a> <span>ロータリーエンジン、作図の書</span></div>
+      <div class="brand-sub">STAGE 1 ― おむすびは、なぜ回る ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <a class="head-reset" href="https://quantum-mechanics.habatakijuku.com/" title="姉妹シリーズ『量子力学、冒険の書』へ">⚛ 量子の冒険の書</a>
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 1</span><h1 class="chapter-title">おむすびは、なぜ回る</h1>
+        <div class="chapter-sub">観察と、角度から座標を取り出す道具</div>
+      </div>
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">ロータリーエンジンの3つの部品（ハウジング・ローター・偏心軸）の名前と、「曲線を式で描く」という考え方を知ろう。半径 r の円の上で角度 θ の点の座標が (r cos θ, r sin θ) と書ける理由を説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今日から新しい旅を始めよう。テーマは<strong>ロータリーエンジン</strong>だ。自動車のエンジンといえば、筒の中でピストンが上下に往復するものがふつうだけれど、ロータリーエンジンには往復する部品がない。<strong>三角おむすびの形をしたローター</strong>が、<strong>繭（まゆ）のような形の部屋</strong>の中をぐるぐる回るだけで動く。1950年代にドイツのフェリクス・ヴァンケルが考え、1967年に日本のマツダが世界で初めて量産車に載せたエンジンだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">テレビで見たことがあります。中でおむすびが回っているのに、はみ出しもしないし、隙間もできない。あの形はどうやって決めたんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それがこの旅の主題なんだ。ゴールを先に言っておこう。<strong>ハウジングの繭形も、ローターのおむすび形も、数学の式だけで描けるようになる</strong>。定規で写し取るのではなく、たった2つの数（部品の寸法）を決めれば、あとは計算で形が出てくる。そういう作図だよ。まず部品の名前を3つ覚えてほしい。外側の繭形の壁を<strong>ハウジング</strong>、中で回る三角形を<strong>ローター</strong>、ローターの真ん中を貫いて回転を外に取り出す軸を<strong>偏心軸（へんしんじく）</strong>という。英語ではエキセントリックシャフトだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「偏心」は、心（中心）が偏（かたよ）っている、という意味ですか？ 軸なのに中心がずれているなんて、変な名前です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通りの意味で、そこが仕掛けの心臓部なんだけれど、それは次のステージで話そう。今日は道具の準備だ。「式で描く」とはどういうことか、いちばん簡単な図形、<strong>円</strong>で練習する。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="parts-svg" viewBox="0 0 360 250" width="100%" role="img" aria-label="ロータリーエンジンの3つの部品の名前。繭形の外壁がハウジング、その中の三角おむすび形がローター、ローターの中心を貫く軸が偏心軸">
+          <g id="parts-fig"></g>
+          <text class="lbS" x="72" y="22" text-anchor="middle">ハウジング（繭形の壁）</text>
+          <text class="lbS" x="192" y="86" text-anchor="middle">ローター</text>
+          <text class="lb" x="192" y="100" text-anchor="middle">（三角おむすび）</text>
+          <text class="lbS" x="180" y="238" text-anchor="middle">偏心軸（回転を取り出す軸）</text>
+        </svg>
+        <div class="diagram-caption">ロータリーエンジンの3つの部品。外側の繭形の壁が<strong>ハウジング</strong>、中で回る三角おむすびが<strong>ローター</strong>、その中心を貫くのが<strong>偏心軸</strong>（エキセントリックシャフト）。ローターの3つの頂点は、いつも壁に触れながら動く</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">円なら、コンパスで描けます。式で描くというのは、どういうことですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">コンパスは「中心から同じ距離の点を全部たどる」道具だね。式で描くときも考え方は同じで、<strong>曲線を「点の集まり」と見て、その1つ1つの点の位置を式で作る</strong>。点の位置は、横の位置 x と縦の位置 y の数の組 (x, y) で表す。これを<strong>座標</strong>という。式で座標を次々に作ってグラフ用紙に打っていけば、どんな曲線でも描けるし、コンピュータに描かせることもできる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">円の上の点の座標を、どうやって式にするんですか？ 中心から同じ距離、というのは分かりますが、「距離が同じ」だけでは x と y がいくつか決まりません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい質問だね。<strong>角度</strong>を使うんだ。中心から真横（右向き）に線を引いて、そこから反時計回りに何度回ったところか、で円の上の点を指定する。この角度を θ（シータ）と呼ぼう。角度が決まれば点は1つに決まる。あとは「角度 θ から座標 (x, y) を取り出す道具」があればいい。それが <strong>cos（コサイン）</strong>と <strong>sin（サイン）</strong>だ。名前は難しそうだけれど、中身はただの<strong>「角度→座標」の対応表</strong>だよ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">定義はこうだ。<strong>半径1の円</strong>を描いて、角度 θ のところにある点を見る。その点の<strong>横座標を cos θ、縦座標を sin θ</strong> と呼ぶ。それだけなんだ。たとえば θ＝0° なら点は真横の (1, 0) にあるから、cos 0°＝1、sin 0°＝0。θ＝90° なら点は真上の (0, 1) だから、cos 90°＝0、sin 90°＝1。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">θ＝60° なら、どうなりますか。中心と、真横の点 (1, 0) と、60° の点の3つを結ぶと、2辺が半径1で、間の角が 60° だから……正三角形です。正三角形を真ん中で半分に折ると、底辺の半分は 0.5。だから横座標は cos 60°＝0.5。縦座標は三平方の定理で、1²＝0.5²＋y² から y²＝0.75、y は約 0.866 です。sin 60° ≈ 0.866、ということですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう。cos や sin の値は、そうやって図形から求められる角度もあるし、そうでない角度は電卓やコンピュータが計算してくれる。大事なのは意味のほうだよ。それから、いま使った三平方の定理は、どの角度でも成り立つ。半径1の円の上の点だから、<strong>(cos θ)²＋(sin θ)²＝1</strong>。この関係はあとで何度も使う。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">半径が1ではなく r のときは、図形をそっくり r 倍に拡大するだけだから、座標も r 倍。円の上で角度 θ の点は <strong>(r cos θ, r sin θ)</strong>、ということですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。それが「円を式で描く」の全部だ。θ を 0° から 360° まで少しずつ動かしながら、点 (r cos θ, r sin θ) を打っていけば円になる。このように、動かす数（ここでは θ）のことを<strong>媒介変数（ばいかいへんすう）</strong>、あるいはパラメータという。旅の間じゅう、この「パラメータを動かして点を打つ」やり方で形を描いていくよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="cv1" role="img" aria-label="半径 r の円と、角度 θ の点。点の座標 (r cos θ, r sin θ) が表示され、θ を動かすと点が円をなぞる"></canvas></div>
+        <div class="sim-controls">
+          <label>角度 θ <input type="range" id="th1" min="0" max="360" value="60" step="1"> <output id="th1o">60°</output></label>
+          <label>半径 r <input type="range" id="r1" min="1" max="10" value="5" step="1"> <output id="r1o">5</output></label>
+        </div>
+        <div class="sim-controls">
+          <button class="btn" type="button" id="plot1">30° ごとに点を打つ</button>
+          <button class="btn" type="button" id="clr1">点を消す</button>
+          <button class="sim-play" id="play1" type="button" aria-pressed="false">▶ 動かす</button>
+        </div>
+        <div class="readout" id="ro1"></div>
+        <div class="diagram-caption">角度 θ を動かすと、点 (r cos θ, r sin θ) が円の上を進む。横座標が r cos θ、縦座標が r sin θ。「30° ごとに点を打つ」で、グラフ用紙に点を打って円を描く様子を再現できる</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">円の中心が原点ではなくて、たとえば (3, 2) にあるときは、どうすればいいですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">中心をずらすだけだから、座標に足せばいい。中心が (a, b) の半径 r の円の上の点は、<strong>(a＋r cos θ, b＋r sin θ)</strong> だ。じつは、これが次のステージの主役になる。ロータリーエンジンでは、<strong>ローターの中心そのものが動く</strong>んだ。動く中心に、さらに角度を足して頂点の位置を作る。今日の道具だけで、それが全部書けるよ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最後にひとつ、旅の約束を。ここで描く形は<strong>「理屈の上での形」</strong>だ。実物のエンジンでは、ローターの頂点に付いている密封部品（アペックスシール）の厚みのぶん壁を少し外側にずらしたり、ローターの面に燃焼室のくぼみを掘ったりと、細かな補正が入る。この旅ではそういう補正は省いて、<strong>形の骨格を式から出すこと</strong>に集中する。そう断ったうえで、驚くほど実物に近い図が出てくるのを見てもらおう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果】</span>
+        <span class="step">部品の名前：ハウジング（繭形の壁）・ローター（三角おむすび）・偏心軸（中心がずれた出力軸）</span>
+        <span class="step">曲線は「点の集まり」。点の位置は座標 (x, y) で表し、式で作れば描ける</span>
+        <span class="step">cos θ・sin θ の定義：半径1の円の上で、角度 θ の点の横座標が cos θ、縦座標が sin θ。<span class="nw">(cos θ)²＋(sin θ)²＝1</span></span>
+        <span class="step">半径 r・中心 (a, b) の円の上で角度 θ の点：<span class="nw">(a＋r cos θ, b＋r sin θ)</span>。θ を 0°→360° と動かすと円になる（θ は媒介変数）</span>
+      </div>
+
+      <h2 class="quiz-head">確認クイズ</h2>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. cos θ とは何か？</p>
+        <div class="choice-list">
+          <button class="choice-btn">半径を θ 倍した長さ</button>
+          <button class="choice-btn">半径1の円の上で、角度 θ のところにある点の横座標</button>
+          <button class="choice-btn">角度 θ の三角形の面積</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ cos θ は「半径1の円の上、角度 θ の点の横座標」、sin θ は同じ点の縦座標。角度から座標を取り出す対応表だと思えばよい。</div>
+      </div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 原点を中心とする半径 r の円の上で、角度 θ の点の座標は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">(r＋cos θ, r＋sin θ)</button>
+          <button class="choice-btn">(cos θ ÷ r, sin θ ÷ r)</button>
+          <button class="choice-btn">(r cos θ, r sin θ)</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 半径1の円を r 倍に拡大すると、座標も r 倍になる。θ を 0° から 360° まで動かすと、この点が円をなぞる。</div>
+      </div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 中心が (3, 2) の半径5の円の上で、角度 θ の点の座標は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">(3＋5 cos θ, 2＋5 sin θ)</button>
+          <button class="choice-btn">(5 cos θ＋2, 5 sin θ＋3)</button>
+          <button class="choice-btn">(3×5 cos θ, 2×5 sin θ)</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 原点中心の円 (5 cos θ, 5 sin θ) を、中心の分だけ平行移動する。x に 3、y に 2 を足せばよい。次のステージでは、この「中心」が動く。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script src="js/rotary.js"></script>
+<script>RQ.initStagePage(1);</script>
+<script>
+
+/* 部品の名前図（SVG）：共通ライブラリの式で繭形と三角を描く */
+(function(){
+  var g=document.getElementById('parts-fig'); if(!g) return;
+  var e=15,R=105,alpha=RE.rad(20),cx=180,cy=128,s=0.86;
+  function P(p){return (cx+p.x*s).toFixed(1)+','+(cy-p.y*s).toFixed(1);}
+  function poly(pts,fill,stroke,w){var el=document.createElementNS('http://www.w3.org/2000/svg','polygon');el.setAttribute('points',pts.map(P).join(' '));el.setAttribute('fill',fill);el.setAttribute('stroke',stroke);el.setAttribute('stroke-width',w);el.setAttribute('stroke-linejoin','round');g.appendChild(el);}
+  function circ(p,r,fill,stroke){var el=document.createElementNS('http://www.w3.org/2000/svg','circle');el.setAttribute('cx',cx+p.x*s);el.setAttribute('cy',cy-p.y*s);el.setAttribute('r',r);el.setAttribute('fill',fill);el.setAttribute('stroke',stroke);el.setAttribute('stroke-width',1.5);g.appendChild(el);}
+  poly(RE.housing(e,R,360),'#efe9df','#1b232c',2.2);
+  poly(RE.rotorOutline(e,R,alpha,null,40),'#dbe6f1','#3d5f88',1.8);
+  var c=RE.rotorCenter(e,alpha);
+  circ(c,15,'#f6d1cc','#c8433f'); circ({x:0,y:0},7,'#f1dfae','#9a6a1c');
+  var l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',cx);l.setAttribute('y1',cy);l.setAttribute('x2',cx+c.x*s);l.setAttribute('y2',cy-c.y*s);l.setAttribute('stroke','#c8433f');l.setAttribute('stroke-width',1.5);g.appendChild(l);
+})();
+
+/* 円を式で描くシミュレータ */
+(function(){
+  var th=60, r=5, dots=[], play, st;
+  var C=RE.C;
+  function draw(st){
+    var ctx=st.ctx, W=st.W, H=st.H; ctx.clearRect(0,0,W,H);
+    ctx.fillStyle=C.paper; ctx.fillRect(0,0,W,H);
+    var v=RE.view(st, 24, 0, 0, W*0.5, H*0.5);
+    // 方眼
+    for(var i=-11;i<=11;i++){ RE.line(ctx,v,{x:i,y:-11},{x:i,y:11},C.grid,1); RE.line(ctx,v,{x:-11,y:i},{x:11,y:i},C.grid,1); }
+    RE.line(ctx,v,{x:-11.5,y:0},{x:11.5,y:0},C.axis,1.2); RE.line(ctx,v,{x:0,y:-11.5},{x:0,y:11.5},C.axis,1.2);
+    RE.label(ctx,v,{x:11.2,y:0},'x',C.muted,6,-10,12,900,'left'); RE.label(ctx,v,{x:0,y:11.2},'y',C.muted,10,-4,12,900,'left');
+    for(i=-10;i<=10;i+=5){ if(i) { RE.label(ctx,v,{x:i,y:0},String(i),C.muted,0,12,10,700); RE.label(ctx,v,{x:0,y:i},String(i),C.muted,-10,0,10,700,'right'); } }
+    // 円
+    RE.circle(ctx,v,{x:0,y:0},r,'#7a9cc4',2,[6,4]);
+    // 打った点
+    dots.forEach(function(d){ RE.dot(ctx,v,{x:r*Math.cos(d),y:r*Math.sin(d)},4,'#3d5f88'); });
+    // 角度の弧と半径
+    var a=RE.rad(th), p={x:r*Math.cos(a),y:r*Math.sin(a)};
+    RE.angleArc(ctx,v,{x:0,y:0},22,0,a,C.gold);
+    RE.label(ctx,v,{x:0,y:0},'θ='+th+'°',C.gold,30*Math.cos(a/2)+4,-30*Math.sin(a/2),11,900,'left');
+    RE.line(ctx,v,{x:0,y:0},p,C.ink,2);
+    // 座標の分解（横 r cos θ・縦 r sin θ）
+    RE.line(ctx,v,{x:p.x,y:0},p,C.ng,1.6,[3,3]);
+    RE.line(ctx,v,{x:0,y:0},{x:p.x,y:0},C.ok,3);
+    RE.line(ctx,v,{x:p.x,y:0},{x:p.x,y:p.y},C.ng,3);
+    RE.dot(ctx,v,p,5,C.ink,'#fff');
+    RE.label(ctx,v,p,'('+RE.fmt(p.x,2)+', '+RE.fmt(p.y,2)+')',C.ink,(p.x>=0?8:-8),(p.y>=0?-10:12),11.5,900,(p.x>=0?'left':'right'));
+    RE.label(ctx,v,{x:p.x/2,y:0},'r cos θ',C.ok,0,(p.y>=0?12:-12),11,900);
+    RE.label(ctx,v,{x:p.x,y:p.y/2},'r sin θ',C.ng,(p.x>=0?8:-8),0,11,900,(p.x>=0?'left':'right'));
+    RE.text(ctx,10,14,'半径 r = '+r+'　点 = (r cos θ, r sin θ)',C.ink,12,900,'left');
+    var ro=document.getElementById('ro1');
+    if(ro) ro.innerHTML='<span>cos θ = <b>'+RE.fmt(Math.cos(a),3)+'</b></span><span>sin θ = <b>'+RE.fmt(Math.sin(a),3)+'</b></span><span>x = r cos θ = <b>'+RE.fmt(p.x,2)+'</b></span><span>y = r sin θ = <b>'+RE.fmt(p.y,2)+'</b></span><span>(cos θ)²＋(sin θ)² = <b>'+RE.fmt(Math.cos(a)*Math.cos(a)+Math.sin(a)*Math.sin(a),3)+'</b></span>';
+  }
+  st=RE.canvas('cv1',0.78,draw); if(!st) return;
+  var thEl=RE.bindRange('th1','th1o',function(x){return x+'°';},function(x){th=x;st.redraw();});
+  RE.bindRange('r1','r1o',null,function(x){r=x;st.redraw();});
+  document.getElementById('plot1').addEventListener('click',function(){dots=[];for(var d=0;d<360;d+=30)dots.push(RE.rad(d));st.redraw();});
+  document.getElementById('clr1').addEventListener('click',function(){dots=[];st.redraw();});
+  play=RE.player(document.getElementById('play1'),function(dt){th=(th+dt*60)%360;thEl.value=Math.round(th);document.getElementById('th1o').textContent=Math.round(th)+'°';st.redraw();});
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2836">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE7 完成図を描く ― ロータリーエンジン、作図の書</title>
+<meta name="description" content="これまでの式をすべて使い、偏心量 e と創成半径 R を自分で決めてロータリーエンジンの完成図を描く。固定歯車（半径 2e）とローター歯車（半径 3e）、偏心軸、部屋がいちばん小さくなるくびれ側の2本の点火プラグ、反対側のくびれをはさむ排気口と吸気口の位置を決め、図を SVG として保存できる作図ツール付き。近似で省いた実物との違いもまとめる。">
+<link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage7">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ロータリーエンジン、作図の書">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE7 完成図を描く ― ロータリーエンジン、作図の書">
+<meta property="og:description" content="e と R を決めるだけで、ハウジング・ローター・歯車・点火プラグ・吸排気口まで、ロータリーエンジンの完成図が式から出てくる。SVG で保存できる。">
+<meta property="og:url" content="https://rotary-engine.habatakijuku.com/stage7">
+<meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .sim-controls{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+  .sim-controls .btn{font-size:12.5px;padding:.45rem .8rem}
+  .sim-controls .btn[aria-pressed="true"]{background:linear-gradient(#7a9cc4,#3d5f88);border-color:#2d4a6e;color:#fff}
+  .sim-controls .btn:disabled{opacity:.35}
+  .sim-controls .grp-label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-controls label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:var(--ink)}
+  .sim-controls input[type=range]{width:150px;accent-color:#3d5f88}
+  .sim-controls input[type=number]{width:70px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;font-size:13px;font-weight:800;color:var(--ink);background:#fff}
+  .sim-controls output{font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right;color:#2d4a6e}
+  .sim-play{padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
+  .cv-wrap{width:100%}
+  .cv-wrap canvas{display:block;width:100%;height:auto;border-radius:8px}
+  .readout{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;margin-top:8px;font-size:12.5px;font-weight:800;color:#2d4a6e;font-variant-numeric:tabular-nums}
+  .readout span b{color:var(--ink)}
+  .note-box{background:#fffbe8;border:1px solid #e3d48f;border-radius:10px;padding:12px 14px;margin:12px 0;font-size:13.5px;line-height:1.75;color:#3a3210;font-weight:700}
+  .note-box .nb-title{display:block;font-weight:950;margin-bottom:4px;color:#7a5a08}
+  .kw{color:#2d4a6e}
+  .qlink{color:var(--gold-dark);text-decoration:underline}
+
+  .tool-grid{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:12px;align-items:start}
+  @media(max-width:700px){.tool-grid{grid-template-columns:1fr}}
+  .tool-panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:left;font-size:12.5px;font-weight:800}
+  .tool-panel h3{font-size:12px;color:#2d4a6e;margin:0 0 6px}
+  .tool-panel label{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:5px 0}
+  .tool-panel input[type=number]{width:74px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;font-size:13px;font-weight:800;color:var(--ink)}
+  .tool-panel input[type=range]{width:100%;accent-color:#3d5f88}
+  .tool-panel .chk{justify-content:flex-start}
+  .tool-panel .chk input{accent-color:#3d5f88}
+  .tool-calc{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-variant-numeric:tabular-nums;line-height:1.7;color:#1c2a3a}
+  .tool-calc b{color:#2d4a6e}
+  .tool-warn{color:var(--ng);font-weight:900}
+  .recipe{counter-reset:step;list-style:none;padding:0;margin:8px 0 0}
+  .recipe li{position:relative;padding:8px 10px 8px 40px;border:1px solid var(--line);background:var(--paper2);border-radius:8px;margin-bottom:6px;font-size:13.5px;line-height:1.7;font-weight:700}
+  .recipe li::before{counter-increment:step;content:counter(step);position:absolute;left:10px;top:9px;width:22px;height:22px;border-radius:50%;background:linear-gradient(#7a9cc4,#3d5f88);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center}
+  </style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🔧</a> <span>ロータリーエンジン、作図の書</span></div>
+      <div class="brand-sub">STAGE 7 ― 完成図を描く ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <a class="head-reset" href="https://quantum-mechanics.habatakijuku.com/" title="姉妹シリーズ『量子力学、冒険の書』へ">⚛ 量子の冒険の書</a>
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 7</span><h1 class="chapter-title">完成図を描く</h1>
+        <div class="chapter-sub">歯車・吸排気口・点火プラグ</div>
+      </div>
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">完成図を仕上げよう。歯車・偏心軸を重ねる位置、点火プラグが「部屋がいちばん小さくなる側のくびれ」に、排気口と吸気口が「反対側のくびれの手前と先」にある理由を説明でき、自分で選んだ e と R で図を描いて保存できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いよいよ最後だ。ハウジング、ローター、部屋の動きまで式で出せた。今日は残りの部品を描き足して、完成図にしよう。まずは<strong>歯車と偏心軸</strong>。STAGE3で、固定歯車の半径は 2e、ローターの内歯車の半径は 3e と決まった。固定歯車は O が中心、ローター歯車は C が中心だ。ただし歯車は、ローターの横のふた（サイドハウジング）側に付いていて、ローターの断面とは奥行きが違う。だから完成図では、歯車の円を<strong>点線で重ねて</strong>描く。偏心軸は、O を中心とする軸の円と、C を中心とする太い円盤を描けばいい。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">部屋の中で火をつける部品と、混合気の出入り口も必要ですね。どこに置けばいいんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">STAGE6の面積の変化を思い出そう。部屋がいちばん小さくなる場所は、ハウジングの2つの<strong>くびれ</strong>だった。1つの部屋は、上のくびれで小さくなり、次に下のくびれで小さくなる。4行程のうち、小さくなる瞬間は「圧縮の終わり」と「排気の終わり」の2回。だから、<strong>片方のくびれを圧縮の終わり（点火）、もう片方を排気の終わり（吸排気）</strong>に割り当てる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">では点火プラグは、片方のくびれのところに付ける。部屋がいちばん小さくなった瞬間に火花を飛ばせるように、ということですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう。実物では、くびれの部分の部屋は細長く伸びた形になるから、火が端まで届きやすいように<strong>プラグを2本</strong>、少し離して付ける。ローターの進む向きで先にある方を<strong>リーディング</strong>（先行）、後ろの方を<strong>トレーリング</strong>（後行）と呼ぶ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">吸気口と排気口は、反対側のくびれの両脇だ。部屋は排気の行程で小さくなりながらくびれに近づく。だから、回転の向きで見て<strong>くびれの手前に排気口</strong>を開けておけば、燃えかすが押し出される。くびれを過ぎると部屋は大きくなり始めるから、<strong>くびれの先に吸気口</strong>を開けておけば、新しい混合気が吸い込まれる。排気口はハウジングの壁そのものに穴を開け（ペリフェラルポート）、吸気口は横のふたに開ける（サイドポート）ことが多い。図では、排気口を壁の切れ目、吸気口を壁ぎわの楕円で描こう。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ローターが反時計回りに回るなら、部屋は右→上→左→下→右の順に動きます。上のくびれで点火するなら、下のくびれの手前は左下、先は右下。だから<strong>排気口は左下、吸気口は右下</strong>、ということですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。これで、式で決まる部品は全部そろった。ここから先は、自分の寸法で描いてみる番だよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="tool-grid">
+          <div class="cv-wrap"><canvas id="cv7" role="img" aria-label="自分で選んだ偏心量 e と創成半径 R で描いたロータリーエンジンの完成図。ハウジング、ローター、歯車、偏心軸、点火プラグ、吸気口、排気口が描かれ、再生すると回転する"></canvas></div>
+          <div class="tool-panel">
+            <h3>寸法（mm）</h3>
+            <label>偏心量 e <input type="number" id="e7" min="1" max="60" value="15" step="0.5"></label>
+            <label>創成半径 R <input type="number" id="r7" min="5" max="400" value="105" step="0.5"></label>
+            <label>幅 b <input type="number" id="b7" min="1" max="400" value="80" step="1"></label>
+            <label>軸の角度 α <output id="al7o">60°</output></label>
+            <input type="range" id="al7" min="0" max="1080" value="60" step="1" aria-label="軸の角度 α">
+            <h3 style="margin-top:8px">表示</h3>
+            <label class="chk"><input type="checkbox" id="c7gear" checked> 歯車（点線）</label>
+            <label class="chk"><input type="checkbox" id="c7ch" checked> 部屋の色分け</label>
+            <label class="chk"><input type="checkbox" id="c7port" checked> プラグ・吸排気口</label>
+            <label class="chk"><input type="checkbox" id="c7dim"> 寸法線</label>
+            <div class="tool-calc" id="calc7"></div>
+          </div>
+        </div>
+        <div class="sim-controls">
+          <button class="btn" type="button" id="preset13b">13B の寸法に戻す</button>
+          <button class="sim-play" id="play7" type="button" aria-pressed="false">▶ 動かす</button>
+          <button class="btn btn-primary" type="button" id="dl7">⬇ SVG で保存</button>
+        </div>
+        <div class="diagram-caption">e と R を変えると、ハウジング・ローター・歯車・部屋がすべて式から描き直される。K＝R/e が 3 以下だとハウジングにループができて成立しない。「SVG で保存」で、寸法どおり（mm 単位）のベクター図がダウンロードできる。プラグ（⚡）は上のくびれ、排気口（EX）は左下、吸気口（IN）は右下</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">e と R の2つを決めるだけで、本当に全部の形が出てきました。作図の手順を、最初から通しで整理してもいいですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ぜひそうしよう。旅の地図として、手順をまとめておくよ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box" style="padding-top:12px">
+        <span class="step"><strong>【ロータリーエンジン作図の手順書】</strong> 決める数は e（偏心量）と R（創成半径）の2つ。実機は K＝R/e が 6〜8（13B：e＝15、R＝105、幅 b＝80）</span>
+      </div>
+      <ol class="recipe">
+        <li><strong>ハウジング</strong>：θ を 0°→360° と動かして点 (R cos θ＋e cos 3θ, R sin θ＋e sin 3θ) を打ち、なめらかに結ぶ。O からの距離は最大 R＋e、最小 R−e（くびれ）</li>
+        <li><strong>ローターの中心と頂点</strong>：軸の角度 α を決め、C＝(e cos α, e sin α)。頂点は C から距離 R、向き α/3＋120°k（k＝0, 1, 2）</li>
+        <li><strong>ローターの辺</strong>：辺の中点を C から R−2e の位置にとり、2頂点と中点を通る半径 ρ＝(h²＋s²)/(2s) の円弧を描く（h＝R√3/2、s＝R/2−2e）</li>
+        <li><strong>歯車と偏心軸</strong>：O 中心・半径 2e の固定歯車、C 中心・半径 3e のローター歯車を点線で。O に軸の円、C に偏心円盤</li>
+        <li><strong>点火プラグ</strong>：片方のくびれ（O から R−e）の壁に2本（リーディング／トレーリング）</li>
+        <li><strong>吸排気口</strong>：反対側のくびれの、回転の向きで手前に排気口、先に吸気口</li>
+        <li><strong>確かめ</strong>：α を進めて、頂点が壁をなぞり、辺が壁からはみ出さず、3つの部屋が順に大きさを変えることを見る。排気量＝3√3·e·R·b</li>
+      </ol>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">最初に「近似」と断っていましたが、実物と違うところを、まとめて教えてください。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">主なものは3つだ。1つめ、実物のハウジングの壁は、頂点の軌跡そのものではなく、アペックスシールの厚みのぶんだけ<strong>外側に平行にずらした曲線</strong>になっている。2つめ、ローターの辺は包絡線に近い曲線で、しかも<strong>燃焼室のくぼみ</strong>が掘ってある。だから圧縮比は今日の計算より低い。3つめ、実物の歯車には歯があり、軸には軸受けや冷却の通り道があって、図はもっと込み入っている。でも、<strong>形の骨格はすべて今日の式のとおり</strong>だ。式が分かっていれば、そういう補正は「骨格に肉を付ける」だけの話になる。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">これで旅は終わりだ。おむすびがなぜ回るのか、なぜあの繭形なのか、その形をどう決めればいいのか。全部、cos と sin と三平方の定理で説明できた。お疲れさま。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果】</span>
+        <span class="step">歯車：固定歯車（O、半径 2e）とローター歯車（C、半径 3e）を点線で重ねる。偏心軸：O の軸円と C の偏心円盤</span>
+        <span class="step">点火プラグ：部屋がいちばん小さくなる側のくびれに2本（リーディング／トレーリング）</span>
+        <span class="step">吸排気口：反対側のくびれの、回転の向きで手前が排気口（壁の穴）、先が吸気口（横ぶたの穴）</span>
+        <span class="step">近似で省いたもの：アペックスシールの厚みぶんの平行曲線、ローターの辺のくぼみ、歯・軸受け・冷却路などの細部</span>
+      </div>
+
+      <h2 class="quiz-head">確認クイズ</h2>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 点火プラグは、ハウジングのどこに付ける？</p>
+        <div class="choice-list">
+          <button class="choice-btn">部屋がいちばん大きくなる、ふくらみの先端</button>
+          <button class="choice-btn">部屋がいちばん小さくなる、くびれの側</button>
+          <button class="choice-btn">ローターの中心の真上</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 圧縮の終わりに部屋がいちばん小さくなるのはくびれの場所。細長い部屋の端まで火が届くように、リーディングとトレーリングの2本を付ける。</div>
+      </div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 回転の向きに沿って見たとき、吸気口・排気口・くびれの並びは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">排気口 → くびれ → 吸気口</button>
+          <button class="choice-btn">吸気口 → くびれ → 排気口</button>
+          <button class="choice-btn">どちらもふくらみの先端</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 部屋は小さくなりながらくびれに近づくので、手前に排気口。くびれを過ぎて大きくなり始めるところに吸気口。</div>
+      </div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. この旅の作図で「近似」として省いたものは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">ハウジングの式そのもの</button>
+          <button class="choice-btn">ローターの頂点の数</button>
+          <button class="choice-btn">アペックスシールの厚みぶんの平行移動や、ローターの辺のくぼみ</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 骨格（ペリトロコイド、頂点、辺の膨らみ、歯車の半径）は式のとおり。実物はそこに、シールの厚みぶんの平行曲線、燃焼室のくぼみ、軸受けや冷却路といった肉付けが加わる。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage6.html">← 前のステージへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>クリア画面へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script src="js/rotary.js"></script>
+<script>RQ.initStagePage(7);</script>
+<script>
+
+(function(){
+  var e=15,R=105,b=80,alpha=60,st,C=RE.C;
+  var opt={gear:true,ch:true,port:true,dim:false};
+  function K(){return R/e;}
+  function ok(){return e>0&&R>0&&K()>3;}
+  function portGeom(){ // くびれ：上 (0,R−e) にプラグ、下にポート。ハウジング上の点は θ で指定
+    var f=function(th){return RE.housingPoint(e,R,th);};
+    return { plugL:f(RE.rad(98)), plugT:f(RE.rad(82)), ex0:RE.rad(228), ex1:RE.rad(246), inA:f(RE.rad(300)) };
+  }
+  function drawExtras(ctx,v){
+    var g=portGeom();
+    // 排気口：壁の切れ目（白で壁を消し、外へ短い管）
+    var pts=[]; for(var i=0;i<=12;i++){pts.push(RE.housingPoint(e,R,g.ex0+(g.ex1-g.ex0)*i/12));}
+    RE.path(ctx,v,pts,false); RE.stroke(ctx,'#fff',6);
+    var m=RE.housingPoint(e,R,(g.ex0+g.ex1)/2), rr=Math.sqrt(m.x*m.x+m.y*m.y), u={x:m.x/rr,y:m.y/rr};
+    var a0=pts[0],a1=pts[pts.length-1], q0={x:a0.x+u.x*e*1.6,y:a0.y+u.y*e*1.6}, q1={x:a1.x+u.x*e*1.6,y:a1.y+u.y*e*1.6};
+    RE.line(ctx,v,a0,q0,C.housing,2); RE.line(ctx,v,a1,q1,C.housing,2);
+    RE.label(ctx,v,{x:m.x+u.x*e*2.6,y:m.y+u.y*e*2.6},'EX 排気口',C.ink,0,0,10.5,900);
+    // 吸気口：横ぶたの楕円（壁ぎわ）
+    var ia=g.inA, ir=Math.sqrt(ia.x*ia.x+ia.y*ia.y), iu={x:ia.x/ir,y:ia.y/ir}, ic={x:ia.x-iu.x*e*0.9,y:ia.y-iu.y*e*0.9};
+    var qc=v.P(ic); ctx.save(); ctx.translate(qc.x,qc.y); ctx.rotate(-Math.atan2(iu.y,iu.x)); ctx.beginPath(); ctx.ellipse(0,0,e*0.55*v.s,e*1.3*v.s,0,0,RE.TAU); ctx.fillStyle='rgba(47,158,92,.25)'; ctx.fill(); ctx.strokeStyle=C.ok; ctx.lineWidth=1.6; ctx.stroke(); ctx.restore();
+    RE.label(ctx,v,{x:ia.x+iu.x*e*1.4,y:ia.y+iu.y*e*1.4},'IN 吸気口',C.ok,0,0,10.5,900);
+    // プラグ
+    [g.plugL,g.plugT].forEach(function(p,i){var r=Math.sqrt(p.x*p.x+p.y*p.y),uu={x:p.x/r,y:p.y/r}; var o={x:p.x+uu.x*e*1.3,y:p.y+uu.y*e*1.3}; RE.line(ctx,v,p,o,C.gold,3); RE.dot(ctx,v,o,4,C.gold); RE.label(ctx,v,o,i===0?'⚡L':'⚡T',C.gold,i===0?-14:14,-4,10.5,900);});
+    RE.label(ctx,v,{x:0,y:R-e},'点火プラグ',C.gold,0,-40,10.5,900);
+  }
+  function drawDims(ctx,v){
+    var a=RE.rad(alpha), c=RE.rotorCenter(e,a), p0=RE.apex(e,R,a,0);
+    RE.line(ctx,v,{x:0,y:0},c,C.ecc,1.6); RE.label(ctx,v,{x:c.x/2,y:c.y/2},'e='+e,C.ecc,10,-8,11,900,'left');
+    RE.line(ctx,v,c,p0,C.rotor,1.6,[5,4]); RE.label(ctx,v,{x:(c.x+p0.x)/2,y:(c.y+p0.y)/2},'R='+R,C.rotor,10,-8,11,900,'left');
+    RE.line(ctx,v,{x:-(R+e),y:-(R+e)-8},{x:R+e,y:-(R+e)-8},C.muted,1); RE.label(ctx,v,{x:0,y:-(R+e)-8},'2(R＋e)＝'+(2*(R+e)),C.muted,0,10,10.5,800);
+    RE.line(ctx,v,{x:R+e+8,y:-(R-e)},{x:R+e+8,y:R-e},C.muted,1); RE.label(ctx,v,{x:R+e+8,y:0},'2(R−e)＝'+(2*(R-e)),C.muted,6,0,10.5,800,'left');
+  }
+  function draw(st){
+    var ctx=st.ctx,W=st.W,H=st.H; ctx.clearRect(0,0,W,H); ctx.fillStyle=C.paper; ctx.fillRect(0,0,W,H);
+    if(!ok()){ RE.text(ctx,W/2,H/2,'K＝R/e が 3 より大きくなるように e と R を決めてください',C.ng,13,900); return; }
+    var v=RE.view(st, 2*(R+e)*1.3, 0, 0, W*0.5, H*0.5), a=RE.rad(alpha);
+    RE.drawEngine(ctx,v,e,R,a,{chambers:opt.ch,gears:opt.gear});
+    if(opt.port) drawExtras(ctx,v);
+    if(opt.dim) drawDims(ctx,v);
+    RE.text(ctx,10,14,'e='+e+'  R='+R+'  K='+RE.fmt(K(),2)+'  α='+Math.round(alpha)+'°',C.ink,12,900,'left');
+  }
+  function calc(){
+    var el=document.getElementById('calc7'); if(!el) return;
+    if(!ok()){ el.innerHTML='<span class="tool-warn">K＝R/e が 3 以下：ハウジングにループができて成立しません</span>'; return; }
+    var dm=R-2*e, arc=RE.flankArc(R,dm), h=R*Math.sqrt(3)/2;
+    var vd=3*Math.sqrt(3)*e*R*b/1000;
+    el.innerHTML='K＝R/e＝<b>'+RE.fmt(K(),2)+'</b>'+(K()<6||K()>8?' <span class="tool-warn">（実機は 6〜8）</span>':'')+'<br>くびれ R−e＝<b>'+RE.fmt(R-e,1)+'</b>、最大 R＋e＝<b>'+RE.fmt(R+e,1)+'</b><br>辺の中点 R−2e＝<b>'+RE.fmt(dm,1)+'</b><br>矢高 s＝<b>'+RE.fmt(arc.s,1)+'</b>、h＝<b>'+RE.fmt(h,1)+'</b><br>円弧半径 ρ＝<b>'+(isFinite(arc.rho)?RE.fmt(arc.rho,1):'∞')+'</b><br>歯車 2e＝<b>'+RE.fmt(2*e,1)+'</b>、3e＝<b>'+RE.fmt(3*e,1)+'</b><br>排気量 3√3eRb＝<b>'+RE.fmt(vd,1)+'</b> cm³';
+  }
+  st=RE.canvas('cv7',1,draw); if(!st) return;
+  function num(id,fn){var el=document.getElementById(id); el.addEventListener('input',function(){var x=parseFloat(el.value); if(!isNaN(x)&&x>0){fn(x); calc(); st.redraw();}}); return el;}
+  var eEl=num('e7',function(x){e=x;}), rEl=num('r7',function(x){R=x;}), bEl=num('b7',function(x){b=x;});
+  var alEl=RE.bindRange('al7','al7o',function(x){return x+'°';},function(x){alpha=x;st.redraw();});
+  ['gear','ch','port','dim'].forEach(function(k){var cb=document.getElementById('c7'+k); cb.addEventListener('change',function(){opt[k]=cb.checked; st.redraw();});});
+  document.getElementById('preset13b').addEventListener('click',function(){e=15;R=105;b=80;eEl.value=15;rEl.value=105;bEl.value=80;calc();st.redraw();});
+  RE.player(document.getElementById('play7'),function(dt){alpha=(alpha+dt*90)%1080;alEl.value=Math.round(alpha);document.getElementById('al7o').textContent=Math.round(alpha)+'°';st.redraw();});
+  document.getElementById('dl7').addEventListener('click',function(){
+    if(!ok()) return;
+    var g=portGeom(), ex=[];
+    function P(p){return RE.fmt(p.x,2)+','+RE.fmt(-p.y,2);}
+    if(opt.port){
+      var pts=[]; for(var i=0;i<=12;i++){pts.push(RE.housingPoint(e,R,g.ex0+(g.ex1-g.ex0)*i/12));}
+      ex.push('<polyline points="'+pts.map(P).join(' ')+'" fill="none" stroke="#fff" stroke-width="3"/>');
+      var m=RE.housingPoint(e,R,(g.ex0+g.ex1)/2), rr=Math.sqrt(m.x*m.x+m.y*m.y), u={x:m.x/rr,y:m.y/rr};
+      [pts[0],pts[12]].forEach(function(q){ex.push('<line x1="'+RE.fmt(q.x,2)+'" y1="'+RE.fmt(-q.y,2)+'" x2="'+RE.fmt(q.x+u.x*e*1.6,2)+'" y2="'+RE.fmt(-(q.y+u.y*e*1.6),2)+'" stroke="#1b232c" stroke-width="1.2"/>');});
+      ex.push('<text x="'+RE.fmt(m.x+u.x*e*2.8,2)+'" y="'+RE.fmt(-(m.y+u.y*e*2.8),2)+'" font-size="'+RE.fmt(e*0.6,1)+'" text-anchor="middle" fill="#1b232c" font-family="sans-serif">EX</text>');
+      var ia=g.inA, ir=Math.sqrt(ia.x*ia.x+ia.y*ia.y), iu={x:ia.x/ir,y:ia.y/ir}, ic={x:ia.x-iu.x*e*0.9,y:ia.y-iu.y*e*0.9};
+      ex.push('<ellipse cx="'+RE.fmt(ic.x,2)+'" cy="'+RE.fmt(-ic.y,2)+'" rx="'+RE.fmt(e*0.55,2)+'" ry="'+RE.fmt(e*1.3,2)+'" transform="rotate('+RE.fmt(-RE.deg(Math.atan2(iu.y,iu.x)),1)+' '+RE.fmt(ic.x,2)+' '+RE.fmt(-ic.y,2)+')" fill="rgba(47,158,92,.25)" stroke="#2f9e5c" stroke-width=".8"/>');
+      ex.push('<text x="'+RE.fmt(ia.x+iu.x*e*1.8,2)+'" y="'+RE.fmt(-(ia.y+iu.y*e*1.8),2)+'" font-size="'+RE.fmt(e*0.6,1)+'" text-anchor="middle" fill="#2f9e5c" font-family="sans-serif">IN</text>');
+      [g.plugL,g.plugT].forEach(function(p){var r=Math.sqrt(p.x*p.x+p.y*p.y),uu={x:p.x/r,y:p.y/r}; var o={x:p.x+uu.x*e*1.3,y:p.y+uu.y*e*1.3}; ex.push('<line x1="'+RE.fmt(p.x,2)+'" y1="'+RE.fmt(-p.y,2)+'" x2="'+RE.fmt(o.x,2)+'" y2="'+RE.fmt(-o.y,2)+'" stroke="#9a6a1c" stroke-width="1.6"/><circle cx="'+RE.fmt(o.x,2)+'" cy="'+RE.fmt(-o.y,2)+'" r="'+RE.fmt(e*0.2,2)+'" fill="#9a6a1c"/>');});
+    }
+    ex.push('<text x="0" y="'+RE.fmt(R+e+e*0.9,2)+'" font-size="'+RE.fmt(e*0.5,1)+'" text-anchor="middle" fill="#6a7684" font-family="sans-serif">e='+e+' R='+R+' b='+b+' (mm)  ハウジング: x=R cosθ+e cos3θ, y=R sinθ+e sin3θ</text>');
+    var svg=RE.toSvg(e,R,RE.rad(alpha),{chambers:opt.ch,gears:opt.gear,extras:ex.join('\n')});
+    var blob=new Blob([svg],{type:'image/svg+xml'}), url=URL.createObjectURL(blob), a=document.createElement('a');
+    a.href=url; a.download='rotary-engine_e'+e+'_R'+R+'.svg'; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(function(){URL.revokeObjectURL(url);},1000);
+  });
+  calc();
+})();
+
+</script>
+</body>
+</html>
