@@ -13,7 +13,7 @@
   gtag('config', 'G-9RTQCP2HXM');
 </script>
 <title>STAGE1 おむすびは、なぜ回る ― ロータリーエンジン、作図の書</title>
-<meta name="description" content="ロータリーエンジンは、三角おむすび形のローターが繭形のハウジングの中で回るエンジン。その形を定規やコンパスではなく「式」で描くための最初の道具として、点を数の組（座標）で表す考え方と、角度から座標を取り出す cos・sin を中学生向けに導入し、円を式で描く練習をする。">
+<meta name="description" content="ロータリーエンジンは、三角おむすび形のローターが繭形のハウジングの中で回るエンジン。その形を定規やコンパスではなく「式」で描くための最初の道具として、点を数の組（座標）で表す考え方と、角度から座標を取り出す cos・sin（複素数の極形式で学んだもの）を思い出して、円を式で描く練習をする。">
 <link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage1">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ロータリーエンジン、作図の書">
@@ -165,21 +165,21 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いい質問だね。<strong>角度</strong>を使うんだ。中心から真横（右向き）に線を引いて、そこから反時計回りに何度回ったところか、で円の上の点を指定する。この角度を θ（シータ）と呼ぼう。角度が決まれば点は1つに決まる。あとは「角度 θ から座標 (x, y) を取り出す道具」があればいい。それが <strong>cos（コサイン）</strong>と <strong>sin（サイン）</strong>だ。名前は難しそうだけれど、中身はただの<strong>「角度→座標」の対応表</strong>だよ。</div>
+          <div class="dialog-bubble">いい質問だね。<strong>角度</strong>を使うんだ。中心から真横（右向き）に線を引いて、そこから反時計回りに何度回ったところか、で円の上の点を指定する。この角度を θ（シータ）と呼ぼう。角度が決まれば点は1つに決まる。あとは「角度 θ から座標 (x, y) を取り出す道具」があればいい。じつは、その道具にはもう出会っているはずだよ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">名前は聞いたことがありますが、何を計算するものなのかは知りません。角度から座標を取り出すというのは、具体的にはどうするんですか？</div>
+          <div class="dialog-bubble">あ、思い出しました。<a href="https://complex-number.habatakijuku.com/stage5" target="_blank" rel="noopener" style="color:var(--gold-dark);text-decoration:underline">『本当はおもしろい複素数の世界』</a>の極形式の回で、<strong>cos</strong> と <strong>sin</strong> を教わりました。角度 θ の方角へ長さ1だけ進んだとき、横にどれだけ進んだかが cos θ、縦にどれだけ進んだかが sin θ。進む長さが r なら、全部 r 倍して横に r cos θ、縦に r sin θ でした。だから、原点を中心とする半径 r の円の上で角度 θ の点は <strong>(r cos θ, r sin θ)</strong> と書ける、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">定義はこうだ。<strong>半径1の円</strong>を描いて、角度 θ のところにある点を見る。その点の<strong>横座標を cos θ、縦座標を sin θ</strong> と呼ぶ。それだけなんだ。たとえば θ＝0° なら点は真横の (1, 0) にあるから、cos 0°＝1、sin 0°＝0。θ＝90° なら点は真上の (0, 1) だから、cos 90°＝0、sin 90°＝1。</div>
+          <div class="dialog-bubble">よく覚えていたね。その通りだ。この旅では円の言葉で言い直しておこう。<strong>半径1の円</strong>の上で、角度 θ の点の<strong>横座標が cos θ、縦座標が sin θ</strong>。たとえば θ＝0° なら点は真横の (1, 0) にあるから、cos 0°＝1、sin 0°＝0。θ＝90° なら点は真上の (0, 1) だから、cos 90°＝0、sin 90°＝1。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -193,21 +193,21 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そう。cos や sin の値は、そうやって図形から求められる角度もあるし、そうでない角度は電卓やコンピュータが計算してくれる。大事なのは意味のほうだよ。それから、いま使った三平方の定理は、どの角度でも成り立つ。半径1の円の上の点だから、<strong>(cos θ)²＋(sin θ)²＝1</strong>。この関係はあとで何度も使う。もう一つ、半径が1ではなく r の円でも、話は同じだ。半径1の円をそっくり r 倍に拡大したものだから、<strong>座標も r 倍</strong>になる。</div>
+          <div class="dialog-bubble">そう。cos や sin の値は、そうやって図形から求められる角度もあるし、そうでない角度は電卓やコンピュータが計算してくれる。大事なのは意味のほうだよ。それから、いま使った三平方の定理は、どの角度でも成り立つ。半径1の円の上の点だから、<strong>(cos θ)²＋(sin θ)²＝1</strong>。この関係はあとで何度も使う。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">では、半径 r の円の上で角度 θ の点は <strong>(r cos θ, r sin θ)</strong>。θ を変えれば、この点が円の上を動いていく、ということですか？</div>
+          <div class="dialog-bubble">すると「式で円を描く」というのは、θ を 0° から 360° まで少しずつ変えながら、点 (r cos θ, r sin θ) を次々に打っていくこと、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">その通り。それが「円を式で描く」の全部だ。θ を 0° から 360° まで少しずつ動かしながら、点 (r cos θ, r sin θ) を打っていけば円になる。このように、動かす数（ここでは θ）のことを<strong>媒介変数（ばいかいへんすう）</strong>、あるいはパラメータという。旅の間じゅう、この「パラメータを動かして点を打つ」やり方で形を描いていくよ。</div>
+          <div class="dialog-bubble">その通り。それが「円を式で描く」の全部だ。このように、動かす数（ここでは θ）のことを<strong>媒介変数（ばいかいへんすう）</strong>、あるいはパラメータという。旅の間じゅう、この「パラメータを動かして点を打つ」やり方で形を描いていくよ。</div>
         </div>
       </div>
 
