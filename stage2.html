@@ -405,7 +405,7 @@
   slX.addEventListener('input', function(){ slXv.textContent = slX.value+'%'; draw(); });
   var dragging=false, lx=0, ly=0;
   function down(ev){ dragging=true; var p = ev.touches ? ev.touches[0] : ev; lx=p.clientX; ly=p.clientY; if (ev.cancelable) ev.preventDefault(); }
-  function move(ev){ if(!dragging) return; var p = ev.touches ? ev.touches[0] : ev; yaw -= (p.clientX-lx)*0.01; pitch -= (p.clientY-ly)*0.01; if(pitch>1.5)pitch=1.5; if(pitch<-1.5)pitch=-1.5; lx=p.clientX; ly=p.clientY; draw(); if (ev.cancelable) ev.preventDefault(); }
+  function move(ev){ if(!dragging) return; var p = ev.touches ? ev.touches[0] : ev; yaw += (p.clientX-lx)*0.01; pitch += (p.clientY-ly)*0.01; if(pitch>1.5)pitch=1.5; if(pitch<-1.5)pitch=-1.5; lx=p.clientX; ly=p.clientY; draw(); if (ev.cancelable) ev.preventDefault(); }
   function up(){ dragging=false; }
   cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
   cv.addEventListener('touchstart', down, {passive:false}); cv.addEventListener('touchmove', move, {passive:false}); window.addEventListener('touchend', up);
