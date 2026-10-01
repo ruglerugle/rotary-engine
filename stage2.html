@@ -28,6 +28,20 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
+  .ecc-svg .ttl{fill:#1b232c;font-size:12px;font-weight:900}
+  .ecc-svg .lb{fill:var(--muted);font-size:10.5px;font-weight:800}
+  .ecc-svg .lbO{fill:#9a6a1c;font-size:10.5px;font-weight:900}
+  .ecc-svg .lbC{fill:#c8433f;font-size:10.5px;font-weight:900}
+  .ecc-svg .lbE{fill:#c8433f;font-size:12px;font-weight:900}
+  .ecc-svg .rotorS{fill:#dbe6f1;stroke:#3d5f88;stroke-width:1.5;stroke-dasharray:4 3}
+  .ecc-svg .shaft{fill:#f1dfae;stroke:#9a6a1c;stroke-width:1.5}
+  .ecc-svg .disc{fill:#f6d1cc;stroke:#c8433f;stroke-width:1.5}
+  .ecc-svg .axisO{stroke:#9a6a1c;stroke-width:1;stroke-dasharray:5 3}
+  .ecc-svg .axisC{stroke:#c8433f;stroke-width:1;stroke-dasharray:5 3}
+  .ecc-svg .dotO{fill:#9a6a1c}
+  .ecc-svg .dotC{fill:#c8433f}
+  .ecc-svg .dim{stroke:#c8433f;stroke-width:1.6}
+
   .sim-controls{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
   .sim-controls .btn{font-size:12.5px;padding:.45rem .8rem}
   .sim-controls .btn[aria-pressed="true"]{background:linear-gradient(#7a9cc4,#3d5f88);border-color:#2d4a6e;color:#fff}
@@ -94,6 +108,34 @@
           </div>
           <div class="dialog-bubble">今日は偏心軸の話だ。ロータリーエンジンの出力軸（回転を外へ取り出す軸）の中心を <strong>O</strong> と呼ぼう。ローターは、この軸にただ刺さっているのではない。軸の途中に、<strong>中心をずらした太い円盤</strong>が付いていて、ローターはその円盤にはめ込まれている。だからローターの中心 <strong>C</strong> は、軸の中心 O から少し離れたところにある。この <strong>O と C の距離を偏心量（へんしんりょう）</strong>といい、記号 <strong>e</strong> で表す。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="ecc-svg" viewBox="0 0 470 240" width="100%" role="img" aria-label="偏心軸の図解。左は横から見た図で、まっすぐな出力軸の途中に、中心を上にずらした太い円盤（偏心円盤）が付いていて、ローターがそれにはめ込まれている。右は軸の方向から見た図で、軸の中心 O と円盤の中心 C が偏心量 e だけずれている">
+          <text class="ttl" x="112" y="16" text-anchor="middle">横から見る</text>
+          <text class="ttl" x="352" y="16" text-anchor="middle">軸の方向から見る</text>
+          <!-- 左：側面図 -->
+          <rect class="rotorS" x="72" y="28" width="80" height="140" rx="4"></rect>
+          <text class="lb" x="112" y="190" text-anchor="middle">ローター（断面）</text>
+          <rect class="shaft" x="14" y="104" width="196" height="20" rx="3"></rect>
+          <rect class="disc" x="82" y="60" width="60" height="76" rx="4"></rect>
+          <line class="axisO" x1="6" y1="114" x2="218" y2="114"></line>
+          <line class="axisC" x1="52" y1="98" x2="178" y2="98"></line>
+          <text class="lbO" x="22" y="134" text-anchor="start">出力軸</text>
+          <text class="lbC" x="112" y="50" text-anchor="middle">偏心円盤</text>
+          <circle class="dotO" cx="190" cy="114" r="2.6"></circle>
+          <circle class="dotC" cx="48" cy="98" r="2.6"></circle>
+          <text class="lbO" x="196" y="110" text-anchor="start">O の軸</text>
+          <text class="lbC" x="44" y="94" text-anchor="end">C の軸</text>
+          <path class="dim" d="M160 98 V114 M156 98 H164 M156 114 H164"></path>
+          <text class="lbE" x="170" y="109" text-anchor="start">e</text>
+          <!-- 右：正面図 -->
+          <g id="ecc-front"></g>
+        </svg>
+        <div class="diagram-caption">左：横から見た偏心軸。まっすぐな<strong>出力軸</strong>（金色）の途中に、中心を少しずらした太い<strong>偏心円盤</strong>（赤）が付いていて、ローター（青）はこの円盤にはめ込まれて回る。右：軸の方向から見た図。出力軸の中心 <strong>O</strong> と円盤の中心（＝ローターの中心）<strong>C</strong> のずれが<strong>偏心量 e</strong>。図では分かりやすいように e を実物より大きめに描いている</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -270,6 +312,25 @@
 <script src="js/rotary.js"></script>
 <script>RQ.initStagePage(2);</script>
 <script>
+/* 偏心軸の正面図（SVG）：e は見やすいように実物より大きめ */
+(function(){
+  var g=document.getElementById('ecc-front'); if(!g) return;
+  var NS='http://www.w3.org/2000/svg', e=28, R=105, a=RE.rad(40), cx=352, cy=122, sc=0.74;
+  function P(p){return (cx+p.x*sc).toFixed(1)+','+(cy-p.y*sc).toFixed(1);}
+  function el(n,attrs){var x=document.createElementNS(NS,n);for(var k in attrs)x.setAttribute(k,attrs[k]);g.appendChild(x);return x;}
+  function txt(x,y,t,cls,anchor){var x2=el('text',{x:x,y:y,'class':cls,'text-anchor':anchor||'middle'});x2.textContent=t;}
+  var c=RE.rotorCenter(e,a);
+  el('polygon',{points:RE.rotorOutline(e,R,a,null,40).map(P).join(' '),fill:'#dbe6f1',stroke:'#3d5f88','stroke-width':1.5,'stroke-dasharray':'4 3'});
+  el('circle',{cx:cx+c.x*sc,cy:cy-c.y*sc,r:1.7*e*sc,fill:'#f6d1cc',stroke:'#c8433f','stroke-width':1.5});
+  el('circle',{cx:cx,cy:cy,r:0.8*e*sc,fill:'#f1dfae',stroke:'#9a6a1c','stroke-width':1.5});
+  el('line',{x1:cx,y1:cy,x2:cx+c.x*sc,y2:cy-c.y*sc,stroke:'#c8433f','stroke-width':1.8});
+  el('circle',{cx:cx,cy:cy,r:3,fill:'#9a6a1c'}); el('circle',{cx:cx+c.x*sc,cy:cy-c.y*sc,r:3,fill:'#c8433f'});
+  txt(cx-6,cy+15,'O','lbO','end'); txt(cx+c.x*sc+10,cy-c.y*sc-6,'C','lbC');
+  txt(cx+c.x*sc/2-9,cy-c.y*sc/2-6,'e','lbE');
+  txt(cx+c.x*sc+1.7*e*sc+4,cy-c.y*sc+22,'偏心円盤','lbC','start');
+  txt(cx-0.8*e*sc-4,cy+28,'出力軸','lbO','end');
+  txt(cx,cy+R*sc+14,'ローター','lb');
+})();
 
 (function(){
   var alpha=40, e=15, R=105, showTri=false, st, C=RE.C;
