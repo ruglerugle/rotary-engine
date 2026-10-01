@@ -28,19 +28,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
-  .ecc-svg .ttl{fill:#1b232c;font-size:12px;font-weight:900}
-  .ecc-svg .lb{fill:var(--muted);font-size:10.5px;font-weight:800}
-  .ecc-svg .lbO{fill:#9a6a1c;font-size:10.5px;font-weight:900}
-  .ecc-svg .lbC{fill:#c8433f;font-size:10.5px;font-weight:900}
-  .ecc-svg .lbE{fill:#c8433f;font-size:12px;font-weight:900}
-  .ecc-svg .rotorS{fill:#dbe6f1;stroke:#3d5f88;stroke-width:1.5;stroke-dasharray:4 3}
-  .ecc-svg .shaft{fill:#f1dfae;stroke:#9a6a1c;stroke-width:1.5}
-  .ecc-svg .disc{fill:#f6d1cc;stroke:#c8433f;stroke-width:1.5}
-  .ecc-svg .axisO{stroke:#9a6a1c;stroke-width:1;stroke-dasharray:5 3}
-  .ecc-svg .axisC{stroke:#c8433f;stroke-width:1;stroke-dasharray:5 3}
-  .ecc-svg .dotO{fill:#9a6a1c}
-  .ecc-svg .dotC{fill:#c8433f}
-  .ecc-svg .dim{stroke:#c8433f;stroke-width:1.6}
+  #ecc3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
 
   .sim-controls{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
   .sim-controls .btn{font-size:12.5px;padding:.45rem .8rem}
@@ -111,28 +99,13 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="ecc-svg" viewBox="0 0 470 240" width="100%" role="img" aria-label="偏心軸の図解。左は横から見た図で、まっすぐな出力軸の途中に、中心を上にずらした太い円盤（偏心円盤）が付いていて、ローターがそれにはめ込まれている。右は軸の方向から見た図で、軸の中心 O と円盤の中心 C が偏心量 e だけずれている">
-          <text class="ttl" x="112" y="16" text-anchor="middle">横から見る</text>
-          <text class="ttl" x="352" y="16" text-anchor="middle">軸の方向から見る</text>
-          <!-- 左：側面図 -->
-          <rect class="rotorS" x="72" y="28" width="80" height="140" rx="4"></rect>
-          <text class="lb" x="112" y="190" text-anchor="middle">ローター（断面）</text>
-          <rect class="shaft" x="14" y="104" width="196" height="20" rx="3"></rect>
-          <rect class="disc" x="82" y="60" width="60" height="76" rx="4"></rect>
-          <line class="axisO" x1="6" y1="114" x2="218" y2="114"></line>
-          <line class="axisC" x1="52" y1="98" x2="178" y2="98"></line>
-          <text class="lbO" x="22" y="134" text-anchor="start">出力軸</text>
-          <text class="lbC" x="112" y="50" text-anchor="middle">偏心円盤</text>
-          <circle class="dotO" cx="190" cy="114" r="2.6"></circle>
-          <circle class="dotC" cx="48" cy="98" r="2.6"></circle>
-          <text class="lbO" x="196" y="110" text-anchor="start">O の軸</text>
-          <text class="lbC" x="44" y="94" text-anchor="end">C の軸</text>
-          <path class="dim" d="M160 98 V114 M156 98 H164 M156 114 H164"></path>
-          <text class="lbE" x="170" y="109" text-anchor="start">e</text>
-          <!-- 右：正面図 -->
-          <g id="ecc-front"></g>
-        </svg>
-        <div class="diagram-caption">左：横から見た偏心軸。まっすぐな<strong>出力軸</strong>（金色）の途中に、中心を少しずらした太い<strong>偏心円盤</strong>（赤）が付いていて、ローター（青）はこの円盤にはめ込まれて回る。右：軸の方向から見た図。出力軸の中心 <strong>O</strong> と円盤の中心（＝ローターの中心）<strong>C</strong> のずれが<strong>偏心量 e</strong>。図では分かりやすいように e を実物より大きめに描いている</div>
+        <div class="cv-wrap"><canvas id="ecc3d" role="img" aria-label="偏心軸の3D図。まっすぐな出力軸の途中に、中心をずらした太い偏心円盤が付いていて、中央に穴の開いたローターがその円盤にはめ込まれている。分解のスライダーでローターを軸方向に引き抜いて中の円盤を見られる。軸の角度を変えると円盤とローターが回る。ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-controls">
+          <label>軸の角度 α <input type="range" id="ecc-al" min="0" max="360" value="40" step="1"> <output id="ecc-alv">40°</output></label>
+          <label>分解 <input type="range" id="ecc-ex" min="0" max="100" value="70" step="1"> <output id="ecc-exv">70%</output></label>
+          <button class="sim-play" id="ecc-play" type="button" aria-pressed="false">▶ 回す</button>
+        </div>
+        <div class="diagram-caption">偏心軸の3D図（ドラッグで視点を回せる）。まっすぐな<strong>出力軸</strong>（金色）の途中に、中心を少しずらした太い<strong>偏心円盤</strong>（赤）が付いていて、中央に穴の開いた<strong>ローター</strong>（青）はこの円盤にはめ込まれて回る。「分解」を 0% にすると組み立てた状態になる。出力軸の中心 <strong>O</strong> と円盤の中心（＝ローターの中心）<strong>C</strong> のずれが<strong>偏心量 e</strong>。図では分かりやすいように e を実物より大きめに描いている</div>
       </div>
 
       <div class="dialogue-scene">
@@ -312,24 +285,134 @@
 <script src="js/rotary.js"></script>
 <script>RQ.initStagePage(2);</script>
 <script>
-/* 偏心軸の正面図（SVG）：e は見やすいように実物より大きめ */
+/* 偏心軸の3D図：掴んで回せる。出力軸（金）・偏心円盤（赤）・ローター（青、中央に穴）を
+   四角形の面に分けて奥から順に描く（painter's algorithm）。「分解」でローターを軸方向に引き抜く */
 (function(){
-  var g=document.getElementById('ecc-front'); if(!g) return;
-  var NS='http://www.w3.org/2000/svg', e=28, R=105, a=RE.rad(40), cx=352, cy=122, sc=0.74;
-  function P(p){return (cx+p.x*sc).toFixed(1)+','+(cy-p.y*sc).toFixed(1);}
-  function el(n,attrs){var x=document.createElementNS(NS,n);for(var k in attrs)x.setAttribute(k,attrs[k]);g.appendChild(x);return x;}
-  function txt(x,y,t,cls,anchor){var x2=el('text',{x:x,y:y,'class':cls,'text-anchor':anchor||'middle'});x2.textContent=t;}
-  var c=RE.rotorCenter(e,a);
-  el('polygon',{points:RE.rotorOutline(e,R,a,null,40).map(P).join(' '),fill:'#dbe6f1',stroke:'#3d5f88','stroke-width':1.5,'stroke-dasharray':'4 3'});
-  el('circle',{cx:cx+c.x*sc,cy:cy-c.y*sc,r:1.7*e*sc,fill:'#f6d1cc',stroke:'#c8433f','stroke-width':1.5});
-  el('circle',{cx:cx,cy:cy,r:0.8*e*sc,fill:'#f1dfae',stroke:'#9a6a1c','stroke-width':1.5});
-  el('line',{x1:cx,y1:cy,x2:cx+c.x*sc,y2:cy-c.y*sc,stroke:'#c8433f','stroke-width':1.8});
-  el('circle',{cx:cx,cy:cy,r:3,fill:'#9a6a1c'}); el('circle',{cx:cx+c.x*sc,cy:cy-c.y*sc,r:3,fill:'#c8433f'});
-  txt(cx-6,cy+15,'O','lbO','end'); txt(cx+c.x*sc+10,cy-c.y*sc-6,'C','lbC');
-  txt(cx+c.x*sc/2-9,cy-c.y*sc/2-6,'e','lbE');
-  txt(cx+c.x*sc+1.7*e*sc+4,cy-c.y*sc+22,'偏心円盤','lbC','start');
-  txt(cx-0.8*e*sc-4,cy+28,'出力軸','lbO','end');
-  txt(cx,cy+R*sc+14,'ローター','lb');
+  var cv = document.getElementById('ecc3d'); if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var slA = document.getElementById('ecc-al'), slAv = document.getElementById('ecc-alv');
+  var slX = document.getElementById('ecc-ex'), slXv = document.getElementById('ecc-exv');
+  var btn = document.getElementById('ecc-play');
+  var e = 24, R = 105, SH_R = 11, SH_L = 125, DISC_R = 40, DISC_H = 30, ROT_H = 34, HOLE_R = 44;
+  var yaw = 0.75, pitch = -0.45, W = 0, H = 0, sc = 1, cx = 0, cy = 0;
+  var FONT = '900 12px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var SUB = '800 11px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var LIGHT = norm([-0.4, 0.8, 0.6]);
+  function norm(v){ var l=Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2])||1; return [v[0]/l,v[1]/l,v[2]/l]; }
+  /* 3D→画面。z は手前向き（軸方向）。yaw は縦軸まわり、pitch は横軸まわり */
+  function rot(p){
+    var cw=Math.cos(yaw), sw=Math.sin(yaw), cp=Math.cos(pitch), sp=Math.sin(pitch);
+    var x1 = p[0]*cw + p[2]*sw, z1 = -p[0]*sw + p[2]*cw;
+    var y2 = p[1]*cp - z1*sp, z2 = p[1]*sp + z1*cp;
+    return [cx + sc*x1, cy - sc*y2, z2];
+  }
+  function shade(base, n){ // base: [r,g,b]、n: 法線（3D）。回転後の法線で簡易陰影
+    var q = rot([n[0],n[1],n[2]]), o = rot([0,0,0]);
+    var nx=q[0]-o[0], ny=-(q[1]-o[1]), nz=q[2]-o[2]; var l=Math.sqrt(nx*nx+ny*ny+nz*nz)||1;
+    var d = Math.max(0, (nx*LIGHT[0]+ny*LIGHT[1]+nz*LIGHT[2])/l);
+    var k = 0.62 + 0.38*d;
+    return 'rgb(' + Math.round(base[0]*k) + ',' + Math.round(base[1]*k) + ',' + Math.round(base[2]*k) + ')';
+  }
+  var faces = [];
+  function quad(a,b,c,d,base,n,edge){ // 4点（3D）
+    var P=[rot(a),rot(b),rot(c),rot(d)];
+    faces.push({pts:P, z:(P[0][2]+P[1][2]+P[2][2]+P[3][2])/4, fill:shade(base,n), edge:edge});
+  }
+  function polyFace(pts3, base, n, edge, hole3){
+    var P=pts3.map(rot), z=0; P.forEach(function(p){z+=p[2];}); z/=P.length;
+    faces.push({pts:P, z:z, fill:shade(base,n), edge:edge, hole: hole3 ? hole3.map(rot) : null});
+  }
+  // 円柱（中心 c0、半径 r、z0..z1）。cap=両端の面も描く
+  function cylinder(c0, r, z0, z1, base, edge, N){
+    N = N || 36; var i, a0, a1, p00, p01, p10, p11, ring0=[], ring1=[];
+    for (i=0;i<N;i++){
+      a0=2*Math.PI*i/N; a1=2*Math.PI*(i+1)/N;
+      p00=[c0[0]+r*Math.cos(a0), c0[1]+r*Math.sin(a0), z0]; p01=[c0[0]+r*Math.cos(a1), c0[1]+r*Math.sin(a1), z0];
+      p10=[p00[0],p00[1],z1]; p11=[p01[0],p01[1],z1];
+      quad(p00,p01,p11,p10,base,[Math.cos((a0+a1)/2),Math.sin((a0+a1)/2),0],null);
+      ring0.push(p00); ring1.push(p10);
+    }
+    polyFace(ring0, base, [0,0,-1], edge); polyFace(ring1, base, [0,0,1], edge);
+  }
+  // ローター（輪郭 outline2d を z0..z1 に押し出し、中央に半径 HOLE_R の穴）
+  function rotorPrism(center, outline, z0, z1, base, edge){
+    var n=outline.length, i, a, b, N=36, ring0=[], ring1=[], hole0=[], hole1=[];
+    for (i=0;i<n;i++){
+      a=outline[i]; b=outline[(i+1)%n];
+      var nx=b.y-a.y, ny=-(b.x-a.x);
+      quad([a.x,a.y,z0],[b.x,b.y,z0],[b.x,b.y,z1],[a.x,a.y,z1],base,[nx,ny,0],null);
+      ring0.push([a.x,a.y,z0]); ring1.push([a.x,a.y,z1]);
+    }
+    for (i=0;i<N;i++){ // 穴の内壁（法線は内向き）
+      var a0=2*Math.PI*i/N, a1=2*Math.PI*(i+1)/N;
+      var q00=[center[0]+HOLE_R*Math.cos(a0), center[1]+HOLE_R*Math.sin(a0), z0], q01=[center[0]+HOLE_R*Math.cos(a1), center[1]+HOLE_R*Math.sin(a1), z0];
+      quad(q00,q01,[q01[0],q01[1],z1],[q00[0],q00[1],z1],base,[-Math.cos((a0+a1)/2),-Math.sin((a0+a1)/2),0],null);
+      hole0.push(q00); hole1.push([q00[0],q00[1],z1]);
+    }
+    polyFace(ring0, base, [0,0,-1], edge, hole0); polyFace(ring1, base, [0,0,1], edge, hole1);
+  }
+  function pathOf(P){ ctx.beginPath(); for (var i=0;i<P.length;i++){ if(i) ctx.lineTo(P[i][0],P[i][1]); else ctx.moveTo(P[i][0],P[i][1]); } ctx.closePath(); }
+  function text(x,y,s,color,font,align){ ctx.fillStyle=color; ctx.font=font; ctx.textAlign=align||'center'; ctx.textBaseline='middle'; ctx.fillText(s,x,y); }
+
+  function draw(){
+    var al = RE.rad(+slA.value), ex = +slX.value/100, nar = W < 520;
+    ctx.clearRect(0,0,W,H);
+    faces = [];
+    var c = [e*Math.cos(al), e*Math.sin(al)];
+    var GOLD=[241,223,174], RED=[246,209,204], BLUE=[219,230,241];
+    // 出力軸（円盤の手前と奥に分けて描く）
+    cylinder([0,0], SH_R, -SH_L, -DISC_H/2, GOLD, '#9a6a1c', 28);
+    cylinder([0,0], SH_R,  DISC_H/2, SH_L, GOLD, '#9a6a1c', 28);
+    // 偏心円盤
+    cylinder(c, DISC_R, -DISC_H/2, DISC_H/2, RED, '#c8433f', 40);
+    // ローター（分解量 ex で手前に引き出す）
+    var dz = ex * 125;
+    var outline = RE.rotorOutline(e, R, al, null, 24).map(function(p){ return {x:p.x, y:p.y}; });
+    rotorPrism(c, outline, -ROT_H/2 + dz, ROT_H/2 + dz, BLUE, '#3d5f88');
+    // 奥から描く
+    faces.sort(function(a,b){ return a.z - b.z; });
+    faces.forEach(function(f){
+      pathOf(f.pts);
+      if (f.hole){ var P=f.hole; for (var i=0;i<P.length;i++){ if(i) ctx.lineTo(P[i][0],P[i][1]); else ctx.moveTo(P[i][0],P[i][1]); } ctx.closePath(); }
+      ctx.fillStyle = f.fill; ctx.fill('evenodd');
+      ctx.strokeStyle = f.edge || f.fill; ctx.lineWidth = f.edge ? 1.2 : 0.9; ctx.stroke();
+    });
+    // 軸線と O・C・e（円盤の手前の面に描く）
+    var zf = DISC_H/2 + 0.5;
+    var A0 = rot([0,0,-SH_L-18]), A1 = rot([0,0,SH_L+18]);
+    ctx.setLineDash([5,4]); ctx.strokeStyle='#9a6a1c'; ctx.lineWidth=1.2; ctx.beginPath(); ctx.moveTo(A0[0],A0[1]); ctx.lineTo(A1[0],A1[1]); ctx.stroke(); ctx.setLineDash([]);
+    var O = rot([0,0,zf]), Cc = rot([c[0],c[1],zf]);
+    ctx.strokeStyle='#c8433f'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(O[0],O[1]); ctx.lineTo(Cc[0],Cc[1]); ctx.stroke();
+    ctx.fillStyle='#9a6a1c'; ctx.beginPath(); ctx.arc(O[0],O[1],3.5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#c8433f'; ctx.beginPath(); ctx.arc(Cc[0],Cc[1],3.5,0,Math.PI*2); ctx.fill();
+    text(O[0]-9, O[1]+11, 'O', '#9a6a1c', FONT); text(Cc[0]+10, Cc[1]-9, 'C', '#c8433f', FONT);
+    text((O[0]+Cc[0])/2 + 10, (O[1]+Cc[1])/2 + 10, 'e', '#c8433f', FONT);
+    // 部品名
+    var L1 = rot([0, -SH_R-6, SH_L]), L2 = rot([c[0], c[1]+DISC_R+8, 0]), L3 = rot([0, -R+6, dz + ROT_H/2]);
+    text(L1[0], L1[1]+10, '出力軸', '#9a6a1c', SUB); text(L2[0], L2[1]-8, '偏心円盤', '#c8433f', SUB); text(L3[0], L3[1]+12, 'ローター', '#3d5f88', SUB);
+    text(10, 14, nar ? '偏心軸の3D図' : '偏心軸の3D図（ドラッグで視点を回せる）', '#1b232c', FONT, 'left');
+  }
+  function resize(){
+    var w = cv.clientWidth || 320; var h = Math.min(Math.round(w*0.66), 520); var dpr = Math.min(window.devicePixelRatio||1, 2);
+    cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr); cv.style.height = h+'px'; ctx.setTransform(dpr,0,0,dpr,0,0);
+    W = w; H = h; sc = Math.min(w/440, h/310); cx = w/2; cy = h/2; draw();
+  }
+  var playing=false, raf=0, last=0;
+  function loop(now){ if(!playing) return; var dt = last ? Math.min((now-last)/1000, .05) : 0; last = now; var v = (+slA.value + dt*60) % 360; slA.value = v; slAv.textContent = Math.round(v)+'°'; draw(); raf = requestAnimationFrame(loop); }
+  function set(p){ playing=p; last=0; btn.textContent = p ? '⏸ 止める' : '▶ 回す'; btn.setAttribute('aria-pressed', p?'true':'false'); if(p) raf=requestAnimationFrame(loop); else cancelAnimationFrame(raf); }
+  btn.addEventListener('click', function(){ set(!playing); });
+  slA.addEventListener('input', function(){ slAv.textContent = Math.round(+slA.value)+'°'; draw(); });
+  slX.addEventListener('input', function(){ slXv.textContent = slX.value+'%'; draw(); });
+  var dragging=false, lx=0, ly=0;
+  function down(ev){ dragging=true; var p = ev.touches ? ev.touches[0] : ev; lx=p.clientX; ly=p.clientY; if (ev.cancelable) ev.preventDefault(); }
+  function move(ev){ if(!dragging) return; var p = ev.touches ? ev.touches[0] : ev; yaw -= (p.clientX-lx)*0.01; pitch -= (p.clientY-ly)*0.01; if(pitch>1.5)pitch=1.5; if(pitch<-1.5)pitch=-1.5; lx=p.clientX; ly=p.clientY; draw(); if (ev.cancelable) ev.preventDefault(); }
+  function up(){ dragging=false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, {passive:false}); cv.addEventListener('touchmove', move, {passive:false}); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ if(!es[0].isIntersecting && playing) set(false); }, {threshold:0.1}).observe(cv);
 })();
 
 (function(){
