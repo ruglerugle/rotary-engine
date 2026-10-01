@@ -167,6 +167,13 @@
           </div>
           <div class="dialog-bubble">いい質問だね。<strong>角度</strong>を使うんだ。中心から真横（右向き）に線を引いて、そこから反時計回りに何度回ったところか、で円の上の点を指定する。この角度を θ（シータ）と呼ぼう。角度が決まれば点は1つに決まる。あとは「角度 θ から座標 (x, y) を取り出す道具」があればいい。それが <strong>cos（コサイン）</strong>と <strong>sin（サイン）</strong>だ。名前は難しそうだけれど、中身はただの<strong>「角度→座標」の対応表</strong>だよ。</div>
         </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">名前は聞いたことがありますが、何を計算するものなのかは知りません。角度から座標を取り出すというのは、具体的にはどうするんですか？</div>
+        </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
@@ -186,14 +193,14 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そう。cos や sin の値は、そうやって図形から求められる角度もあるし、そうでない角度は電卓やコンピュータが計算してくれる。大事なのは意味のほうだよ。それから、いま使った三平方の定理は、どの角度でも成り立つ。半径1の円の上の点だから、<strong>(cos θ)²＋(sin θ)²＝1</strong>。この関係はあとで何度も使う。</div>
+          <div class="dialog-bubble">そう。cos や sin の値は、そうやって図形から求められる角度もあるし、そうでない角度は電卓やコンピュータが計算してくれる。大事なのは意味のほうだよ。それから、いま使った三平方の定理は、どの角度でも成り立つ。半径1の円の上の点だから、<strong>(cos θ)²＋(sin θ)²＝1</strong>。この関係はあとで何度も使う。もう一つ、半径が1ではなく r の円でも、話は同じだ。半径1の円をそっくり r 倍に拡大したものだから、<strong>座標も r 倍</strong>になる。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">半径が1ではなく r のときは、図形をそっくり r 倍に拡大するだけだから、座標も r 倍。円の上で角度 θ の点は <strong>(r cos θ, r sin θ)</strong>、ということですか？</div>
+          <div class="dialog-bubble">では、半径 r の円の上で角度 θ の点は <strong>(r cos θ, r sin θ)</strong>。θ を変えれば、この点が円の上を動いていく、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -234,12 +241,19 @@
           </div>
           <div class="dialog-bubble">中心をずらすだけだから、座標に足せばいい。中心が (a, b) の半径 r の円の上の点は、<strong>(a＋r cos θ, b＋r sin θ)</strong> だ。じつは、これが次のステージの主役になる。ロータリーエンジンでは、<strong>ローターの中心そのものが動く</strong>んだ。動く中心に、さらに角度を足して頂点の位置を作る。今日の道具だけで、それが全部書けるよ。</div>
         </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">中心が動いても、足し算で追いかけられるんですね。ひとつ気になるのですが、実物のエンジンも、本当に式のとおりの形をしているんですか？</div>
+        </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">最後にひとつ、旅の約束を。ここで描く形は<strong>「理屈の上での形」</strong>だ。実物のエンジンでは、ローターの頂点に付いている密封部品（アペックスシール）の厚みのぶん壁を少し外側にずらしたり、ローターの面に燃焼室のくぼみを掘ったりと、細かな補正が入る。この旅ではそういう補正は省いて、<strong>形の骨格を式から出すこと</strong>に集中する。そう断ったうえで、驚くほど実物に近い図が出てくるのを見てもらおう。</div>
+          <div class="dialog-bubble">いい質問だね。そこは、旅の約束として先に言っておこう。ここで描く形は<strong>「理屈の上での形」</strong>だ。実物のエンジンでは、ローターの頂点に付いている密封部品（アペックスシール）の厚みのぶん壁を少し外側にずらしたり、ローターの面に燃焼室のくぼみを掘ったりと、細かな補正が入る。この旅ではそういう補正は省いて、<strong>形の骨格を式から出すこと</strong>に集中する。そう断ったうえで、驚くほど実物に近い図が出てくるのを見てもらおう。</div>
         </div>
       </div>
 
