@@ -28,6 +28,33 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
+  .diagram-box svg.deg60{max-width:min(100%,400px)}
+  .diagram-box svg.shift{max-width:min(100%,420px)}
+  .deg60 .arc{fill:none;stroke:#7a9cc4;stroke-width:1.6;stroke-dasharray:5 4}
+  .deg60 .ax,.shift .ax{stroke:#b9b0a3;stroke-width:1.2}
+  .deg60 .tri{fill:rgba(219,230,241,.6);stroke:#3d5f88;stroke-width:1.6}
+  .deg60 .fold{stroke:#c8433f;stroke-width:3}
+  .deg60 .rt{fill:none;stroke:#6a7684;stroke-width:1}
+  .deg60 .ang{fill:none;stroke:#9a6a1c;stroke-width:1.6}
+  .deg60 .dO,.shift .dO{fill:#9a6a1c} .deg60 .dA{fill:#6a7684} .deg60 .dP{fill:#3d5f88;stroke:#fff;stroke-width:1.2}
+  .deg60 .lO,.shift .lO{fill:#9a6a1c;font-size:13px;font-weight:900}
+  .deg60 .lA{fill:#6a7684;font-size:12px;font-weight:800}
+  .deg60 .lP{fill:#3d5f88;font-size:12.5px;font-weight:900}
+  .deg60 .lS{fill:#3d5f88;font-size:13px;font-weight:900}
+  .deg60 .lAng{fill:#9a6a1c;font-size:12.5px;font-weight:900}
+  .deg60 .lH{fill:#2f9e5c;font-size:13px;font-weight:900}
+  .deg60 .lV{fill:#c8433f;font-size:13px;font-weight:900}
+  .deg60 .eq{fill:#1b232c;font-size:12.5px;font-weight:900}
+  .shift .gd{stroke:#e6e0d6;stroke-width:1}
+  .shift .c0{fill:none;stroke:#7a9cc4;stroke-width:1.6;stroke-dasharray:5 4}
+  .shift .c1{fill:rgba(219,230,241,.35);stroke:#3d5f88;stroke-width:2}
+  .shift .rad0{stroke:#7a9cc4;stroke-width:1.4;stroke-dasharray:4 3} .shift .rad1{stroke:#3d5f88;stroke-width:1.6}
+  .shift .sh1{stroke:#2f9e5c;stroke-width:3} .shift .sh2{stroke:#c8433f;stroke-width:3}
+  .shift .dC{fill:#c8433f} .shift .dP0{fill:#7a9cc4;stroke:#fff;stroke-width:1} .shift .dP1{fill:#3d5f88;stroke:#fff;stroke-width:1.2}
+  .shift .lC{fill:#c8433f;font-size:12px;font-weight:900}
+  .shift .lP0{fill:#7a9cc4;font-size:11.5px;font-weight:900} .shift .lP1{fill:#3d5f88;font-size:12px;font-weight:900}
+  .shift .lsh1{fill:#2f9e5c;font-size:12px;font-weight:900} .shift .lsh2{fill:#c8433f;font-size:12px;font-weight:900}
+  .shift .lr{fill:#3d5f88;font-size:12.5px;font-weight:900}
   .sim-controls{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
   .sim-controls .btn{font-size:12.5px;padding:.45rem .8rem}
   .sim-controls .btn[aria-pressed="true"]{background:linear-gradient(#7a9cc4,#3d5f88);border-color:#2d4a6e;color:#fff}
@@ -151,7 +178,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">コンパスは「中心から同じ距離の点を全部たどる」道具だね。式で描くときも考え方は同じで、<strong>曲線を「点の集まり」と見て、その1つ1つの点の位置を式で作る</strong>。点の位置は、横の位置 x と縦の位置 y の数の組 (x, y) で表す。これを<strong>座標</strong>という。式で座標を次々に作ってグラフ用紙に打っていけば、どんな曲線でも描けるし、コンピュータに描かせることもできる。</div>
+          <div class="dialog-bubble">コンパスは「中心から同じ距離の点を全部たどる」道具だね。式で描くときも考え方は同じで、<strong>曲線を「点の集まり」と見て、その1つ1つの点の位置を式で作る</strong>。点の位置は、横の位置 x と縦の位置 y の数の組 (x, y)、つまり<strong>座標</strong>で表す。式で座標を次々に作ってグラフ用紙に打っていけば、どんな曲線でも描けるし、コンピュータに描かせることもできる。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -188,6 +215,34 @@
           </div>
           <div class="dialog-bubble">θ＝60° なら、どうなりますか。中心と、真横の点 (1, 0) と、60° の点の3つを結ぶと、2辺が半径1で、間の角が 60° だから……正三角形です。正三角形を真ん中で半分に折ると、底辺の半分は 1/2。だから横座標は cos 60°＝1/2。縦座標は三平方の定理で、1²＝(1/2)²＋y² から y²＝3/4、y＝√3/2 です。つまり sin 60°＝√3/2、小数にすると約 0.866、ということですか？</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="deg60" viewBox="0 0 320 256" width="100%" role="img" aria-label="半径1の円の上の60度の点を求める図。中心O、真横の点(1,0)、60度の点Pで正三角形ができ、Pから底辺へ下ろした線が底辺を半分の1/2に分ける。三平方の定理から縦は√3/2">
+          <path class="arc" d="M190.0 205.0 A150 150 0 0 0 14.0 57.3"></path>
+          <line class="ax" x1="30.0" y1="205.0" x2="220.0" y2="205.0"></line>
+          <polygon class="tri" points="40.0,205.0 190.0,205.0 115.0,75.1"></polygon>
+          <line class="fold" x1="115.0" y1="75.1" x2="115.0" y2="205.0"></line>
+          <path class="rt" d="M106.0 205.0 V196.0 H115.0"></path>
+          <path class="ang" d="M66.0 205.0 A26 26 0 0 0 53.0 182.5"></path>
+          <circle class="dO" cx="40.0" cy="205.0" r="3.5"></circle>
+          <circle class="dA" cx="190.0" cy="205.0" r="3.5"></circle>
+          <circle class="dP" cx="115.0" cy="75.1" r="4.5"></circle>
+          <text class="lO" x="34.0" y="221.0" text-anchor="end">O</text>
+          <text class="lA" x="190.0" y="223.0" text-anchor="middle">(1, 0)</text>
+          <text class="lP" x="123.0" y="67.1">P＝(cos 60°, sin 60°)</text>
+          <text class="lS" x="67.5" y="136.0" text-anchor="end">1</text>
+          <text class="lS" x="162.5" y="136.0">1</text>
+          <text class="lAng" x="74.0" y="195.0">60°</text>
+          <text class="lH" x="77.5" y="223.0" text-anchor="middle">1/2</text>
+          <text class="lH" x="152.5" y="223.0" text-anchor="middle">1/2</text>
+          <text class="lV" x="121.0" y="144.0">√3/2</text>
+          <text class="eq" x="115.0" y="248" text-anchor="middle">1²＝(1/2)²＋y²　→　y＝√3/2</text>
+        </svg>
+        <div class="diagram-caption">半径1の円の上で θ＝60° の点 P。O・(1, 0)・P を結ぶと、2辺が半径1で間の角が 60° なので正三角形。P から底辺へまっすぐ下ろした線が底辺を半分（1/2）に分けるので、cos 60°＝1/2。縦の長さは三平方の定理 1²＝(1/2)²＋y² から y＝√3/2、つまり sin 60°＝√3/2 ≈ 0.866</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
@@ -241,6 +296,40 @@
           </div>
           <div class="dialog-bubble">中心をずらすだけだから、座標に足せばいい。中心が (a, b) の半径 r の円の上の点は、<strong>(a＋r cos θ, b＋r sin θ)</strong> だ。じつは、これが次のステージの主役になる。ロータリーエンジンでは、<strong>ローターの中心そのものが動く</strong>んだ。動く中心に、さらに角度を足して頂点の位置を作る。今日の道具だけで、それが全部書けるよ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="shift" viewBox="0 0 364 260" width="100%" role="img" aria-label="原点を中心とする半径5の円と、中心を(3,2)にずらした半径5の円。角度θの点どうしは、横に3、縦に2だけずれている。だから中心(a,b)の円の点は (a＋r cos θ, b＋r sin θ)">
+          <line class="gd" x1="16.0" y1="278.0" x2="16.0" y2="62.0"></line><line class="gd" x1="32.0" y1="278.0" x2="32.0" y2="62.0"></line><line class="gd" x1="48.0" y1="278.0" x2="48.0" y2="62.0"></line><line class="gd" x1="64.0" y1="278.0" x2="64.0" y2="62.0"></line><line class="gd" x1="80.0" y1="278.0" x2="80.0" y2="62.0"></line><line class="gd" x1="96.0" y1="278.0" x2="96.0" y2="62.0"></line><line class="gd" x1="112.0" y1="278.0" x2="112.0" y2="62.0"></line><line class="gd" x1="128.0" y1="278.0" x2="128.0" y2="62.0"></line><line class="gd" x1="144.0" y1="278.0" x2="144.0" y2="62.0"></line><line class="gd" x1="160.0" y1="278.0" x2="160.0" y2="62.0"></line><line class="gd" x1="176.0" y1="278.0" x2="176.0" y2="62.0"></line><line class="gd" x1="192.0" y1="278.0" x2="192.0" y2="62.0"></line><line class="gd" x1="208.0" y1="278.0" x2="208.0" y2="62.0"></line><line class="gd" x1="224.0" y1="278.0" x2="224.0" y2="62.0"></line><line class="gd" x1="240.0" y1="278.0" x2="240.0" y2="62.0"></line><line class="gd" x1="8.0" y1="270.0" x2="248.0" y2="270.0"></line><line class="gd" x1="8.0" y1="254.0" x2="248.0" y2="254.0"></line><line class="gd" x1="8.0" y1="238.0" x2="248.0" y2="238.0"></line><line class="gd" x1="8.0" y1="222.0" x2="248.0" y2="222.0"></line><line class="gd" x1="8.0" y1="206.0" x2="248.0" y2="206.0"></line><line class="gd" x1="8.0" y1="190.0" x2="248.0" y2="190.0"></line><line class="gd" x1="8.0" y1="174.0" x2="248.0" y2="174.0"></line><line class="gd" x1="8.0" y1="158.0" x2="248.0" y2="158.0"></line><line class="gd" x1="8.0" y1="142.0" x2="248.0" y2="142.0"></line><line class="gd" x1="8.0" y1="126.0" x2="248.0" y2="126.0"></line><line class="gd" x1="8.0" y1="110.0" x2="248.0" y2="110.0"></line><line class="gd" x1="8.0" y1="94.0" x2="248.0" y2="94.0"></line><line class="gd" x1="8.0" y1="78.0" x2="248.0" y2="78.0"></line><line class="gd" x1="8.0" y1="62.0" x2="248.0" y2="62.0"></line>
+          <line class="ax" x1="8.0" y1="190.0" x2="248.0" y2="190.0"></line>
+          <line class="ax" x1="96.0" y1="278.0" x2="96.0" y2="62.0"></line>
+          <circle class="c0" cx="96.0" cy="190.0" r="80"></circle>
+          <circle class="c1" cx="144.0" cy="158.0" r="80"></circle>
+          <line class="rad0" x1="96.0" y1="190.0" x2="157.3" y2="138.6"></line>
+          <line class="rad1" x1="144.0" y1="158.0" x2="205.3" y2="106.6"></line>
+          <line class="sh1" x1="157.3" y1="138.6" x2="205.3" y2="138.6"></line>
+          <line class="sh2" x1="205.3" y1="138.6" x2="205.3" y2="106.6"></line>
+          <line class="sh1" x1="96.0" y1="190.0" x2="144.0" y2="190.0"></line>
+          <line class="sh2" x1="144.0" y1="190.0" x2="144.0" y2="158.0"></line>
+          <circle class="dO" cx="96.0" cy="190.0" r="3.5"></circle>
+          <circle class="dC" cx="144.0" cy="158.0" r="3.5"></circle>
+          <circle class="dP0" cx="157.3" cy="138.6" r="4"></circle>
+          <circle class="dP1" cx="205.3" cy="106.6" r="4.5"></circle>
+          <text class="lO" x="90.0" y="205.0" text-anchor="end">O</text>
+          <text class="lC" x="150.0" y="173.0">(a, b)＝(3, 2)</text>
+          <text class="lP0" x="151.3" y="130.6" text-anchor="end">(r cos θ, r sin θ)</text>
+          <text class="lP1" x="213.3" y="104.6">(a＋r cos θ, b＋r sin θ)</text>
+          <text class="lsh1" x="181.3" y="153.6" text-anchor="middle">＋a</text>
+          <text class="lsh2" x="211.3" y="126.6">＋b</text>
+          <text class="lsh1" x="120.0" y="205.0" text-anchor="middle">＋a</text>
+          <text class="lsh2" x="138.0" y="178.0" text-anchor="end">＋b</text>
+          <text class="lr" x="118.6" y="166.3" text-anchor="end">r</text>
+          <text class="lr" x="166.6" y="134.3" text-anchor="end">r</text>
+        </svg>
+        <div class="diagram-caption">原点が中心の半径 r の円（点線）と、中心を (a, b)＝(3, 2) にずらした同じ半径の円（実線）。同じ角度 θ の点どうしは、中心と同じく横に a、縦に b だけずれているので、ずらした円の点は (a＋r cos θ, b＋r sin θ)。図は r＝5、θ＝40°</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -253,7 +342,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いい質問だね。そこは、旅の約束として先に言っておこう。ここで描く形は<strong>「理屈の上での形」</strong>だ。実物のエンジンでは、ローターの頂点に付いている密封部品（アペックスシール）の厚みのぶん壁を少し外側にずらしたり、ローターの面に燃焼室のくぼみを掘ったりと、細かな補正が入る。この旅ではそういう補正は省いて、<strong>形の骨格を式から出すこと</strong>に集中する。そう断ったうえで、驚くほど実物に近い図が出てくるのを見てもらおう。</div>
+          <div class="dialog-bubble">いい質問だね。そこは、旅の約束として先に言っておこう。ここで描く形は<strong>「理屈の上での形」</strong>だ。実物のエンジンでは、ローターの頂点に付いている密封部品（アペックスシール）の厚みのぶん壁を少し外側にずらしたり、ローターの面に、燃料が燃える部屋（燃焼室）になるくぼみを掘ったりと、細かな補正が入る。この旅ではそういう補正は省いて、<strong>形の骨格を式から出すこと</strong>に集中する。そう断ったうえで、驚くほど実物に近い図が出てくるのを見てもらおう。</div>
         </div>
       </div>
 
@@ -261,7 +350,7 @@
         <span class="step">【このステージの成果】</span>
         <span class="step">部品の名前：ハウジング（繭形の壁）・ローター（三角おむすび）・偏心軸（中心がずれた出力軸）</span>
         <span class="step">曲線は「点の集まり」。点の位置は座標 (x, y) で表し、式で作れば描ける</span>
-        <span class="step">cos θ・sin θ の定義：半径1の円の上で、角度 θ の点の横座標が cos θ、縦座標が sin θ。<span class="nw">(cos θ)²＋(sin θ)²＝1</span></span>
+        <span class="step">cos θ・sin θ（複素数の世界で学んだもの）：半径1の円の上で、角度 θ の点の横座標が cos θ、縦座標が sin θ。<span class="nw">(cos θ)²＋(sin θ)²＝1</span></span>
         <span class="step">半径 r・中心 (a, b) の円の上で角度 θ の点：<span class="nw">(a＋r cos θ, b＋r sin θ)</span>。θ を 0°→360° と動かすと円になる（θ は媒介変数）</span>
       </div>
 
