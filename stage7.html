@@ -30,7 +30,7 @@
 <style>
   .pair-wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:6px 14px}
   .diagram-box .pair-wrap svg{flex:1 1 230px;width:100%;max-width:320px;height:auto}
-  #ports3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  #ports3d,#gear3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   .apx .ttl{fill:#1b232c;font-size:12.5px;font-weight:900}
   .apx .rt{fill:#dbe6f1;stroke:#3d5f88;stroke-width:1.4}
   .apx .off{fill:none;stroke:#c8433f;stroke-width:1.6;stroke-dasharray:5 3}
@@ -122,6 +122,19 @@
           </div>
           <div class="dialog-bubble">いよいよ最後だ。ハウジング、ローター、部屋の動きまで式で出せた。今日は残りの部品を描き足して、完成図にしよう。まずは<strong>歯車と偏心軸</strong>。STAGE3で、固定歯車の半径は 2e、ローターの内歯車の半径は 3e と決まった。固定歯車は O が中心、ローター歯車は C が中心だ。ただし歯車は、ローターの横のふた（サイドハウジング）側に付いていて、ローターの断面とは奥行きが違う。だから完成図では、歯車の円を<strong>点線で重ねて</strong>描く。偏心軸は、O を中心とする軸の円と、C を中心とする太い円盤を描けばいい。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="gear3d" role="img" aria-label="歯車の位置の3D図。奥の横ぶた（サイドハウジング）に固定歯車が付き、ローターの側面には内歯車の輪が埋め込まれている。偏心軸は横ぶたの穴と固定歯車の中を通り、ローターの手前側の穴に偏心円盤が入る。分解のスライダーで横ぶたと内歯車の輪を奥へ引き離せる。ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-controls">
+          <label>分解 <input type="range" id="g3-ex" min="0" max="100" value="60" step="1"> <output id="g3-exv">60%</output></label>
+          <label>軸の角度 α <input type="range" id="g3-al" min="0" max="1080" value="60" step="1"> <output id="g3-alv">60°</output></label>
+          <button class="sim-play" id="g3-play" type="button" aria-pressed="false">▶ 回す</button>
+        </div>
+        <div class="diagram-caption">歯車の位置の3D図（ドラッグで視点を回せる）。<strong style="color:#9a6a1c">固定歯車</strong>は奥の<strong style="color:#6a7684">横ぶた（サイドハウジング）</strong>に固定されていて回らない。<strong style="color:#3d5f88">内歯車の輪</strong>はローターの側面（横ぶた側の面）に埋め込まれていて、ローターと一緒に回る。つまり2つの歯車は、ローターの断面（三角おむすびの面）とは奥行きの違う、横ぶたのすぐそばの薄い層で噛み合っている。偏心軸は横ぶたの穴と固定歯車の中を通り、ローターの手前側の穴に偏心円盤が入る。「分解」を 0% にすると組み立てた状態になる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -548,6 +561,101 @@
   function set(p){playing=p;last=0;btn.textContent=p?'⏸ 止める':'▶ 回す';btn.setAttribute('aria-pressed',p?'true':'false');if(p)raf=requestAnimationFrame(loop);else cancelAnimationFrame(raf);}
   btn.addEventListener('click',function(){set(!playing);});
   slA.addEventListener('input',function(){slAv.textContent=Math.round(+slA.value)+'°';draw();});
+  var dragging=false,lx=0,ly=0;
+  function down(ev){dragging=true;var p=ev.touches?ev.touches[0]:ev;lx=p.clientX;ly=p.clientY;if(ev.cancelable)ev.preventDefault();}
+  function move(ev){if(!dragging)return;var p=ev.touches?ev.touches[0]:ev;yaw+=(p.clientX-lx)*0.01;pitch+=(p.clientY-ly)*0.01;if(pitch>1.5)pitch=1.5;if(pitch<-1.5)pitch=-1.5;lx=p.clientX;ly=p.clientY;draw();if(ev.cancelable)ev.preventDefault();}
+  function up(){dragging=false;}
+  cv.addEventListener('mousedown',down);window.addEventListener('mousemove',move);window.addEventListener('mouseup',up);
+  cv.addEventListener('touchstart',down,{passive:false});cv.addEventListener('touchmove',move,{passive:false});window.addEventListener('touchend',up);
+  window.addEventListener('resize',resize);resize();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
+  if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(!es[0].isIntersecting&&playing)set(false);},{threshold:0.1}).observe(cv);
+})();
+/* 歯車の位置の3D図：横ぶた（サイドハウジング）に固定歯車、ローターの側面に内歯車の輪が埋め込まれている。
+   「分解」で横ぶた・内歯車の輪・ローターを軸方向に引き離す。掴んで回せる */
+(function(){
+  var cv=document.getElementById('gear3d'); if(!cv) return;
+  var ctx=cv.getContext('2d');
+  var slA=document.getElementById('g3-al'), slAv=document.getElementById('g3-alv'), slX=document.getElementById('g3-ex'), slXv=document.getElementById('g3-exv'), btn=document.getElementById('g3-play');
+  var e=15, R=105, HR=40, GH=14, SH_R=11, DISC_R=40, HOLE_F=44, HOLE_B=60, RING_OUT=60, NF=20, NR=30, DEP=2.6;
+  var yaw=0.95, pitch=-0.42, W=0, H=0, sc=1, cx=0, cy=0;
+  var FONT='900 12px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var SUB='800 11px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var LIGHT=norm([-0.4,0.8,0.6]);
+  function norm(v){var l=Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2])||1;return [v[0]/l,v[1]/l,v[2]/l];}
+  function rot(p){var cw=Math.cos(yaw),sw=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);var x1=p[0]*cw+p[2]*sw,z1=-p[0]*sw+p[2]*cw;var y2=p[1]*cp-z1*sp,z2=p[1]*sp+z1*cp;return [cx+sc*x1,cy-sc*y2,z2];}
+  function shade(base,n){var q=rot([n[0],n[1],n[2]]),o=rot([0,0,0]);var nx=q[0]-o[0],ny=-(q[1]-o[1]),nz=q[2]-o[2];var l=Math.sqrt(nx*nx+ny*ny+nz*nz)||1;var d=Math.max(0,(nx*LIGHT[0]+ny*LIGHT[1]+nz*LIGHT[2])/l);var k=0.6+0.4*d;return 'rgb('+Math.round(base[0]*k)+','+Math.round(base[1]*k)+','+Math.round(base[2]*k)+')';}
+  var faces=[];
+  function quad(a,b,c,d,base,n,edge){var P=[rot(a),rot(b),rot(c),rot(d)];faces.push({pts:P,z:(P[0][2]+P[1][2]+P[2][2]+P[3][2])/4,fill:shade(base,n),edge:edge});}
+  function polyFace(pts3,base,n,edge,hole3){var P=pts3.map(rot),z=0;P.forEach(function(p){z+=p[2];});z/=P.length;faces.push({pts:P,z:z,fill:shade(base,n),edge:edge,hole:hole3?hole3.map(rot):null});}
+  /* 2D の歯車輪郭（歯 n 枚、ピッチ半径 rp、位相 phase、inner なら歯は内向き） */
+  function gearProfile(c,rp,n,phase,inner){var pts=[],K=4;for(var j=0;j<n;j++){for(var q=0;q<K;q++){var u=q/K,ang=phase+2*Math.PI*(j+u)/n,r=rp+(u<0.5?1:-1)*DEP*(inner?-1:1);pts.push({x:c.x+r*Math.cos(ang),y:c.y+r*Math.sin(ang)});}}return pts;}
+  function circle2(c,r,n){var pts=[];for(var i=0;i<n;i++){var a=2*Math.PI*i/n;pts.push({x:c.x+r*Math.cos(a),y:c.y+r*Math.sin(a)});}return pts;}
+  /* 輪郭 outline（反時計回り）を z0..z1 に押し出し（側面）。inward なら法線を内向きに */
+  function extrudeSide(outline,z0,z1,base,inward){var n=outline.length;for(var i=0;i<n;i++){var a=outline[i],b=outline[(i+1)%n];var nx=b.y-a.y,ny=-(b.x-a.x);if(inward){nx=-nx;ny=-ny;}quad([a.x,a.y,z0],[b.x,b.y,z0],[b.x,b.y,z1],[a.x,a.y,z1],base,[nx,ny,0],null);}}
+  function capFace(outline,z,base,dir,edge,hole){polyFace(outline.map(function(p){return [p.x,p.y,z];}),base,[0,0,dir],edge,hole?hole.map(function(p){return [p.x,p.y,z];}):null);}
+  function hp(t){return {x:R*Math.cos(t)+e*Math.cos(3*t),y:R*Math.sin(t)+e*Math.sin(3*t)};}
+  function hn(t){var dx=-R*Math.sin(t)-3*e*Math.sin(3*t),dy=R*Math.cos(t)+3*e*Math.cos(3*t),l=Math.hypot(dx,dy);return {x:dy/l,y:-dx/l};}
+  var plateOutline=[];for(var i=0;i<72;i++){var t=2*Math.PI*i/72,p=hp(t),n=hn(t);plateOutline.push({x:p.x+n.x*22,y:p.y+n.y*22});}
+  var GOLD=[241,223,174],RED=[246,209,204],BLUE=[219,230,241],PLATE=[205,198,186],FIX=[232,206,140],RING=[150,180,215];
+  function build(alpha,ex){
+    var th=alpha/3, c=RE.rotorCenter(e,alpha), O={x:0,y:0};
+    var dzP=-ex*90, dzR=-ex*45; /* 横ぶた（＋固定歯車）と内歯車の輪を奥へ引き離す */
+    /* 横ぶた */
+    var pz1=-HR-12+dzP, pz0=pz1-10;
+    var shaftHole=circle2(O,SH_R+2,24);
+    capFace(plateOutline,pz1,PLATE,1,'#6a7684',shaftHole); capFace(plateOutline,pz0,PLATE,-1,null,shaftHole);
+    extrudeSide(plateOutline,pz0,pz1,PLATE,false);
+    /* 固定歯車（横ぶたに固定、中は軸が通る穴） */
+    var fg=gearProfile(O,2*e,NF,0,false), fh=circle2(O,SH_R+2,24);
+    extrudeSide(fg,pz1,pz1+GH,FIX,false); extrudeSide(fh,pz1,pz1+GH,FIX,true);
+    capFace(fg,pz1+GH,FIX,1,'#9a6a1c',fh);
+    /* ローターの内歯車の輪（ローター側面に埋め込まれる部品） */
+    var rz0=-HR+dzR, rz1=rz0+GH;
+    var ringOut=circle2(c,RING_OUT,48), ringIn=gearProfile(c,3*e,NR,th+2*Math.PI*0.5/NR,true);
+    extrudeSide(ringOut,rz0,rz1,RING,false); extrudeSide(ringIn,rz0,rz1,RING,true);
+    capFace(ringOut,rz1,RING,1,'#3d5f88',ringIn); capFace(ringOut,rz0,RING,-1,'#3d5f88',ringIn);
+    /* ローター（奥側の帯は輪が入る大きな穴、手前側は軸受けの穴） */
+    var outline=RE.rotorOutline(e,R,alpha,null,24);
+    var zb0=-HR, zb1=-HR+GH, zf1=HR;
+    var holeB=circle2(c,HOLE_B,36), holeF=circle2(c,HOLE_F,36);
+    extrudeSide(outline,zb0,zf1,BLUE,false);
+    extrudeSide(holeB,zb0,zb1,BLUE,true); extrudeSide(holeF,zb1,zf1,BLUE,true);
+    capFace(outline,zb0,BLUE,-1,null,holeB); capFace(outline,zf1,BLUE,1,'#3d5f88',holeF);
+    /* 段差の面（大きな穴と小さな穴の間） */
+    polyFace(holeB.map(function(p){return [p.x,p.y,zb1];}),BLUE,[0,0,-1],null,holeF.map(function(p){return [p.x,p.y,zb1];}));
+    /* 偏心軸：軸（全体を貫く）と偏心円盤（手前側の穴に入る） */
+    var shaft=circle2(O,SH_R,20);
+    extrudeSide(shaft,pz0-40,zf1+36,GOLD,false); capFace(shaft,zf1+36,GOLD,1,'#9a6a1c'); capFace(shaft,pz0-40,GOLD,-1,null);
+    var disc=circle2(c,DISC_R,30);
+    extrudeSide(disc,zb1+2,zf1-3,RED,false); capFace(disc,zf1-3,RED,1,'#c8433f'); capFace(disc,zb1+2,RED,-1,null);
+    return {c:c,pz1:pz1,rz0:rz0,rz1:rz1,zb0:zb0};
+  }
+  function text(x,y,s,color,font,align){ctx.fillStyle=color;ctx.font=font;ctx.textAlign=align||'center';ctx.textBaseline='middle';ctx.fillText(s,x,y);}
+  function label3(p,s,color,font,dx,dy,align){var q=rot(p);text(q[0]+(dx||0),q[1]+(dy||0),s,color,font,align);}
+  function draw(){
+    var alpha=RE.rad(+slA.value), ex=+slX.value/100, nar=W<440;
+    ctx.clearRect(0,0,W,H); faces=[];
+    var g=build(alpha,ex);
+    faces.sort(function(a,b){return a.z-b.z;});
+    faces.forEach(function(f){ctx.beginPath();for(var i=0;i<f.pts.length;i++){if(i)ctx.lineTo(f.pts[i][0],f.pts[i][1]);else ctx.moveTo(f.pts[i][0],f.pts[i][1]);}ctx.closePath();
+      if(f.hole){for(i=0;i<f.hole.length;i++){if(i)ctx.lineTo(f.hole[i][0],f.hole[i][1]);else ctx.moveTo(f.hole[i][0],f.hole[i][1]);}ctx.closePath();}
+      ctx.fillStyle=f.fill;ctx.fill('evenodd');ctx.strokeStyle=f.edge||f.fill;ctx.lineWidth=f.edge?1.1:0.8;ctx.stroke();});
+    /* ラベル */
+    label3([0,R+e+30,g.pz1-5],'横ぶた（サイドハウジング）','#6a7684',FONT,0,-12);
+    label3([2*e+4,-(2*e)-4,g.pz1+GH],nar?'固定歯車（横ぶたに固定）':'固定歯車（横ぶたに固定・回らない）','#9a6a1c',nar?SUB:FONT,8,8,'left');
+    label3([g.c.x+RING_OUT+2,g.c.y+RING_OUT*0.3,g.rz1],nar?'内歯車の輪（ローター側面）':'内歯車の輪（ローターの側面に埋め込む）','#3d5f88',nar?SUB:FONT,8,-6,'left');
+    label3([-R+10,R*0.5,HR],'ローター','#3d5f88',FONT,-8,-6,'right');
+    label3([0,0,HR+36],'偏心軸','#9a6a1c',FONT,10,-10,'left');
+    text(10,H-12,nar?'ドラッグで回せる':'ドラッグで視点を回せる。「分解」で奥へ引き離す','#6a7684',SUB,'left');
+  }
+  function resize(){var w=cv.clientWidth||320,h=Math.min(Math.round(w*0.8),520),dpr=Math.min(window.devicePixelRatio||1,2);cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);cv.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);W=w;H=h;sc=Math.min(w/430,h/330);cx=w/2+6;cy=h/2;draw();}
+  var playing=false,raf=0,last=0;
+  function loop(now){if(!playing)return;var dt=last?Math.min((now-last)/1000,.05):0;last=now;var v=(+slA.value+dt*60)%1080;slA.value=v;slAv.textContent=Math.round(v)+'°';draw();raf=requestAnimationFrame(loop);}
+  function set(p){playing=p;last=0;btn.textContent=p?'⏸ 止める':'▶ 回す';btn.setAttribute('aria-pressed',p?'true':'false');if(p)raf=requestAnimationFrame(loop);else cancelAnimationFrame(raf);}
+  btn.addEventListener('click',function(){set(!playing);});
+  slA.addEventListener('input',function(){slAv.textContent=Math.round(+slA.value)+'°';draw();});
+  slX.addEventListener('input',function(){slXv.textContent=slX.value+'%';draw();});
   var dragging=false,lx=0,ly=0;
   function down(ev){dragging=true;var p=ev.touches?ev.touches[0]:ev;lx=p.clientX;ly=p.clientY;if(ev.cancelable)ev.preventDefault();}
   function move(ev){if(!dragging)return;var p=ev.touches?ev.touches[0]:ev;yaw+=(p.clientX-lx)*0.01;pitch+=(p.clientY-ly)*0.01;if(pitch>1.5)pitch=1.5;if(pitch<-1.5)pitch=-1.5;lx=p.clientX;ly=p.clientY;draw();if(ev.cancelable)ev.preventDefault();}
