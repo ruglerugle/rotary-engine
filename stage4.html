@@ -42,6 +42,22 @@
   .pair-wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:6px 14px}
   .diagram-box .pair-wrap svg{flex:1 1 230px;width:100%;max-width:330px;height:auto}
   .diagram-box svg.bulge{max-width:min(100%,480px)}
+  .diagram-box svg.rotOne{max-width:min(100%,500px)}
+  .rotOne .before{opacity:.38}
+  .rotOne .ax{stroke:#b9b0a3;stroke-width:1;stroke-dasharray:4 4}
+  .rotOne .ang{fill:none;stroke:#6a7684;stroke-width:1.2}
+  .rotOne .segE{stroke:#c8433f;stroke-width:3} .rotOne .segR{stroke:#3d5f88;stroke-width:3}
+  .rotOne .segr{stroke:#b8860b;stroke-width:2.2;stroke-dasharray:5 3}
+  .rotOne .legH{stroke:#2f9e5c;stroke-width:4;opacity:.7} .rotOne .legV{stroke:#b8860b;stroke-width:3}
+  .rotOne .rt{fill:none;stroke:#6a7684;stroke-width:1} .rotOne .ext{stroke:#b9b0a3;stroke-width:1;stroke-dasharray:3 3}
+  .rotOne .turn{fill:none;stroke:#6a7684;stroke-width:1.6;stroke-dasharray:3 3} .rotOne .turnh{fill:#6a7684}
+  .rotOne .lTurn{fill:#6a7684;font-size:12px;font-weight:900}
+  .rotOne .dO{fill:#9a6a1c} .rotOne .dC{fill:#c8433f} .rotOne .dP{fill:#3d5f88;stroke:#fff;stroke-width:1.2}
+  .rotOne .lO{fill:#9a6a1c;font-size:13px;font-weight:900} .rotOne .lC{fill:#c8433f;font-size:13px;font-weight:900}
+  .rotOne .lP{fill:#3d5f88;font-size:12.5px;font-weight:900} .rotOne .lA{fill:#6a7684;font-size:12.5px;font-weight:900}
+  .rotOne .lE{fill:#c8433f;font-size:13px;font-weight:900} .rotOne .lR{fill:#3d5f88;font-size:12.5px;font-weight:900}
+  .rotOne .lr{fill:#b8860b;font-size:13px;font-weight:900} .rotOne .lH{fill:#2f9e5c;font-size:12px;font-weight:900} .rotOne .lV{fill:#b8860b;font-size:12px;font-weight:900}
+  .rotOne .lgd{fill:#1b232c;font-size:12.5px;font-weight:900}
   .rotS .ttl,.lobe .ttl{fill:#1b232c;font-size:13px;font-weight:900}
   .rotS .ax,.bulge .ax{stroke:#b9b0a3;stroke-width:1;stroke-dasharray:4 4}
   .rotS .ang{fill:none;stroke:#6a7684;stroke-width:1.2}
@@ -248,49 +264,45 @@
       </div>
 
       <div class="diagram-box">
-        <div class="pair-wrap">
-          <svg class="rotS" viewBox="0 0 300 200" role="img" aria-label="回す前の図。O から向き 3θ に長さ e 進むと C、C から向き θ に長さ R 進むと頂点 P">
-          <text class="ttl" x="125" y="16" text-anchor="middle">回す前</text>
-          <line class="ax" x1="16" y1="176" x2="245" y2="176"></line>
-          <line class="ax" x1="57.0" y1="122.3" x2="127.0" y2="122.3"></line>
-          <path class="ang" d="M48.0 176.0 A22 22 0 0 0 37.0 156.9"></path>
-          <path class="ang" d="M87.0 122.3 A30 30 0 0 0 85.2 112.0"></path>
-          <line class="segE" x1="26" y1="176" x2="57.0" y2="122.3"></line>
-          <line class="segR" x1="57.0" y1="122.3" x2="209.9" y2="66.6"></line>
-          <line class="segr" x1="26" y1="176" x2="209.9" y2="66.6"></line>
-          <circle class="dO" cx="26" cy="176" r="3.5"></circle><circle class="dC" cx="57.0" cy="122.3" r="3.5"></circle><circle class="dP" cx="209.9" cy="66.6" r="4"></circle>
-          <text class="lO" x="22" y="191">O</text>
-          <text class="lC" x="43.0" y="118.3">C</text>
-          <text class="lP" x="215.9" y="62.6">P</text>
-          <text class="lA" x="52" y="168">3θ</text>
-          <text class="lA" x="91.0" y="119.3">θ</text>
-          <text class="lE" x="29.5" y="147.2" text-anchor="end">e</text>
-          <text class="lR" x="127.5" y="86.5" text-anchor="end">R</text>
-          <text class="lr" x="148.0" y="122.2">r</text>
+        <svg class="rotOne" viewBox="0 0 400 236" width="100%" role="img" aria-label="図全体を O のまわりに θ だけ逆向きに回す様子。回す前（薄い色）は O から向き 3θ に e 進んで C、C から向き θ に R 進んで P。回した後（濃い色）は C→P が真横、O→C の向きが 2θ。回しただけなので e、R、O から P までの距離 r は同じ長さのまま。回した後では、r は横 e cos 2θ＋R、縦 e sin 2θ の直角三角形の斜辺">
+          <line class="ax" x1="30" y1="192" x2="392" y2="192"></line>
+          <text class="lgd" x="12" y="18" text-anchor="start">薄い色：回す前　　濃い色：θ だけ逆向きに回した後</text>
+          <!-- 回す前（薄く） -->
+          <g class="before">
+            <line class="segE" x1="44" y1="192" x2="74.0" y2="140.0"></line>
+            <line class="segR" x1="74.0" y1="140.0" x2="222.0" y2="86.2"></line>
+            <line class="segr" x1="44" y1="192" x2="222.0" y2="86.2"></line>
+            <circle class="dC" cx="74.0" cy="140.0" r="3.5"></circle><circle class="dP" cx="222.0" cy="86.2" r="4"></circle>
+            <text class="lC" x="68.0" y="134.0" text-anchor="end">C</text>
+            <text class="lP" x="228.0" y="82.2">P</text>
+            <text class="lE" x="49.0" y="164.0" text-anchor="end">e</text>
+            <text class="lR" x="144.0" y="104.1" text-anchor="end">R</text>
+          </g>
+          <!-- 回す矢印（O のまわり、θ だけ時計回り） -->
+          <path class="turn" d="M222.0 86.2 A207.1 207.1 0 0 1 247.5 153.4"></path><polygon class="turnh" points="247.5,153.4 249.9,144.8 242.0,146.3"></polygon>
+          <path class="turn" d="M74.0 140.0 A60.0 60.0 0 0 1 90.0 153.4"></path><polygon class="turnh" points="90.0,153.4 87.9,144.7 81.8,149.9"></polygon>
+          <text class="lTurn" x="248.9" y="118.4" text-anchor="start">θ だけ回す</text>
+          <!-- 回した後（濃く） -->
+          <path class="ang" d="M70.0 192 A26 26 0 0 0 63.9 175.3"></path>
+          <line class="legH" x1="44" y1="192" x2="247.5" y2="192"></line>
+          <line class="legV" x1="247.5" y1="192" x2="247.5" y2="153.4"></line>
+          <path class="rt" d="M239.5 192 V184 H247.5"></path>
+          <line class="segE" x1="44" y1="192" x2="90.0" y2="153.4"></line>
+          <line class="segR" x1="90.0" y1="153.4" x2="247.5" y2="153.4"></line>
+          <line class="segr" x1="44" y1="192" x2="247.5" y2="153.4"></line>
+          <line class="ext" x1="90.0" y1="153.4" x2="90.0" y2="192"></line>
+          <circle class="dO" cx="44" cy="192" r="3.5"></circle><circle class="dC" cx="90.0" cy="153.4" r="3.5"></circle><circle class="dP" cx="247.5" cy="153.4" r="4"></circle>
+          <text class="lO" x="40" y="207">O</text>
+          <text class="lC" x="85.0" y="146.4" text-anchor="end">C</text>
+          <text class="lP" x="253.5" y="149.4">P</text>
+          <text class="lA" x="74" y="186">2θ</text>
+          <text class="lE" x="58.0" y="174.7" text-anchor="end">e</text>
+          <text class="lR" x="168.7" y="146.4" text-anchor="middle">R（真横）</text>
+          <text class="lr" x="166.1" y="184.9" text-anchor="middle">r</text>
+          <text class="lH" x="145.7" y="208" text-anchor="middle">e cos 2θ＋R</text>
+          <text class="lV" x="253.5" y="184.7">e sin 2θ</text>
         </svg>
-          <svg class="rotS" viewBox="0 0 300 200" role="img" aria-label="図全体を θ だけ逆向きに回した図。C→P が真横になり、O→C の向きは 2θ。O から P までの距離 r は、横 e cos 2θ＋R、縦 e sin 2θ の直角三角形の斜辺">
-          <text class="ttl" x="125" y="16" text-anchor="middle">θ だけ逆向きに回した後</text>
-          <line class="ax" x1="16" y1="176" x2="245" y2="176"></line>
-          <path class="ang" d="M50.0 176.0 A24 24 0 0 0 44.4 160.6"></path>
-          <line class="legH" x1="26" y1="176" x2="236.2" y2="176"></line>
-          <line class="legV" x1="236.2" y1="176" x2="236.2" y2="136.1"></line>
-          <path class="rt" d="M228.2 176 V168 H236.2"></path>
-          <line class="segE" x1="26" y1="176" x2="73.5" y2="136.1"></line>
-          <line class="segR" x1="73.5" y1="136.1" x2="236.2" y2="136.1"></line>
-          <line class="segr" x1="26" y1="176" x2="236.2" y2="136.1"></line>
-          <line class="ext" x1="73.5" y1="136.1" x2="73.5" y2="176"></line>
-          <circle class="dO" cx="26" cy="176" r="3.5"></circle><circle class="dC" cx="73.5" cy="136.1" r="3.5"></circle><circle class="dP" cx="236.2" cy="136.1" r="4"></circle>
-          <text class="lO" x="22" y="191">O</text>
-          <text class="lC" x="69.5" y="128.1" text-anchor="end">C</text>
-          <text class="lP" x="242.2" y="132.1">P</text>
-          <text class="lA" x="54" y="170">2θ</text>
-          <text class="lR" x="154.9" y="130.1" text-anchor="middle">R（真横）</text>
-          <text class="lH" x="131.1" y="192" text-anchor="middle">e cos 2θ＋R</text>
-          <text class="lV" x="241.2" y="160.1">e sin 2θ</text>
-          <text class="lr" x="141.6" y="148.1">r</text>
-        </svg>
-        </div>
-        <div class="diagram-caption">「回す前」：O から向き 3θ に長さ <span style="color:#c8433f">e</span> 進むと C、C から向き θ に長さ <span style="color:#3d5f88">R</span> 進むと頂点 P。「回した後」：図全体を θ だけ逆向きに回すと、C→P が真横になり、O→C の向きは 3θ−θ＝2θ。長さは変わらないので、O から P までの距離 <span style="color:#b8860b">r</span> は、横 e cos 2θ＋R（緑）と縦 e sin 2θ（黄土色）の直角三角形の斜辺になる。図は θ＝20° で、見やすいように e を実物より大きく描いている</div>
+        <div class="diagram-caption">1枚の図の中で、図全体を O のまわりに θ だけ逆向きに回した。<strong>薄い色が回す前</strong>（O から向き 3θ に <span style="color:#c8433f">e</span> 進んで C、C から向き θ に <span style="color:#3d5f88">R</span> 進んで P）、<strong>濃い色が回した後</strong>。回しただけなので e、R、O から P までの距離 <span style="color:#b8860b">r</span> は同じ長さのまま。回した後は C→P が真横になり、O→C の向きは 3θ−θ＝2θ。だから r は、横 e cos 2θ＋R（緑）と縦 e sin 2θ（黄土色）の直角三角形の斜辺になる。図は θ＝20° で、見やすいように e を実物より大きく描いている</div>
       </div>
 
       <div class="dialogue-scene">
