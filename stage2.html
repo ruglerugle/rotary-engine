@@ -28,9 +28,12 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
-  .v1-wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:4px 8px}
+  .v1-wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 8px}
   .diagram-box .v1-wrap svg.v1a{flex:0 1 180px;width:100%;max-width:200px;height:auto}
   .diagram-box .v1-wrap svg.v1b{flex:1 1 300px;width:100%;max-width:420px;height:auto}
+  .v1-svg .rot{fill:rgba(219,230,241,.55);stroke:rgba(61,95,136,.45);stroke-width:1.4}
+  .v1-svg .lbRot{fill:rgba(61,95,136,.75);font-size:11px;font-weight:900}
+  .v1-svg .lbRot2{fill:rgba(61,95,136,.65);font-size:9.5px;font-weight:800}
   .v1-svg .ttl{fill:#1b232c;font-size:12px;font-weight:900}
   .v1-svg .cap{fill:var(--muted);font-size:10.5px;font-weight:800}
   .v1-svg .sm{fill:var(--muted);font-size:10px;font-weight:800}
@@ -286,8 +289,13 @@
           <text class="cap" x="90" y="247" text-anchor="middle">縦軸で左右に折り返した点</text>
 
         </svg>
-        <svg class="v1-svg v1b" viewBox="150 0 370 260" role="img" aria-label="軸の角度0度のときの図で、O から e だけ右に C があり、頂点0は O から120ミリ右、頂点1は C から120度の向きに R＝105ミリ。O と頂点1を結ぶ線を斜辺とし、横37.5ミリ、縦90.9ミリの直角三角形から、O と頂点1の距離が約98.4ミリと分かる">
+        <svg class="v1-svg v1b" viewBox="150 0 370 390" role="img" aria-label="軸の角度0度のときの図で、O から e だけ右に C があり、頂点0は O から120ミリ右、頂点1は C から120度の向きに R＝105ミリ。O と頂点1を結ぶ線を斜辺とし、横37.5ミリ、縦90.9ミリの直角三角形から、O と頂点1の距離が約98.4ミリと分かる">
           <text class="ttl" x="335" y="22" text-anchor="middle">α＝0° のときの頂点1</text>
+          <polygon class="rot" points="452.0,200.0 447.9,193.6 443.6,187.4 439.2,181.2 434.7,175.2 429.9,169.3 425.1,163.5 420.1,157.8 415.0,152.2 409.7,146.8 404.3,141.5 398.8,136.3 393.2,131.2 387.4,126.3 381.5,121.6 375.5,116.9 369.4,112.5 363.2,108.1 356.9,104.0 350.5,99.9 344.0,96.1 337.4,92.4 330.7,88.8 323.9,85.5 317.1,82.2 310.2,79.2 303.2,76.3 296.1,73.6 289.0,71.1 281.8,68.7 274.5,66.5 267.2,64.5 259.9,62.7 252.5,61.0 245.1,59.5 237.6,58.2 230.1,57.1 222.6,56.2 215.1,55.5 207.6,54.9 200.0,54.5 196.6,61.2 193.3,68.1 190.2,75.0 187.2,81.9 184.4,89.0 181.8,96.1 179.4,103.2 177.1,110.5 175.0,117.7 173.1,125.1 171.4,132.4 169.9,139.8 168.5,147.3 167.3,154.8 166.3,162.3 165.5,169.8 164.8,177.3 164.4,184.9 164.1,192.4 164.0,200.0 164.1,207.6 164.4,215.1 164.8,222.7 165.5,230.2 166.3,237.7 167.3,245.2 168.5,252.7 169.9,260.2 171.4,267.6 173.1,274.9 175.0,282.3 177.1,289.5 179.4,296.8 181.8,303.9 184.4,311.0 187.2,318.1 190.2,325.0 193.3,331.9 196.6,338.8 200.0,345.5 207.6,345.1 215.1,344.5 222.6,343.8 230.1,342.9 237.6,341.8 245.1,340.5 252.5,339.0 259.9,337.3 267.2,335.5 274.5,333.5 281.8,331.3 289.0,328.9 296.1,326.4 303.2,323.7 310.2,320.8 317.1,317.8 323.9,314.5 330.7,311.2 337.4,307.6 344.0,303.9 350.5,300.1 356.9,296.0 363.2,291.9 369.4,287.5 375.5,283.1 381.5,278.4 387.4,273.7 393.2,268.8 398.8,263.7 404.3,258.5 409.7,253.2 415.0,247.8 420.1,242.2 425.1,236.5 429.9,230.7 434.7,224.8 439.2,218.8 443.6,212.6 447.9,206.4"></polygon>
+          <text class="lbRot" x="356.0" y="288.0" text-anchor="middle">ローター</text>
+          <text class="lbRot2" x="356.0" y="301.0" text-anchor="middle">（軸と同じ向き）</text>
+          <circle class="dtV" cx="200.0" cy="345.5" r="4"></circle>
+          <text class="lbV" x="192" y="349.5" text-anchor="end">頂点2</text>
           <line class="ax" x1="180" y1="200" x2="464.8" y2="200"></line>
           <line class="ax" x1="260" y1="212" x2="260" y2="40"></line>
           <line class="rv" x1="284" y1="200" x2="452" y2="200"></line>
@@ -313,10 +321,10 @@
           <text class="lbL" x="194" y="120" text-anchor="end">R√3/2</text>
           <text class="lbL" x="194" y="133" text-anchor="end">≈90.9</text>
           <text class="lbH" x="208" y="155.2">≈98.4</text>
-          <text class="eq" x="335" y="248" text-anchor="middle">37.5²＋90.9²＝9675 ≈ 98.4²</text>
+          <text class="eq" x="335" y="378" text-anchor="middle">37.5²＋90.9²＝9675 ≈ 98.4²</text>
                 </svg>
         </div>
-        <div class="diagram-caption">「半径1の円で見ると」：120° の点は 60° の点 (1/2, √3/2) を縦軸で左右に折り返した点なので (−1/2, √3/2)。「α＝0° のときの頂点1」：C は O から e だけ右。頂点1は C から 120° の向きに R 進んだ (e−R/2, R√3/2)。O から頂点1までの距離（<span style="color:#c8433f">赤</span>）は、横 R/2−e（<span style="color:#2f9e5c">緑</span>）と縦 R√3/2（<span style="color:#b8860b">黄土色</span>）の直角三角形の斜辺なので、三平方の定理で √(R²−eR＋e²) ≈ 98.4 mm。頂点0（O から 120 mm）より内側にある（寸法は 13B：e＝15 mm、R＝105 mm）</div>
+        <div class="diagram-caption">「半径1の円で見ると」：120° の点は 60° の点 (1/2, √3/2) を縦軸で左右に折り返した点なので (−1/2, √3/2)。「α＝0° のときの頂点1」：C は O から e だけ右。頂点1は C から 120° の向きに R 進んだ (e−R/2, R√3/2)。O から頂点1までの距離（<span style="color:#c8433f">赤</span>）は、横 R/2−e（<span style="color:#2f9e5c">緑</span>）と縦 R√3/2（<span style="color:#b8860b">黄土色</span>）の直角三角形の斜辺なので、三平方の定理で √(R²−eR＋e²) ≈ 98.4 mm。頂点0（O から 120 mm）より内側にある。薄い青は、軸と同じ向きで回るときのローターの形（寸法は 13B：e＝15 mm、R＝105 mm）</div>
       </div>
 
       <div class="dialogue-scene">
