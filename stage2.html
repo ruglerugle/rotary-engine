@@ -28,6 +28,12 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
+  .crank-wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 14px}
+  .crank-panel{flex:1 1 240px;max-width:330px;margin:0}
+  .crank-panel figcaption{font-size:12.5px;font-weight:900;color:var(--ink);margin-bottom:2px}
+  .crank-panel canvas{display:block;width:100%;height:auto}
+  .crank-panel p{font-size:12px;font-weight:800;color:var(--muted);margin-top:2px;line-height:1.5}
+  .crank-panel b{color:var(--ink)} .crank-panel b.arm{color:#c8433f} .crank-panel b.gas{color:#d9822b}
   .v1-wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 8px}
   .diagram-box .v1-wrap svg.v1a{flex:0 1 180px;width:100%;max-width:200px;height:auto}
   .diagram-box .v1-wrap svg.v1b{flex:1 1 300px;width:100%;max-width:420px;height:auto}
@@ -199,6 +205,21 @@
           </div>
           <div class="dialog-bubble">そう。ピストンエンジンのクランク軸と同じ仕組みだよ。クランク軸も、中心からずれた腕の先をピストンが押すから回る。ロータリーエンジンでは、ローターがその腕の先に乗っている。腕の長さが e だ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="crank-wrap">
+          <figure class="crank-panel"><figcaption>ピストンエンジン</figcaption><canvas id="cvCrank" role="img" aria-label="ピストンエンジンのクランク軸。ガスがピストンを押し、ピストンは棒（コンロッド）で、軸の中心 O からずれた腕（クランク）の先を押す。腕の先が押されるので軸が回る"></canvas><p><b class="gas">ガス</b>が<b>ピストン</b>を押し、棒（コンロッド）が<b class="arm">腕の先</b>を押す</p></figure>
+          <figure class="crank-panel"><figcaption>ロータリーエンジン</figcaption><canvas id="cvEcc" role="img" aria-label="ロータリーエンジンの偏心軸。ローターは軸の中心 O から e だけずれた腕の先 C に乗っていて、ガスがローターを押すと、腕の先が押されて軸が回る"></canvas><p><b class="gas">ガス</b>が<b>ローター</b>を押し、ローターが乗った<b class="arm">腕の先 C</b> が押される</p></figure>
+        </div>
+        <div class="sim-controls">
+          <label>軸の角度 <input type="range" id="crk-al" min="0" max="360" value="50" step="1"> <output id="crk-alo">50°</output></label>
+          <button class="sim-play" id="crk-play" type="button" aria-pressed="false">▶ 動かす</button>
+        </div>
+        <div class="diagram-caption">どちらも、軸の中心 <strong>O</strong> から<strong style="color:#c8433f">ずれた腕（赤）</strong>の先が押されるので、軸が回る。ピストンエンジンでは腕の先を棒で押し、ロータリーエンジンでは腕の先にローターそのものが乗っている。その腕の長さが偏心量 <strong>e</strong>。図では分かりやすいように、腕を実物より長めに描いている</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
@@ -585,6 +606,57 @@
 })();
 
 
+
+/* クランク軸と偏心軸の比較図：同じ軸の角度で一緒に回す */
+(function(){
+  var ang=50, C=RE.C, stA, stB;
+  function arrowDown(ctx,v,x,y0,y1,color){ var p=v.P({x:x,y:y0}), q=v.P({x:x,y:y1}); RE.arrowPx(ctx,p.x,p.y,q.x,q.y,color,2.2); }
+  function drawCrank(st){
+    var ctx=st.ctx,W=st.W,H=st.H; ctx.clearRect(0,0,W,H); ctx.fillStyle=C.paper; ctx.fillRect(0,0,W,H);
+    var v=RE.view(st, 228, 0, 72, W*0.5, H*0.5), th=RE.rad(ang), r=34, l=100, pw=66, ph=34;
+    var pin={x:r*Math.sin(th), y:r*Math.cos(th)}, py=pin.y+Math.sqrt(l*l-pin.x*pin.x);
+    /* シリンダーの壁 */
+    RE.line(ctx,v,{x:-pw/2-4,y:75},{x:-pw/2-4,y:185},'#4a5563',3); RE.line(ctx,v,{x:pw/2+4,y:75},{x:pw/2+4,y:185},'#4a5563',3);
+    RE.line(ctx,v,{x:-pw/2-4,y:185},{x:pw/2+4,y:185},'#4a5563',3);
+    /* ガス */
+    RE.path(ctx,v,[{x:-pw/2,y:py+ph},{x:pw/2,y:py+ph},{x:pw/2,y:183},{x:-pw/2,y:183}],true); RE.fill(ctx,'rgba(246,209,204,.6)');
+    /* 回転の円 */
+    RE.circle(ctx,v,{x:0,y:0},r,C.axis,1.2,[4,4]);
+    /* コンロッド */
+    RE.line(ctx,v,pin,{x:0,y:py+ph*0.4},'#6a7684',6);
+    /* ピストン */
+    RE.path(ctx,v,[{x:-pw/2,y:py},{x:pw/2,y:py},{x:pw/2,y:py+ph},{x:-pw/2,y:py+ph}],true); RE.fill(ctx,'#dbe6f1'); RE.stroke(ctx,C.rotor,1.6);
+    /* 押す力 */
+    arrowDown(ctx,v,0,Math.min(py+ph+40,190),py+ph+4,'#d9822b');
+    /* 腕（クランク）と軸 */
+    RE.circle(ctx,v,{x:0,y:0},11,C.gold,1.4,null,C.shaftFill);
+    RE.line(ctx,v,{x:0,y:0},pin,'#c8433f',5);
+    RE.dot(ctx,v,{x:0,y:0},3.5,C.gold); RE.dot(ctx,v,pin,4.5,'#c8433f','#fff');
+    RE.label(ctx,v,{x:0,y:0},'O',C.gold,-9,13,12,900);
+  }
+  function drawEcc(st){
+    var ctx=st.ctx,W=st.W,H=st.H; ctx.clearRect(0,0,W,H); ctx.fillStyle=C.paper; ctx.fillRect(0,0,W,H);
+    var e=20, R=105, a=RE.rad(ang), v=RE.view(st, 2*R*1.22, 0, 0, W*0.5, H*0.5), c=RE.rotorCenter(e,a);
+    var ro=RE.rotorOutline(e,R,a,null,40);
+    RE.path(ctx,v,ro,true); RE.fill(ctx,'#dbe6f1'); RE.stroke(ctx,C.rotor,1.6);
+    /* いちばん上を向いた辺にガスの力 */
+    var th=a/3, best=0, by=-9;
+    for(var k=0;k<3;k++){ var m=th+RE.TAU*k/3+Math.PI/3; if(Math.sin(m)>by){by=Math.sin(m);best=m;} }
+    var dm=R-2*e, fm={x:c.x+dm*Math.cos(best),y:c.y+dm*Math.sin(best)}, fo={x:c.x+(dm+42)*Math.cos(best),y:c.y+(dm+42)*Math.sin(best)};
+    var gq=v.P(fo), gp=v.P(fm); RE.arrowPx(ctx,gq.x,gq.y,gp.x,gp.y,'#d9822b',2.6);
+    RE.circle(ctx,v,{x:0,y:0},e,C.axis,1.2,[4,4]);
+    RE.circle(ctx,v,c,e*1.25,C.ecc,1.4,null,'#f6d1cc');
+    RE.circle(ctx,v,{x:0,y:0},10,C.gold,1.4,null,C.shaftFill);
+    RE.line(ctx,v,{x:0,y:0},c,'#c8433f',5);
+    RE.dot(ctx,v,{x:0,y:0},3.5,C.gold); RE.dot(ctx,v,c,4.5,'#c8433f','#fff');
+    RE.label(ctx,v,{x:0,y:0},'O',C.gold,-9,13,12,900); RE.label(ctx,v,c,'C',C.ecc,10,-10,12,900);
+  }
+  stA=RE.canvas('cvCrank',1.1,drawCrank); stB=RE.canvas('cvEcc',1.1,drawEcc); if(!stA||!stB) return;
+  function upd(){ stA.redraw(); stB.redraw(); }
+  var el=RE.bindRange('crk-al','crk-alo',function(x){return Math.round(x)+'°';},function(x){ang=x;upd();});
+  RE.player(document.getElementById('crk-play'),function(dt){ang=(ang+dt*60)%360;el.value=Math.round(ang);document.getElementById('crk-alo').textContent=Math.round(ang)+'°';upd();});
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(upd);
+})();
 </script>
 </body>
 </html>
