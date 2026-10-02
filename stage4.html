@@ -409,8 +409,28 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">ならない。R と e の比を <strong>K</strong> と呼ぼう。K＝R/e だ。K が 3 より小さいと、曲線が自分自身と交わってループができてしまい、壁として使えない。K が 3 から 9 の間では、くびれのところが少し内側にへこむ。9 より大きいと、へこみが消えて、楕円に近いなめらかな形になる。実際のエンジンでは K は 6 から 8 くらいが使われていて、13B は 7 だ。K を小さくすると部屋の大きさの変化が大きくなって、たくさん圧縮できる。でも小さくしすぎると頂点が壁に当たる角度がきつくなって、密封部品が傷みやすい。そのつり合いで決まっているんだよ。これでハウジングが描けた。次のステージでは、ローターの辺の形を決める。頂点は決まっているけれど、辺をどれだけ膨らませていいかは、ハウジングの形から逆算するんだ。</div>
+          <div class="dialog-bubble">ならない。R と e の比を <strong>K</strong> と呼ぼう。K＝R/e だ。K が 3 より小さいと、曲線が自分自身と交わってループができてしまい、壁として使えない。K が 3 から 9 の間では、くびれのところが少し内側にへこむ。9 より大きいと、へこみが消えて、楕円に近いなめらかな形になる。実際のエンジンでは K は 6 から 8 くらいが使われていて、13B は 7 だ。K を大きくすると、ローターが丸く太って、部屋をより小さくまで押し縮められる。つまり圧縮が強くできる。けれど、同じ排気量のエンジンを作るには、K が大きいほど R が大きくなって、エンジンそのものが大きく重くなる。逆に K を小さくすると小さく作れるけれど、頂点が壁に当たる角度がきつくなって、密封部品が傷みやすい。そのつり合いで決まっているんだよ。これでハウジングが描けた。次のステージでは、ローターの辺の形を決める。頂点は決まっているけれど、辺をどれだけ膨らませていいかは、ハウジングの形から逆算するんだ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="cvK" role="img" aria-label="比 K＝R/e を変えたときのハウジングとローターの形。K が3より小さいとハウジングにループができ、3から9ではくびれがへこみ、9より大きいと楕円に近くなる。圧縮比の目安と、頂点が壁に当たる角度の最大値も表示される"></canvas></div>
+        <div class="sim-controls">
+          <label>比 K＝R/e <input type="range" id="k4b" min="2" max="12" value="7" step="0.1"> <output id="k4bo">7.0</output></label>
+        </div>
+        <div class="sim-controls">
+          <span class="grp-label">例</span>
+          <button class="btn" type="button" data-k="2.5">K＝2.5</button>
+          <button class="btn" type="button" data-k="5">K＝5</button>
+          <button class="btn" type="button" data-k="7">K＝7（13B）</button>
+          <button class="btn" type="button" data-k="10">K＝10</button>
+          <button class="sim-play" id="playK" type="button" aria-pressed="false">▶ 動かす</button>
+        </div>
+        <div class="readout" id="roK"></div>
+        <div class="diagram-caption">e＝15 mm に固定し、R＝K×e。K を変えると、ハウジングの太り方とローターの形が変わる。<strong>圧縮比の目安</strong>は、部屋の面積がいちばん大きいときと小さいときの比（辺を円弧で近似した値。K が 4 以下では辺が直線になる）。<strong>頂点の傾き</strong>は、頂点が壁に当たるとき、ローターの中心から頂点へ向かう向きと壁に垂直な向きのずれで、1回転のうちの最大値。K が大きいほど圧縮比は上がり、傾きは小さくなるが、同じ排気量では R が大きくなってエンジンが大型化する。K が小さいほど小さく作れるが、傾きが大きくなって密封部品に厳しくなる</div>
+      </div>
+
+      <div class="dialogue-scene">
       </div>
 
       <div class="formula-box">
@@ -503,6 +523,48 @@
   RE.player(document.getElementById('play4'),function(dt){var x=alpha+dt*120; if(x>=1080) x=0; setA(x);});
 })();
 
+
+/* K を変えてハウジングとローターの形・圧縮比・頂点の傾きを見る */
+(function(){
+  var e=15, K=7, alpha=40, st, C=RE.C;
+  function R(){return K*e;}
+  function dm(){var Rv=R(); return Math.max(Rv-2*e, Rv/2);}
+  function kind(){ if(K<3) return {t:'ループができる（壁として使えない）',c:C.ng}; if(K<9) return {t:'くびれが少し内側にへこむ',c:'#b8860b'}; return {t:'へこみが消えて楕円に近い',c:C.ok}; }
+  function leanMax(){ var Rv=R(), best=0; for(var d=0;d<=180;d++){ var th=RE.rad(d), nx=Rv*Math.cos(th)+3*e*Math.cos(3*th), ny=Rv*Math.sin(th)+3*e*Math.sin(3*th), l=Math.hypot(nx,ny); var c=(nx*Math.cos(th)+ny*Math.sin(th))/l; var a=Math.acos(Math.max(-1,Math.min(1,c))); if(a>best)best=a; } return RE.deg(best); }
+  function comp(){ var Rv=R(); var A=RE.chamberArea(e,Rv,RE.rad(360),0,dm()), B=RE.chamberArea(e,Rv,RE.rad(90),0,dm()); return A/B; }
+  function draw(st){
+    var ctx=st.ctx,W=st.W,H=st.H; ctx.clearRect(0,0,W,H); ctx.fillStyle=C.paper; ctx.fillRect(0,0,W,H);
+    var Rv=R(), v=RE.view(st, 2*(Rv+e)*1.12, 0, 0, W*0.5, H*0.5), a=RE.rad(alpha);
+    RE.axes(ctx,v,Rv+e+10);
+    var kd=kind(), ok=K>3;
+    var hs=RE.housing(e,Rv,360);
+    RE.path(ctx,v,hs,true); if(ok){ RE.fill(ctx,C.housingFill); }
+    RE.stroke(ctx, ok?C.housing:C.ng, 2.4);
+    if(ok){
+      RE.path(ctx,v,RE.rotorOutline(e,Rv,a,dm(),40),true); RE.fill(ctx,C.rotorFill); RE.stroke(ctx,C.rotor,2);
+      var c=RE.rotorCenter(e,a), p=RE.apex(e,Rv,a,0), th=a/3;
+      /* 頂点での壁の垂線と、C→頂点の向き */
+      var nx=Rv*Math.cos(th)+3*e*Math.cos(3*th), ny=Rv*Math.sin(th)+3*e*Math.sin(3*th), l=Math.hypot(nx,ny);
+      var L=Rv*0.32;
+      RE.line(ctx,v,p,{x:p.x-nx/l*L,y:p.y-ny/l*L},C.ng,2);
+      RE.line(ctx,v,p,{x:p.x-Math.cos(th)*L,y:p.y-Math.sin(th)*L},C.rotor,2,[5,3]);
+      RE.dot(ctx,v,p,5,C.rotor,'#fff');
+      RE.circle(ctx,v,c,Math.max(e*0.9,6),C.ecc,1.4,null,'#f6d1cc'); RE.dot(ctx,v,{x:0,y:0},3.5,C.gold); RE.dot(ctx,v,c,3,C.ecc);
+      var ang=RE.deg(Math.acos(Math.max(-1,Math.min(1,(nx*Math.cos(th)+ny*Math.sin(th))/l))));
+      RE.label(ctx,v,p,'傾き '+RE.fmt(ang,1)+'°',C.ng,(p.x>=0?-10:10),-14,11,900,(p.x>=0?'right':'left'));
+    }
+    RE.text(ctx,10,14,'K = '+RE.fmt(K,1)+'　R = '+RE.fmt(Rv,1)+' mm',C.ink,12,900,'left');
+    RE.text(ctx,10,32,kd.t,kd.c,12,900,'left');
+    RE.text(ctx,10,H-12,'赤：壁に垂直な向き　青の点線：ローターの中心から頂点への向き',C.muted,10.5,800,'left');
+    var ro=document.getElementById('roK');
+    if(ro){ if(ok) ro.innerHTML='<span>圧縮比の目安（面積比）= <b>'+RE.fmt(comp(),1)+'</b></span><span>頂点の傾き（最大）= <b>'+RE.fmt(leanMax(),1)+'°</b></span><span>壁までの距離：最大 R＋e = '+RE.fmt(Rv+e,0)+'、最小 R−e = '+RE.fmt(Rv-e,0)+'</span>'; else ro.innerHTML='<span style="color:'+C.ng+'">K が 3 以下ではハウジングが成立しないので、ローターは描けない</span>'; }
+  }
+  st=RE.canvas('cvK',0.86,draw); if(!st) return;
+  var kEl=RE.bindRange('k4b','k4bo',function(x){return RE.fmt(x,1);},function(x){K=x;st.redraw();});
+  document.querySelectorAll('[data-k]').forEach(function(b){ b.addEventListener('click',function(){ K=parseFloat(b.getAttribute('data-k')); kEl.value=K; document.getElementById('k4bo').textContent=RE.fmt(K,1); st.redraw(); }); });
+  RE.player(document.getElementById('playK'),function(dt){alpha=(alpha+dt*90)%1080;st.redraw();});
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ st.redraw(); });
+})();
 </script>
 </body>
 </html>
