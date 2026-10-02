@@ -28,6 +28,37 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
+  .v1-wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:4px 8px}
+  .diagram-box .v1-wrap svg.v1a{flex:0 1 180px;width:100%;max-width:200px;height:auto}
+  .diagram-box .v1-wrap svg.v1b{flex:1 1 300px;width:100%;max-width:420px;height:auto}
+  .v1-svg .ttl{fill:#1b232c;font-size:12px;font-weight:900}
+  .v1-svg .cap{fill:var(--muted);font-size:10.5px;font-weight:800}
+  .v1-svg .sm{fill:var(--muted);font-size:10px;font-weight:800}
+  .v1-svg .smB{fill:#3d5f88;font-size:10px;font-weight:900}
+  .v1-svg .smR{fill:#3d5f88;font-size:10px;font-weight:900}
+  .v1-svg .ax{stroke:#b9b0a3;stroke-width:1;stroke-dasharray:4 4}
+  .v1-svg .uc{fill:none;stroke:#7a9cc4;stroke-width:1.4;stroke-dasharray:5 4}
+  .v1-svg .rad{stroke:#6a7684;stroke-width:1.4}
+  .v1-svg .mir{stroke:#3d5f88;stroke-width:1.2;stroke-dasharray:3 3}
+  .v1-svg .arc,.v1-svg .arcR{fill:none;stroke:#3d5f88;stroke-width:1.2}
+  .v1-svg .dt{fill:#6a7684}
+  .v1-svg .dtB{fill:#3d5f88}
+  .v1-svg .rv{stroke:#3d5f88;stroke-width:2}
+  .v1-svg .lg{stroke:#2f9e5c;stroke-width:3.5}
+  .v1-svg .lv{stroke:#b8860b;stroke-width:3}
+  .v1-svg .hy{stroke:#c8433f;stroke-width:2.6}
+  .v1-svg .rt{fill:none;stroke:#6a7684;stroke-width:1}
+  .v1-svg .dtO{fill:#9a6a1c}
+  .v1-svg .dtC{fill:#c8433f}
+  .v1-svg .dtV{fill:#3d5f88;stroke:#fff;stroke-width:1.2}
+  .v1-svg .lbO{fill:#9a6a1c;font-size:12px;font-weight:900}
+  .v1-svg .lbC{fill:#c8433f;font-size:12px;font-weight:900}
+  .v1-svg .lbV{fill:#3d5f88;font-size:11px;font-weight:900}
+  .v1-svg .lbG{fill:#2f9e5c;font-size:10.5px;font-weight:900}
+  .v1-svg .lbL{fill:#b8860b;font-size:10.5px;font-weight:900}
+  .v1-svg .lbH{fill:#c8433f;font-size:11px;font-weight:900}
+  .v1-svg .eq{fill:#1b232c;font-size:11.5px;font-weight:900}
+
   #ecc3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
 
   .sim-controls{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
@@ -231,6 +262,64 @@
           </div>
           <div class="dialog-bubble">α＝0° なら C＝(e, 0) で、頂点1は C から 120° の向きに R 進んだところです。120° の点は、STAGE1 で計算した 60° の点 (1/2, √3/2) を縦軸で左右に折り返した位置なので、cos 120°＝−1/2、sin 120°＝√3/2。だから頂点1＝(e−R/2, R√3/2)。O からの距離は三平方の定理で、<br>(e−R/2)²＋(R√3/2)²＝e²−eR＋R²/4＋3R²/4＝<strong>R²−eR＋e²</strong>。<br>13B の数を入れると 11025−1575＋225＝9675 で、距離は約 <strong>98.4 mm</strong>。頂点0 の 120 mm より 20 mm 以上も内側です。軸と一緒に回るので、この距離は α が変わっても変わりません。頂点1は半径 98.4 mm の円を回る、ということですか？</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="v1-wrap">
+        <svg class="v1-svg v1a" viewBox="0 0 180 250" role="img" aria-label="半径1の円の上で、120度の点は60度の点 (1/2, √3/2) を縦軸で左右に折り返した点 (−1/2, √3/2) であることを示す図">
+          <text class="ttl" x="90" y="22" text-anchor="middle">半径1の円で見ると</text>
+          <line class="ax" x1="21" y1="150" x2="159" y2="150"></line>
+          <line class="ax" x1="90" y1="215" x2="90" y2="81"></line>
+          <circle class="uc" cx="90" cy="150" r="55"></circle>
+          <line class="rad" x1="90" y1="150" x2="117.5" y2="102.4"></line>
+          <line class="rad" x1="90" y1="150" x2="62.5" y2="102.4"></line>
+          <line class="mir" x1="62.5" y1="102.4" x2="117.5" y2="102.4"></line>
+          <path class="arc" d="M104 150 A14 14 0 0 0 97.0 137.9"></path>
+          <path class="arc" d="M114 150 A24 24 0 0 0 78.0 129.2"></path>
+          <text class="sm" x="109" y="145">60°</text>
+          <text class="sm" x="60" y="126" text-anchor="end">120°</text>
+          <circle class="dt" cx="117.5" cy="102.4" r="3"></circle>
+          <circle class="dtB" cx="62.5" cy="102.4" r="3.5"></circle>
+          <text class="sm" x="112.5" y="94.4">(1/2, √3/2)</text>
+          <text class="smB" x="68.5" y="94.4" text-anchor="end">(−1/2, √3/2)</text>
+          <text class="cap" x="90" y="233" text-anchor="middle">120° の点は 60° の点を</text>
+          <text class="cap" x="90" y="247" text-anchor="middle">縦軸で左右に折り返した点</text>
+
+        </svg>
+        <svg class="v1-svg v1b" viewBox="150 0 370 260" role="img" aria-label="軸の角度0度のときの図で、O から e だけ右に C があり、頂点0は O から120ミリ右、頂点1は C から120度の向きに R＝105ミリ。O と頂点1を結ぶ線を斜辺とし、横37.5ミリ、縦90.9ミリの直角三角形から、O と頂点1の距離が約98.4ミリと分かる">
+          <text class="ttl" x="335" y="22" text-anchor="middle">α＝0° のときの頂点1</text>
+          <line class="ax" x1="180" y1="200" x2="464.8" y2="200"></line>
+          <line class="ax" x1="260" y1="212" x2="260" y2="40"></line>
+          <line class="rv" x1="284" y1="200" x2="452" y2="200"></line>
+          <line class="rv" x1="284" y1="200" x2="200.0" y2="54.5"></line>
+          <line class="lg" x1="200" y1="200" x2="260" y2="200"></line>
+          <line class="lv" x1="200" y1="200" x2="200" y2="54.5"></line>
+          <line class="hy" x1="260" y1="200" x2="200.0" y2="54.5"></line>
+          <path class="rt" d="M208 200 V192 H200"></path>
+          <path class="arcR" d="M300 200 A16 16 0 0 0 276.0 186.1"></path>
+          <text class="smR" x="302" y="186">120°</text>
+          <circle class="dtO" cx="260" cy="200" r="3.5"></circle>
+          <circle class="dtC" cx="284" cy="200" r="3.5"></circle>
+          <circle class="dtV" cx="452" cy="200" r="4"></circle>
+          <circle class="dtV" cx="200.0" cy="54.5" r="4.5"></circle>
+          <text class="lbO" x="256" y="215" text-anchor="end">O</text>
+          <text class="lbC" x="287" y="215">C</text>
+          <text class="lbC" x="272" y="195" text-anchor="middle">e</text>
+          <text class="lbV" x="452" y="216" text-anchor="middle">頂点0</text>
+          <text class="sm" x="452" y="230" text-anchor="middle">O から R＋e＝120</text>
+          <text class="lbV" x="208.0" y="48.5">頂点1 (e−R/2, R√3/2)</text>
+          <text class="lbV" x="250" y="120">R＝105</text>
+          <text class="lbG" x="230" y="229" text-anchor="middle">R/2−e＝37.5</text>
+          <text class="lbL" x="194" y="120" text-anchor="end">R√3/2</text>
+          <text class="lbL" x="194" y="133" text-anchor="end">≈90.9</text>
+          <text class="lbH" x="208" y="155.2">≈98.4</text>
+          <text class="eq" x="335" y="248" text-anchor="middle">37.5²＋90.9²＝9675 ≈ 98.4²</text>
+                </svg>
+        </div>
+        <div class="diagram-caption">「半径1の円で見ると」：120° の点は 60° の点 (1/2, √3/2) を縦軸で左右に折り返した点なので (−1/2, √3/2)。「α＝0° のときの頂点1」：C は O から e だけ右。頂点1は C から 120° の向きに R 進んだ (e−R/2, R√3/2)。O から頂点1までの距離（<span style="color:#c8433f">赤</span>）は、横 R/2−e（<span style="color:#2f9e5c">緑</span>）と縦 R√3/2（<span style="color:#b8860b">黄土色</span>）の直角三角形の斜辺なので、三平方の定理で √(R²−eR＋e²) ≈ 98.4 mm。頂点0（O から 120 mm）より内側にある（寸法は 13B：e＝15 mm、R＝105 mm）</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
