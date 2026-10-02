@@ -58,9 +58,10 @@
   };
 
   // 辺の円弧: 弦の長さ R√3、矢の高さ s = dm − R/2、半径 ρ = ((R√3/2)² + s²) / (2s)
+  // s < 0（dm < R/2、K < 4 のとき）は辺が内側に曲がる。ρ は負になり、円弧の中心は辺の外側にある
   RE.flankArc = function (R, dm) {
     var s = dm - R / 2;
-    if (s <= 1e-9) return { rho: Infinity, s: s, dist: -Infinity };
+    if (Math.abs(s) <= 1e-9) return { rho: Infinity, s: s, dist: -Infinity };
     var rho = (3 * R * R / 4 + s * s) / (2 * s);
     return { rho: rho, s: s, dist: dm - rho }; // dist: ローター中心から円弧の中心までの符号付き距離（辺の中点方向が正）
   };
@@ -79,7 +80,8 @@
       var b0 = Math.atan2(A.y - cy, A.x - cx), b1 = Math.atan2(B.y - cy, B.x - cx), d = b1 - b0;
       while (d > Math.PI) d -= TAU;
       while (d < -Math.PI) d += TAU;
-      for (i = 0; i <= n; i++) { var b = b0 + d * i / n; pts.push({ x: cx + arc.rho * Math.cos(b), y: cy + arc.rho * Math.sin(b) }); }
+      var ra = Math.abs(arc.rho);
+      for (i = 0; i <= n; i++) { var b = b0 + d * i / n; pts.push({ x: cx + ra * Math.cos(b), y: cy + ra * Math.sin(b) }); }
     }
     if (reverse) pts.reverse();
     return pts;

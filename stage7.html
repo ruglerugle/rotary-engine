@@ -433,7 +433,7 @@
     if(!ok()){ el.innerHTML='<span class="tool-warn">K＝R/e が 3 以下：ハウジングにループができて成立しません</span>'; return; }
     var dm=R-2*e, arc=RE.flankArc(R,dm), h=R*Math.sqrt(3)/2;
     var vd=3*Math.sqrt(3)*e*R*b/1000;
-    el.innerHTML='K＝R/e＝<b>'+RE.fmt(K(),2)+'</b>'+(K()<6||K()>8?' <span class="tool-warn">（実機は 6〜8）</span>':'')+'<br>くびれ R−e＝<b>'+RE.fmt(R-e,1)+'</b>、最大 R＋e＝<b>'+RE.fmt(R+e,1)+'</b><br>辺の中点 R−2e＝<b>'+RE.fmt(dm,1)+'</b><br>矢高 s＝<b>'+RE.fmt(arc.s,1)+'</b>、h＝<b>'+RE.fmt(h,1)+'</b><br>円弧半径 ρ＝<b>'+(isFinite(arc.rho)?RE.fmt(arc.rho,1):'∞')+'</b><br>歯車 2e＝<b>'+RE.fmt(2*e,1)+'</b>、3e＝<b>'+RE.fmt(3*e,1)+'</b><br>排気量 3√3eRb＝<b>'+RE.fmt(vd,1)+'</b> cm³';
+    el.innerHTML='K＝R/e＝<b>'+RE.fmt(K(),2)+'</b>'+(K()<6||K()>8?' <span class="tool-warn">（実機は 6〜8）</span>':'')+'<br>くびれ R−e＝<b>'+RE.fmt(R-e,1)+'</b>、最大 R＋e＝<b>'+RE.fmt(R+e,1)+'</b><br>辺の中点 R−2e＝<b>'+RE.fmt(dm,1)+'</b><br>矢高 s＝<b>'+RE.fmt(arc.s,1)+'</b>、h＝<b>'+RE.fmt(h,1)+'</b><br>円弧半径 ρ＝<b>'+(isFinite(arc.rho)?RE.fmt(Math.abs(arc.rho),1):'∞（直線）')+'</b>'+(arc.s<0?'（辺は内側に曲がる）':'')+'<br>歯車 2e＝<b>'+RE.fmt(2*e,1)+'</b>、3e＝<b>'+RE.fmt(3*e,1)+'</b><br>排気量 3√3eRb＝<b>'+RE.fmt(vd,1)+'</b> cm³';
   }
   st=RE.canvas('cv7',1,draw); if(!st) return;
   function num(id,fn){var el=document.getElementById(id); el.addEventListener('input',function(){var x=parseFloat(el.value); if(!isNaN(x)&&x>0){fn(x); calc(); st.redraw();}}); return el;}
