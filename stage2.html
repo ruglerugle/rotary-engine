@@ -28,10 +28,6 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
-  .legend2c{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;margin-top:8px;font-size:12px;font-weight:800;color:var(--ink)}
-  .legend2c i{display:inline-block;width:22px;height:0;vertical-align:middle;margin-right:5px}
-  .legend2c .lg-wall{border-top:3px solid #4a5563}
-  .legend2c .lg-red{border-top:2px dashed #c8433f}
   .v1-wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 8px}
   .diagram-box .v1-wrap svg.v1a{flex:0 1 180px;width:100%;max-width:200px;height:auto}
   .diagram-box .v1-wrap svg.v1b{flex:1 1 300px;width:100%;max-width:420px;height:auto}
@@ -210,23 +206,6 @@
           </div>
           <div class="dialog-bubble">腕の先の C が円を描くのは分かりました。では、C から R 離れたローターの頂点は、軸が回るとどこを通るんですか？</div>
         </div>
-      </div>
-
-      <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="cv2" role="img" aria-label="出力軸の中心 O のまわりを、ローター中心 C が半径 e の円を描いて回る様子。C から距離 R の位置に頂点がある。ローターの向きを軸と同じにすると、頂点は半径 R+e の円を描く"></canvas></div>
-        <div class="sim-controls">
-          <label>軸の角度 α <input type="range" id="al2" min="0" max="360" value="40" step="1"> <output id="al2o">40°</output></label>
-          <label>偏心量 e <input type="range" id="e2" min="0" max="40" value="15" step="1"> <output id="e2o">15</output></label>
-        </div>
-        <div class="sim-controls">
-          <button class="btn" type="button" id="tri2" aria-pressed="false">ローターを軸と同じ向きで回してみる</button>
-          <button class="sim-play" id="play2" type="button" aria-pressed="false">▶ 動かす</button>
-        </div>
-        <div class="readout" id="ro2"></div>
-        <div class="diagram-caption">出力軸の中心 O（金色）のまわりを、ローターの中心 C（赤）が半径 e の円（赤の点線）を描いて回る。R＝105 mm は固定。「ローターを軸と同じ向きで回してみる」を押すと、頂点0の軌跡（灰色の点線）が半径 R＋e のただの円になり、残りの頂点1・2は内側の小さな円（赤の点線）を回って、壁との間に隙間が開いたままになる様子が見える</div>
-      </div>
-
-      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
@@ -342,13 +321,17 @@
       </div>
 
       <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="cv2c" role="img" aria-label="ローターを出力軸と同じ向きで回したときの図。壁は頂点0が通る半径120ミリの円、頂点1と頂点2は半径98.4ミリの小さな円を回り、壁との間に約21.6ミリの隙間が開いたまま、ローター全体が O を中心に車輪のように回る"></canvas></div>
+        <div class="cv-wrap"><canvas id="cv2" role="img" aria-label="出力軸の中心 O のまわりを、ローター中心 C が半径 e の円を描いて回る様子。C から距離 R の位置に頂点がある。ローターの向きを軸と同じにすると、頂点は半径 R+e の円を描く"></canvas></div>
         <div class="sim-controls">
-          <label>軸の角度 α <input type="range" id="al2c" min="0" max="360" value="40" step="1"> <output id="al2co">40°</output></label>
-          <button class="sim-play" id="play2c" type="button" aria-pressed="false">▶ 動かす</button>
+          <label>軸の角度 α <input type="range" id="al2" min="0" max="360" value="40" step="1"> <output id="al2o">40°</output></label>
+          <label>偏心量 e <input type="range" id="e2" min="0" max="40" value="15" step="1"> <output id="e2o">15</output></label>
         </div>
-        <div class="legend2c"><span><i class="lg-wall"></i>壁（頂点0の通り道）半径 120 mm</span><span><i class="lg-red"></i>頂点1・2の通り道 半径 98.4 mm</span><span><b style="color:#3d5f88">●</b> 頂点0：壁に接する</span><span><b style="color:#c8433f">●</b> 頂点1・2：壁との隙間 21.6 mm</span></div>
-        <div class="diagram-caption">ローターを出力軸と<strong>同じ向き</strong>で回した場合（13B：e＝15 mm、R＝105 mm）。壁は頂点0（青）が通る<strong>半径 120 mm の円</strong>（濃い灰色）にするしかないが、頂点1・2（赤）は<strong>半径 98.4 mm の円</strong>（赤の点線）を回るので、壁との間に約 21.6 mm の隙間が開いたままになる。ローター全体が O を中心に車輪のように回るだけなので、ローターと壁の間の空間の形も変わらない</div>
+        <div class="sim-controls">
+          <button class="btn" type="button" id="tri2" aria-pressed="false">ローターを軸と同じ向きで回してみる</button>
+          <button class="sim-play" id="play2" type="button" aria-pressed="false">▶ 動かす</button>
+        </div>
+        <div class="readout" id="ro2"></div>
+        <div class="diagram-caption">出力軸の中心 O（金色）のまわりを、ローターの中心 C（赤）が半径 e の円（赤の点線）を描いて回る。R＝105 mm は固定。「ローターを軸と同じ向きで回してみる」を押すと、頂点0の軌跡（灰色の点線）が半径 R＋e のただの円になり、残りの頂点1・2は内側の小さな円（赤の点線）を回って、壁との間に隙間が開いたままになる様子が見える</div>
       </div>
 
       <div class="dialogue-scene">
@@ -602,47 +585,6 @@
 })();
 
 
-/* 軸と同じ向きで回したときの専用図：半径 120（壁）と 98.4（頂点1・2）の円を寸法つきで示す */
-(function(){
-  var alpha=40, e=15, R=105, st, C=RE.C, RW=R+e, R1=Math.sqrt(R*R-e*R+e*e);
-  function draw(st){
-    var ctx=st.ctx,W=st.W,H=st.H; ctx.clearRect(0,0,W,H); ctx.fillStyle=C.paper; ctx.fillRect(0,0,W,H);
-    var v=RE.view(st, 2*RW*1.06, 0, 0, W*0.5, H*0.5), a=RE.rad(alpha), c=RE.rotorCenter(e,a), O={x:0,y:0};
-    RE.axes(ctx,v,RW+12);
-    /* 壁（半径120）と頂点1・2の円（半径98.4） */
-    RE.circle(ctx,v,O,RW,'#4a5563',3);
-    RE.circle(ctx,v,O,R1,'#c8433f',1.6,[4,4]);
-    /* ローター（軸と同じ向き＝本来の α/3 から α へ回した形） */
-    var th0=a/3, d=a-th0, cs=Math.cos(d), sn=Math.sin(d);
-    var ro=RE.rotorOutline(e,R,a,null,40).map(function(p){ var x=p.x-c.x, y=p.y-c.y; return {x:c.x+x*cs-y*sn, y:c.y+x*sn+y*cs}; });
-    RE.path(ctx,v,ro,true); RE.fill(ctx,'rgba(219,230,241,.6)'); RE.stroke(ctx,'rgba(61,95,136,.6)',1.6);
-    /* 寸法矢印（向きは固定）：半径120 は右下、半径98.4 は左下 */
-    function dim(r,ang,color,label){
-      var p={x:r*Math.cos(ang),y:r*Math.sin(ang)}, q=v.P(p), o=v.P(O);
-      RE.arrowPx(ctx,o.x,o.y,q.x,q.y,color,1.8);
-      var m=v.P({x:0.58*r*Math.cos(ang),y:0.58*r*Math.sin(ang)});
-      ctx.font='900 12px '+RE.FONT; var w=ctx.measureText(label).width+10;
-      ctx.fillStyle='rgba(253,251,246,.92)'; ctx.fillRect(m.x-w/2,m.y-9,w,18);
-      RE.text(ctx,m.x,m.y,label,color,12,900);
-    }
-    dim(RW,RE.rad(-38),'#4a5563','半径 120 mm');
-    dim(R1,RE.rad(218),'#c8433f','半径 98.4 mm');
-    /* 頂点 */
-    var tri=[0,1,2].map(function(k){var t=a+RE.TAU*k/3;return {x:c.x+R*Math.cos(t),y:c.y+R*Math.sin(t)};});
-    [1,2].forEach(function(k){ var p=tri[k], rp=Math.sqrt(p.x*p.x+p.y*p.y), u={x:p.x/rp,y:p.y/rp}, q={x:u.x*RW,y:u.y*RW};
-      RE.line(ctx,v,p,q,'#c8433f',3.5); RE.dot(ctx,v,p,5.5,'#c8433f','#fff'); });
-    RE.dot(ctx,v,tri[0],6,'#3d5f88','#fff');
-    /* 軸と腕 */
-    RE.circle(ctx,v,c,Math.max(e*1.15,8),C.ecc,1.4,null,'#f6d1cc');
-    RE.circle(ctx,v,O,Math.max(e*0.55,5),C.gold,1.4,null,C.shaftFill);
-    RE.line(ctx,v,O,c,C.ecc,2); RE.dot(ctx,v,O,3.5,C.gold); RE.dot(ctx,v,c,3.5,C.ecc);
-    RE.label(ctx,v,O,'O',C.gold,-8,12,12,900); RE.label(ctx,v,c,'C',C.ecc,9,-9,12,900);
-  }
-  st=RE.canvas('cv2c',0.9,draw); if(!st) return;
-  var el=RE.bindRange('al2c','al2co',function(x){return Math.round(x)+'°';},function(x){alpha=x;st.redraw();});
-  RE.player(document.getElementById('play2c'),function(dt){alpha=(alpha+dt*45)%360;el.value=Math.round(alpha);document.getElementById('al2co').textContent=Math.round(alpha)+'°';st.redraw();});
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ st.redraw(); });
-})();
 </script>
 </body>
 </html>
