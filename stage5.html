@@ -450,7 +450,7 @@
     RE.dot(ctx,v,{x:0,y:0},4,C.ecc); RE.label(ctx,v,{x:0,y:0},'C',C.ecc,10,-8,12,900);
     // O の位置（ローター基準では回る）
     var o=toRotor({x:0,y:0},thL); RE.dot(ctx,v,o,3.5,C.gold); RE.label(ctx,v,o,'O',C.gold,9,9,11,900);
-    if(showArc){ var pts2=RE.rotorOutline(e,R,0,null,40); RE.path(ctx,v,pts2,true); RE.stroke(ctx,C.rotor,2.2); }
+    if(showArc){ var pts2=RE.rotorOutline(e,R,0,null,40).map(function(p){return {x:p.x-e,y:p.y};}); /* ローター基準では中心 C が原点なので、α=0 のときの C=(e,0) ぶんをずらす */ RE.path(ctx,v,pts2,true); RE.stroke(ctx,C.rotor,2.2); }
     // 辺の中点までの距離
     var m={x:(R-2*e)*Math.cos(Math.PI/3),y:(R-2*e)*Math.sin(Math.PI/3)};
     RE.line(ctx,v,{x:0,y:0},m,C.ng,1.4,[4,3]); RE.dot(ctx,v,m,3.5,C.ng);
