@@ -429,6 +429,10 @@
       RE.label(ctx,v,{x:0,y:R+e},'頂点の軌跡：半径 R＋e の円',C.muted,0,-10,11,900);
       RE.dot(ctx,v,tri[0],5,C.rotor,'#fff');
     }
+    // ローターの形（薄く）。向きはまだ決めていないので、描いている頂点（向き α）に1つの頂点を合わせて置く
+    var th0=a/3, c0=RE.rotorCenter(e,a), dd=a-th0, cs0=Math.cos(dd), sn0=Math.sin(dd);
+    var ro = RE.rotorOutline(e,R,a,null,40).map(function(p){ var x=p.x-c0.x, y=p.y-c0.y; return {x:c0.x+x*cs0-y*sn0, y:c0.y+x*sn0+y*cs0}; });
+    RE.path(ctx,v,ro,true); RE.fill(ctx,'rgba(219,230,241,.35)'); RE.stroke(ctx,'rgba(61,95,136,.35)',1.4);
     RE.circle(ctx,v,{x:0,y:0},e,C.ecc,1.6,[4,3]);
     // 偏心の円盤
     RE.circle(ctx,v,c,Math.max(e*1.15,8),C.ecc,1.6,null,'#f6d1cc');
@@ -444,7 +448,7 @@
     var bt=a; var p={x:c.x+R*Math.cos(bt),y:c.y+R*Math.sin(bt)};
     RE.line(ctx,v,c,p,C.rotor,1.8,[6,4]); RE.dot(ctx,v,p,4,C.rotor);
     RE.label(ctx,v,{x:(c.x+p.x)/2,y:(c.y+p.y)/2},'R',C.rotor,-12*Math.sin(bt),-12*Math.cos(bt),12,900);
-    RE.label(ctx,v,p,'頂点（向きは次のステージで決める）',C.rotor,0,(p.y>0?-12:14),10.5,800);
+    RE.text(ctx,10,H-12,'● 頂点（向きは次のステージで決める）　薄い青＝ローターの形',C.rotor,10.5,800,'left');
     RE.text(ctx,10,14,'e = '+e+' mm,  R = '+R+' mm',C.ink,12,900,'left');
     var ro=document.getElementById('ro2');
     if(ro) ro.innerHTML='<span>C = (e cos α, e sin α) = (<b>'+RE.fmt(c.x,1)+'</b>, <b>'+RE.fmt(c.y,1)+'</b>)</span>';
