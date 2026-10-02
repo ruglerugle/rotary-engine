@@ -30,19 +30,7 @@
 <style>
   .pair-wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:6px 14px}
   .diagram-box .pair-wrap svg{flex:1 1 230px;width:100%;max-width:320px;height:auto}
-  .diagram-box svg.ports{max-width:min(100%,480px)}
-  .ports .hs,.apx .hs{fill:#efe9df;stroke:#4a5563;stroke-width:2}
-  .ports .ch{fill:rgba(246,209,204,.9)}
-  .ports .rt{fill:rgba(219,230,241,.8);stroke:#3d5f88;stroke-width:1.4}
-  .ports .exgap{fill:none;stroke:#fdfbf6;stroke-width:6}
-  .ports .exl{stroke:#1b232c;stroke-width:2}
-  .ports .inp{fill:rgba(47,158,92,.25);stroke:#2f9e5c;stroke-width:1.6}
-  .ports .plug{stroke:#9a6a1c;stroke-width:3} .ports .plugd{fill:#9a6a1c}
-  .ports .lPl{fill:#9a6a1c;font-size:11.5px;font-weight:900} .ports .lPlT{fill:#9a6a1c;font-size:12.5px;font-weight:900}
-  .ports .lEx{fill:#1b232c;font-size:12px;font-weight:900} .ports .lIn{fill:#2f9e5c;font-size:12px;font-weight:900}
-  .ports .arrow{fill:none;stroke:#6a7684;stroke-width:2} .ports .arrowh{fill:#6a7684}
-  .ports .lRot{fill:#6a7684;font-size:11.5px;font-weight:800}
-  .ports .lPos{fill:#1b232c;font-size:11.5px;font-weight:900} .ports .lPos2{fill:#6a7684;font-size:10.5px;font-weight:800}
+  #ports3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   .apx .ttl{fill:#1b232c;font-size:12.5px;font-weight:900}
   .apx .rt{fill:#dbe6f1;stroke:#3d5f88;stroke-width:1.4}
   .apx .off{fill:none;stroke:#c8433f;stroke-width:1.6;stroke-dasharray:5 3}
@@ -186,30 +174,12 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="ports" viewBox="0 0 430 352" width="100%" role="img" aria-label="点火プラグと吸排気口の配置図。ローターは反時計回りに回り、部屋は右（吸気の終わり、最大）、上（圧縮の終わり、最小、点火）、左（爆発の終わり、最大）、下（排気の終わり、最小）の順に動く。上のくびれに点火プラグ2本（先行Lと後行T）、下のくびれの手前の左下に排気口EX、先の右下に吸気口IN">
-          <polygon class="hs" points="341.0,170.0 340.9,165.9 340.7,161.8 340.2,157.7 339.6,153.6 338.9,149.6 337.9,145.6 336.8,141.7 335.6,137.8 334.2,134.0 332.6,130.3 330.9,126.7 329.1,123.2 327.2,119.8 325.1,116.5 322.9,113.3 320.6,110.2 318.2,107.2 315.7,104.4 313.1,101.7 310.5,99.1 307.8,96.7 305.0,94.4 302.2,92.2 299.3,90.2 296.4,88.3 293.5,86.6 290.6,85.0 287.7,83.5 284.7,82.1 281.8,80.9 278.9,79.8 276.0,78.8 273.2,77.9 270.3,77.2 267.6,76.5 264.8,75.9 262.1,75.5 259.5,75.1 256.9,74.8 254.4,74.5 251.9,74.3 249.5,74.2 247.1,74.2 244.9,74.1 242.6,74.2 240.5,74.2 238.4,74.3 236.3,74.4 234.3,74.5 232.4,74.6 230.5,74.8 228.7,74.9 226.9,75.0 225.1,75.1 223.4,75.2 221.7,75.3 220.0,75.4 218.3,75.5 216.7,75.5 215.0,75.5 213.3,75.5 211.7,75.5 210.0,75.4 208.3,75.3 206.6,75.2 204.9,75.1 203.1,75.0 201.3,74.9 199.5,74.8 197.6,74.6 195.7,74.5 193.7,74.4 191.6,74.3 189.5,74.2 187.4,74.2 185.1,74.1 182.9,74.2 180.5,74.2 178.1,74.3 175.6,74.5 173.1,74.8 170.5,75.1 167.9,75.5 165.2,75.9 162.4,76.5 159.7,77.2 156.8,77.9 154.0,78.8 151.1,79.8 148.2,80.9 145.3,82.1 142.3,83.5 139.4,85.0 136.5,86.6 133.6,88.3 130.7,90.2 127.8,92.2 125.0,94.4 122.2,96.7 119.5,99.1 116.9,101.7 114.3,104.4 111.8,107.2 109.4,110.2 107.1,113.3 104.9,116.5 102.8,119.8 100.9,123.2 99.1,126.7 97.4,130.3 95.8,134.0 94.4,137.8 93.2,141.7 92.1,145.6 91.1,149.6 90.4,153.6 89.8,157.7 89.3,161.8 89.1,165.9 89.0,170.0 89.1,174.1 89.3,178.2 89.8,182.3 90.4,186.4 91.1,190.4 92.1,194.4 93.2,198.3 94.4,202.2 95.8,206.0 97.4,209.7 99.1,213.3 100.9,216.8 102.8,220.2 104.9,223.5 107.1,226.7 109.4,229.8 111.8,232.8 114.3,235.6 116.9,238.3 119.5,240.9 122.2,243.3 125.0,245.6 127.8,247.8 130.7,249.8 133.6,251.7 136.5,253.4 139.4,255.0 142.3,256.5 145.3,257.9 148.2,259.1 151.1,260.2 154.0,261.2 156.8,262.1 159.7,262.8 162.4,263.5 165.2,264.1 167.9,264.5 170.5,264.9 173.1,265.2 175.6,265.5 178.1,265.7 180.5,265.8 182.9,265.8 185.1,265.9 187.4,265.8 189.5,265.8 191.6,265.7 193.7,265.6 195.7,265.5 197.6,265.4 199.5,265.2 201.3,265.1 203.1,265.0 204.9,264.9 206.6,264.8 208.3,264.7 210.0,264.6 211.7,264.5 213.3,264.5 215.0,264.5 216.7,264.5 218.3,264.5 220.0,264.6 221.7,264.7 223.4,264.8 225.1,264.9 226.9,265.0 228.7,265.1 230.5,265.2 232.4,265.4 234.3,265.5 236.3,265.6 238.4,265.7 240.5,265.8 242.6,265.8 244.9,265.9 247.1,265.8 249.5,265.8 251.9,265.7 254.4,265.5 256.9,265.2 259.5,264.9 262.1,264.5 264.8,264.1 267.6,263.5 270.3,262.8 273.2,262.1 276.0,261.2 278.9,260.2 281.8,259.1 284.7,257.9 287.7,256.5 290.6,255.0 293.5,253.4 296.4,251.7 299.3,249.8 302.2,247.8 305.0,245.6 307.8,243.3 310.5,240.9 313.1,238.3 315.7,235.6 318.2,232.8 320.6,229.8 322.9,226.7 325.1,223.5 327.2,220.2 329.1,216.8 330.9,213.3 332.6,209.7 334.2,206.0 335.6,202.2 336.8,198.3 337.9,194.4 338.9,190.4 339.6,186.4 340.2,182.3 340.7,178.2 340.9,174.1"></polygon>
-          <polygon class="ch" points="310.5,99.1 306.9,95.9 303.1,92.9 299.3,90.2 295.5,87.7 291.6,85.5 287.7,83.5 283.8,81.7 279.9,80.2 276.0,78.8 272.2,77.7 268.5,76.7 264.8,75.9 261.2,75.3 257.8,74.9 254.4,74.5 251.1,74.3 247.9,74.2 244.9,74.1 241.9,74.2 239.1,74.3 236.3,74.4 233.7,74.6 231.1,74.7 228.7,74.9 226.3,75.1 223.9,75.2 221.7,75.3 219.4,75.4 217.2,75.5 215.0,75.5 212.8,75.5 210.6,75.4 208.3,75.3 206.1,75.2 203.7,75.1 201.3,74.9 198.9,74.7 196.3,74.6 193.7,74.4 190.9,74.3 188.1,74.2 185.1,74.1 182.1,74.2 178.9,74.3 175.6,74.5 172.2,74.9 168.8,75.3 165.2,75.9 161.5,76.7 157.8,77.7 154.0,78.8 150.1,80.2 146.2,81.7 142.3,83.5 138.4,85.5 134.5,87.7 130.7,90.2 126.9,92.9 123.1,95.9 119.5,99.1 122.5,97.6 125.4,96.1 128.4,94.7 131.4,93.3 134.5,92.0 137.5,90.7 140.6,89.5 143.7,88.3 146.8,87.2 149.9,86.1 153.1,85.1 156.2,84.1 159.4,83.2 162.6,82.3 165.8,81.5 169.0,80.7 172.3,80.0 175.5,79.3 178.8,78.7 182.0,78.2 185.3,77.7 188.6,77.2 191.9,76.8 195.2,76.5 198.5,76.2 201.8,75.9 205.1,75.7 208.4,75.6 211.7,75.5 215.0,75.5 218.3,75.5 221.6,75.6 224.9,75.7 228.2,75.9 231.5,76.2 234.8,76.5 238.1,76.8 241.4,77.2 244.7,77.7 248.0,78.2 251.2,78.7 254.5,79.3 257.7,80.0 261.0,80.7 264.2,81.5 267.4,82.3 270.6,83.2 273.8,84.1 276.9,85.1 280.1,86.1 283.2,87.2 286.3,88.3 289.4,89.5 292.5,90.7 295.5,92.0 298.6,93.3 301.6,94.7 304.6,96.1 307.5,97.6"></polygon>
-          <polygon class="rt" points="310.5,99.1 306.1,96.9 301.6,94.7 297.1,92.7 292.5,90.7 287.9,88.9 283.2,87.2 278.5,85.6 273.8,84.1 269.0,82.7 264.2,81.5 259.3,80.4 254.5,79.3 249.6,78.4 244.7,77.7 239.8,77.0 234.8,76.5 229.9,76.0 224.9,75.7 220.0,75.6 215.0,75.5 210.0,75.6 205.1,75.7 200.1,76.0 195.2,76.5 190.2,77.0 185.3,77.7 180.4,78.4 175.5,79.3 170.7,80.4 165.8,81.5 161.0,82.7 156.2,84.1 151.5,85.6 146.8,87.2 142.1,88.9 137.5,90.7 132.9,92.7 128.4,94.7 123.9,96.9 119.5,99.1 119.8,104.1 120.1,109.0 120.6,114.0 121.2,118.9 122.0,123.8 122.8,128.7 123.8,133.6 124.9,138.4 126.1,143.2 127.4,148.0 128.8,152.8 130.4,157.5 132.1,162.2 133.8,166.8 135.7,171.4 137.7,176.0 139.8,180.5 142.0,184.9 144.4,189.3 146.8,193.6 149.3,197.9 152.0,202.1 154.7,206.2 157.6,210.3 160.5,214.3 163.5,218.3 166.6,222.1 169.9,225.9 173.2,229.6 176.6,233.2 180.1,236.8 183.6,240.2 187.3,243.6 191.0,246.8 194.8,250.0 198.7,253.1 202.7,256.1 206.7,259.0 210.8,261.8 215.0,264.5 219.2,261.8 223.3,259.0 227.3,256.1 231.3,253.1 235.2,250.0 239.0,246.8 242.7,243.6 246.4,240.2 249.9,236.8 253.4,233.2 256.8,229.6 260.1,225.9 263.4,222.1 266.5,218.3 269.5,214.3 272.4,210.3 275.3,206.2 278.0,202.1 280.7,197.9 283.2,193.6 285.6,189.3 288.0,184.9 290.2,180.5 292.3,176.0 294.3,171.4 296.2,166.8 297.9,162.2 299.6,157.5 301.2,152.8 302.6,148.0 303.9,143.2 305.1,138.4 306.2,133.6 307.2,128.7 308.0,123.8 308.8,118.9 309.4,114.0 309.9,109.0 310.2,104.1"></polygon>
-          <polyline class="exgap" points="154.0,261.2 156.8,262.1 159.7,262.8 162.4,263.5 165.2,264.1 167.9,264.5 170.5,264.9 173.1,265.2 175.6,265.5 178.1,265.7 180.5,265.8 182.9,265.8 185.1,265.9"></polyline>
-          <line class="exl" x1="154" y1="261.2" x2="144.2" y2="282.1"></line>
-          <line class="exl" x1="185.1" y1="265.9" x2="175.3" y2="286.8"></line>
-          <text class="lEx" x="153.6" y="305.1" text-anchor="middle">EX 排気口</text>
-          <ellipse class="inp" cx="248.8" cy="251.9" rx="8.4" ry="18.9" transform="rotate(67.6 248.8 251.9)"></ellipse>
-          <text class="lIn" x="263.2" y="290.8" text-anchor="middle">IN 吸気口</text>
-          <line class="plug" x1="206.1" y1="75.2" x2="204.5" y2="58.5"></line><circle class="plugd" cx="204.5" cy="58.5" r="4"></circle><text class="lPl" x="198.5" y="51.5" text-anchor="end">L（先行）</text>
-          <line class="plug" x1="223.9" y1="75.2" x2="225.5" y2="58.5"></line><circle class="plugd" cx="225.5" cy="58.5" r="4"></circle><text class="lPl" x="231.5" y="51.5" text-anchor="start">T（後行）</text>
-          <text class="lPlT" x="215" y="33.5" text-anchor="middle">点火プラグ</text>
-          <path class="arrow" d="M357.8 222.0 A152 152 0 0 0 331.4 72.3"></path>
-          <polygon class="arrowh" points="331.4,72.3 340.4,75.3 332.4,83.3"></polygon>
-          <text class="lRot" x="379.3" y="135.1" text-anchor="start">回る向き</text>
-          <text class="lPos" x="347" y="156" text-anchor="start">右：最大</text>
-          <text class="lPos2" x="347" y="170" text-anchor="start">（吸気の終わり）</text>
-          <text class="lPos" x="83" y="156" text-anchor="end">左：最大</text>
-          <text class="lPos2" x="83" y="170" text-anchor="end">（爆発の終わり）</text>
-          <text class="lPos" x="215" y="17.5" text-anchor="middle">上：最小 ＝ 圧縮の終わり、点火</text>
-          <text class="lPos" x="215" y="342" text-anchor="middle">下：最小 ＝ 排気の終わり</text>
-        </svg>
-        <div class="diagram-caption">ローターは反時計回りに回り、1つの部屋は右（最大、吸気の終わり）→上（最小、圧縮の終わり）→左（最大、爆発の終わり）→下（最小、排気の終わり）→右の順に動く（13B の寸法、ローターは α＝270° の瞬間で、上の部屋がいちばん小さい）。上のくびれに<strong style="color:#9a6a1c">点火プラグ</strong>を2本（進む向きで先の L、後ろの T）。下のくびれの手前（左下）に<strong style="color:#1b232c">排気口 EX</strong>、先（右下）に<strong style="color:#2f9e5c">吸気口 IN</strong> を置くと、排気の終わりで燃えかすを出し切り、くびれを過ぎて大きくなり始める部屋に新しい混合気が入る</div>
+        <div class="cv-wrap"><canvas id="ports3d" role="img" aria-label="点火プラグと吸排気口の配置の3D図。厚みのある繭形のハウジングの上のくびれに点火プラグが2本、左下の壁に排気口の窓があり、奥の横ぶた（サイドハウジング）の右下に吸気口の穴がある。中にローターと偏心軸。ローターは反時計回りに回り、1つの部屋は右（最大、吸気の終わり）、上（最小、圧縮の終わり、点火）、左（最大、爆発の終わり）、下（最小、排気の終わり）の順に動く。ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-controls">
+          <label>軸の角度 α <input type="range" id="p3-al" min="0" max="1080" value="270" step="1"> <output id="p3-alv">270°</output></label>
+          <button class="sim-play" id="p3-play" type="button" aria-pressed="false">▶ 回す</button>
+        </div>
+        <div class="diagram-caption">3D 図（ドラッグで視点を回せる）。ローターは反時計回りに回り、1つの部屋は右（最大、吸気の終わり）→上（最小、圧縮の終わり）→左（最大、爆発の終わり）→下（最小、排気の終わり）→右の順に動く（13B の寸法、初めは α＝270° で、上の部屋（薄い赤）がいちばん小さい）。上のくびれの壁に<strong style="color:#9a6a1c">点火プラグ</strong>を2本（進む向きで先の L、後ろの T）。下のくびれの手前（左下）の壁に<strong style="color:#1b232c">排気口 EX</strong> の窓、先（右下）の横ぶたに<strong style="color:#2f9e5c">吸気口 IN</strong> の穴を置くと、排気の終わりで燃えかすを出し切り、くびれを過ぎて大きくなり始める部屋に新しい混合気が入る。手前の横ぶたは外して描いている</div>
       </div>
 
       <div class="dialogue-scene">
@@ -466,6 +436,128 @@
   calc();
 })();
 
+/* 点火プラグと吸排気口の配置の3D図：掴んで回せる。
+   ハウジング（厚みのある繭形の壁、上のくびれに点火プラグ2本、左下の壁に排気口の窓）、
+   奥の横ぶた（サイドハウジング、右下に吸気口の穴）、ローター、偏心軸を面に分けて奥から描く */
+(function(){
+  var cv = document.getElementById('ports3d'); if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var slA = document.getElementById('p3-al'), slAv = document.getElementById('p3-alv'), btn = document.getElementById('p3-play');
+  var e=15, R=105, T=12, Hh=38, HR=Hh-3, HOLE_R=44, DISC_R=40, SH_R=11;
+  var yaw=0.55, pitch=-0.5, W=0, H=0, sc=1, cx=0, cy=0;
+  var FONT='900 12px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var SUB='800 11px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var LIGHT=norm([-0.4,0.8,0.6]);
+  function norm(v){var l=Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2])||1;return [v[0]/l,v[1]/l,v[2]/l];}
+  function rot(p){var cw=Math.cos(yaw),sw=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);var x1=p[0]*cw+p[2]*sw,z1=-p[0]*sw+p[2]*cw;var y2=p[1]*cp-z1*sp,z2=p[1]*sp+z1*cp;return [cx+sc*x1,cy-sc*y2,z2];}
+  function shade(base,n){var q=rot([n[0],n[1],n[2]]),o=rot([0,0,0]);var nx=q[0]-o[0],ny=-(q[1]-o[1]),nz=q[2]-o[2];var l=Math.sqrt(nx*nx+ny*ny+nz*nz)||1;var d=Math.max(0,(nx*LIGHT[0]+ny*LIGHT[1]+nz*LIGHT[2])/l);var k=0.6+0.4*d;return 'rgb('+Math.round(base[0]*k)+','+Math.round(base[1]*k)+','+Math.round(base[2]*k)+')';}
+  var faces=[];
+  function quad(a,b,c,d,base,n,edge){var P=[rot(a),rot(b),rot(c),rot(d)];faces.push({pts:P,z:(P[0][2]+P[1][2]+P[2][2]+P[3][2])/4,fill:shade(base,n),edge:edge});}
+  function polyFace(pts3,base,n,edge,hole3,alpha){var P=pts3.map(rot),z=0;P.forEach(function(p){z+=p[2];});z/=P.length;faces.push({pts:P,z:z,fill:alpha!=null?base:shade(base,n),edge:edge,hole:hole3?hole3.map(rot):null,alpha:alpha});}
+  /* 円柱（任意の軸）。p0→p1、半径 r */
+  function cylinder(p0,p1,r,base,edge,N,caps){N=N||24;var ax=norm([p1[0]-p0[0],p1[1]-p0[1],p1[2]-p0[2]]);var u=Math.abs(ax[2])<0.9?norm([ -ax[1],ax[0],0 ]):[1,0,0];if(Math.abs(ax[2])>=0.9)u=[1,0,0];var v=norm([ax[1]*u[2]-ax[2]*u[1],ax[2]*u[0]-ax[0]*u[2],ax[0]*u[1]-ax[1]*u[0]]);var r0=[],r1=[];
+    for(var i=0;i<N;i++){var a0=2*Math.PI*i/N,a1=2*Math.PI*(i+1)/N;var n0=[u[0]*Math.cos(a0)+v[0]*Math.sin(a0),u[1]*Math.cos(a0)+v[1]*Math.sin(a0),u[2]*Math.cos(a0)+v[2]*Math.sin(a0)];var n1=[u[0]*Math.cos(a1)+v[0]*Math.sin(a1),u[1]*Math.cos(a1)+v[1]*Math.sin(a1),u[2]*Math.cos(a1)+v[2]*Math.sin(a1)];
+      var A=[p0[0]+r*n0[0],p0[1]+r*n0[1],p0[2]+r*n0[2]],B=[p0[0]+r*n1[0],p0[1]+r*n1[1],p0[2]+r*n1[2]],C=[p1[0]+r*n1[0],p1[1]+r*n1[1],p1[2]+r*n1[2]],D=[p1[0]+r*n0[0],p1[1]+r*n0[1],p1[2]+r*n0[2]];
+      quad(A,B,C,D,base,[(n0[0]+n1[0])/2,(n0[1]+n1[1])/2,(n0[2]+n1[2])/2],null);r0.push(A);r1.push(D);}
+    if(caps!==false){polyFace(r0,base,[-ax[0],-ax[1],-ax[2]],edge);polyFace(r1,base,ax,edge);}}
+  function hp(t){return {x:R*Math.cos(t)+e*Math.cos(3*t),y:R*Math.sin(t)+e*Math.sin(3*t)};}
+  function hn(t){var dx=-R*Math.sin(t)-3*e*Math.sin(3*t),dy=R*Math.cos(t)+3*e*Math.cos(3*t),l=Math.hypot(dx,dy);return {x:dy/l,y:-dx/l};}
+  var N=96, inner=[], outer=[], plate=[], nrm=[];
+  for(var i=0;i<N;i++){var t=2*Math.PI*i/N,p=hp(t),n=hn(t);inner.push(p);nrm.push(n);outer.push({x:p.x+n.x*T,y:p.y+n.y*T});plate.push({x:p.x+n.x*(T+10),y:p.y+n.y*(T+10)});}
+  var EX0=228*Math.PI/180, EX1=246*Math.PI/180, PZ=14; /* 排気口の窓：角度範囲と z の半分の高さ */
+  function inPort(t){return t>EX0&&t<EX1;}
+  var GOLD=[241,223,174],RED=[246,209,204],BLUE=[219,230,241],WALL=[226,220,208],PLATE=[205,198,186],PLUG=[200,170,110],NUT=[150,150,150];
+  function buildHousing(){
+    var i,j;
+    for(i=0;i<N;i++){j=(i+1)%N;var t0=2*Math.PI*i/N,t1=2*Math.PI*j/N,tm=(t0+t1)/2;var a=inner[i],b=inner[j],ao=outer[i],bo=outer[j],nm=hn(tm);
+      var bands=inPort(tm)?[[-Hh,-PZ],[PZ,Hh]]:[[-Hh,Hh]];
+      bands.forEach(function(bd){
+        quad([a.x,a.y,bd[0]],[b.x,b.y,bd[0]],[b.x,b.y,bd[1]],[a.x,a.y,bd[1]],WALL,[-nm.x,-nm.y,0],null);
+        quad([ao.x,ao.y,bd[0]],[bo.x,bo.y,bd[0]],[bo.x,bo.y,bd[1]],[ao.x,ao.y,bd[1]],WALL,[nm.x,nm.y,0],null);});
+      if(inPort(tm)){ /* 窓の上下の面 */
+        quad([a.x,a.y,PZ],[b.x,b.y,PZ],[bo.x,bo.y,PZ],[ao.x,ao.y,PZ],WALL,[0,0,-1],null);
+        quad([a.x,a.y,-PZ],[b.x,b.y,-PZ],[bo.x,bo.y,-PZ],[ao.x,ao.y,-PZ],WALL,[0,0,1],null);}
+      var inNext=inPort(2*Math.PI*((j+0.5)%N)/N), inThis=inPort(tm);
+      if(inThis!==inNext){ /* 窓の左右の面 */ var tg=hn(t1); quad([b.x,b.y,-PZ],[bo.x,bo.y,-PZ],[bo.x,bo.y,PZ],[b.x,b.y,PZ],WALL,[inThis?-tg.y:tg.y,inThis?tg.x:-tg.x,0],null);}
+    }
+    var capO=outer.map(function(p){return [p.x,p.y,Hh];}),capI=inner.map(function(p){return [p.x,p.y,Hh];});
+    polyFace(capO,WALL,[0,0,1],'#4a5563',capI);
+    var bO=outer.map(function(p){return [p.x,p.y,-Hh];}),bI=inner.map(function(p){return [p.x,p.y,-Hh];});
+    polyFace(bO,WALL,[0,0,-1],null,bI);
+  }
+  /* 吸気口（横ぶたの穴） */
+  var IT=300*Math.PI/180, ip=hp(IT), inn=hn(IT), ic={x:ip.x-inn.x*14,y:ip.y-inn.y*14}, tv={x:-inn.y,y:inn.x};
+  function inletRing(z){var pts=[];for(var i=0;i<28;i++){var a=2*Math.PI*i/28;pts.push([ic.x+inn.x*8*Math.cos(a)+tv.x*18*Math.sin(a),ic.y+inn.y*8*Math.cos(a)+tv.y*18*Math.sin(a),z]);}return pts;}
+  function buildPlate(){
+    var z0=-Hh-10,z1=-Hh;var front=plate.map(function(p){return [p.x,p.y,z1];}),back=plate.map(function(p){return [p.x,p.y,z0];});
+    var h1=inletRing(z1),h0=inletRing(z0);
+    polyFace(front,PLATE,[0,0,1],'#6a7684',h1);
+    polyFace(back,PLATE,[0,0,-1],null,h0);
+    for(var i=0;i<N;i++){var j=(i+1)%N,nm=hn(2*Math.PI*(i+0.5)/N);quad([plate[i].x,plate[i].y,z0],[plate[j].x,plate[j].y,z0],[plate[j].x,plate[j].y,z1],[plate[i].x,plate[i].y,z1],PLATE,[nm.x,nm.y,0],null);}
+    for(i=0;i<28;i++){j=(i+1)%28;var a=2*Math.PI*(i+0.5)/28;quad(h0[i],h0[j],h1[j],h1[i],[120,150,130],[-(inn.x*Math.cos(a)+tv.x*Math.sin(a)),-(inn.y*Math.cos(a)+tv.y*Math.sin(a)),0],null);}
+  }
+  function buildPlugs(){
+    [98,82].forEach(function(deg){var t=deg*Math.PI/180,p=hp(t),n=hn(t);var b0=[p.x+n.x*T,p.y+n.y*T,0],b1=[p.x+n.x*(T+9),p.y+n.y*(T+9),0],b2=[p.x+n.x*(T+30),p.y+n.y*(T+30),0];
+      cylinder(b0,b1,7,NUT,'#555',12);cylinder(b1,b2,4,PLUG,'#7a5a1c',12);});
+  }
+  function buildRotor(alpha){
+    var c=RE.rotorCenter(e,alpha),outline=RE.rotorOutline(e,R,alpha,null,24),z0=-HR,z1=HR,n=outline.length,i;
+    var ring0=[],ring1=[],hole0=[],hole1=[];
+    for(i=0;i<n;i++){var a=outline[i],b=outline[(i+1)%n];quad([a.x,a.y,z0],[b.x,b.y,z0],[b.x,b.y,z1],[a.x,a.y,z1],BLUE,[b.y-a.y,-(b.x-a.x),0],null);ring0.push([a.x,a.y,z0]);ring1.push([a.x,a.y,z1]);}
+    for(i=0;i<30;i++){var a0=2*Math.PI*i/30,a1=2*Math.PI*(i+1)/30;var q00=[c.x+HOLE_R*Math.cos(a0),c.y+HOLE_R*Math.sin(a0),z0],q01=[c.x+HOLE_R*Math.cos(a1),c.y+HOLE_R*Math.sin(a1),z0];quad(q00,q01,[q01[0],q01[1],z1],[q00[0],q00[1],z1],BLUE,[-Math.cos((a0+a1)/2),-Math.sin((a0+a1)/2),0],null);hole0.push(q00);hole1.push([q00[0],q00[1],z1]);}
+    polyFace(ring0,BLUE,[0,0,-1],null,hole0);polyFace(ring1,BLUE,[0,0,1],'#3d5f88',hole1);
+    cylinder([c.x,c.y,-HR+2],[c.x,c.y,HR-2],DISC_R,RED,'#c8433f',30);
+    cylinder([0,0,-Hh-60],[0,0,-Hh-10],SH_R,GOLD,'#9a6a1c',20);
+    cylinder([0,0,-HR+2],[0,0,HR+40],SH_R,GOLD,'#9a6a1c',20);
+    /* 部屋1（頂点0〜1の間）の手前の面を薄い赤で */
+    var ch=RE.chamberPolygon(e,R,alpha,0,null,40).map(function(p){return [p.x,p.y,HR+0.5];});
+    polyFace(ch,'rgba(246,209,204,.75)',[0,0,1],null,null,1);
+  }
+  function text(x,y,s,color,font,align){ctx.fillStyle=color;ctx.font=font;ctx.textAlign=align||'center';ctx.textBaseline='middle';ctx.fillText(s,x,y);}
+  function label3(p,s,color,font,dx,dy,align){var q=rot(p);text(q[0]+(dx||0),q[1]+(dy||0),s,color,font,align);}
+  function draw(){
+    var alpha=RE.rad(+slA.value), nar=W<440;
+    ctx.clearRect(0,0,W,H); faces=[];
+    buildPlate(); buildHousing(); buildPlugs(); buildRotor(alpha);
+    faces.sort(function(a,b){return a.z-b.z;});
+    faces.forEach(function(f){ctx.beginPath();for(var i=0;i<f.pts.length;i++){if(i)ctx.lineTo(f.pts[i][0],f.pts[i][1]);else ctx.moveTo(f.pts[i][0],f.pts[i][1]);}ctx.closePath();
+      if(f.hole){for(i=0;i<f.hole.length;i++){if(i)ctx.lineTo(f.hole[i][0],f.hole[i][1]);else ctx.moveTo(f.hole[i][0],f.hole[i][1]);}ctx.closePath();}
+      ctx.fillStyle=f.fill;ctx.fill('evenodd');if(f.alpha==null){ctx.strokeStyle=f.edge||f.fill;ctx.lineWidth=f.edge?1.1:0.8;ctx.stroke();}});
+    /* 回る向きの矢印（手前の面の上） */
+    var arc=[];for(var k=0;k<=20;k++){var a=RE.rad(-25+60*k/20);arc.push(rot([(R+e+10)*Math.cos(a),(R+e+10)*Math.sin(a),Hh+2]));}
+    ctx.strokeStyle='#6a7684';ctx.lineWidth=2;ctx.setLineDash([]);ctx.beginPath();arc.forEach(function(q,i){if(i)ctx.lineTo(q[0],q[1]);else ctx.moveTo(q[0],q[1]);});ctx.stroke();
+    var tip=arc[20],prev=arc[18],ang=Math.atan2(tip[1]-prev[1],tip[0]-prev[0]);ctx.fillStyle='#6a7684';ctx.beginPath();ctx.moveTo(tip[0],tip[1]);ctx.lineTo(tip[0]-9*Math.cos(ang-0.45),tip[1]-9*Math.sin(ang-0.45));ctx.lineTo(tip[0]-9*Math.cos(ang+0.45),tip[1]-9*Math.sin(ang+0.45));ctx.closePath();ctx.fill();
+    label3([(R+e+14)*Math.cos(RE.rad(52)),(R+e+14)*Math.sin(RE.rad(52)),Hh+2],'回る向き','#6a7684',SUB,6,-6,'left');
+    /* ラベル */
+    var tp=hp(RE.rad(90)),tn=hn(RE.rad(90));
+    label3([tp.x+tn.x*(T+34),tp.y+tn.y*(T+34),0],'点火プラグ（L・T）','#9a6a1c',FONT,0,-10);
+    var em=hp(RE.rad(237)),en=hn(RE.rad(237));
+    label3([em.x+en.x*(T+16),em.y+en.y*(T+16),0],'EX 排気口','#1b232c',FONT,-6,12,'right');
+    label3([ic.x,ic.y,-Hh],'IN 吸気口（横ぶたの穴）','#2f9e5c',FONT,26,18,'left');
+    if(!nar){
+      label3([R+e+16,0,Hh],'右：最大','#1b232c',SUB,4,-8,'left'); label3([R+e+16,0,Hh],'（吸気の終わり）','#1b232c',SUB,4,8,'left');
+      label3([-(R+e+16),0,Hh],'左：最大','#1b232c',SUB,-4,-8,'right'); label3([-(R+e+16),0,Hh],'（爆発の終わり）','#1b232c',SUB,-4,8,'right');
+      label3([0,R+e+8,Hh],'上：最小＝圧縮の終わり、点火','#1b232c',SUB,0,-40);
+      label3([0,-(R+e+14),Hh],'下：最小＝排気の終わり','#1b232c',SUB,-30,30);
+    }
+    text(10,H-12,nar?'ドラッグで回せる':'ドラッグで視点を回せる・スライダーで軸を回す','#6a7684',SUB,'left');
+  }
+  function resize(){var w=cv.clientWidth||320,h=Math.min(Math.round(w*0.8),520),dpr=Math.min(window.devicePixelRatio||1,2);cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);cv.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);W=w;H=h;sc=Math.min(w/480,h/360);cx=w/2;cy=h/2+2;draw();}
+  var playing=false,raf=0,last=0;
+  function loop(now){if(!playing)return;var dt=last?Math.min((now-last)/1000,.05):0;last=now;var v=(+slA.value+dt*60)%1080;slA.value=v;slAv.textContent=Math.round(v)+'°';draw();raf=requestAnimationFrame(loop);}
+  function set(p){playing=p;last=0;btn.textContent=p?'⏸ 止める':'▶ 回す';btn.setAttribute('aria-pressed',p?'true':'false');if(p)raf=requestAnimationFrame(loop);else cancelAnimationFrame(raf);}
+  btn.addEventListener('click',function(){set(!playing);});
+  slA.addEventListener('input',function(){slAv.textContent=Math.round(+slA.value)+'°';draw();});
+  var dragging=false,lx=0,ly=0;
+  function down(ev){dragging=true;var p=ev.touches?ev.touches[0]:ev;lx=p.clientX;ly=p.clientY;if(ev.cancelable)ev.preventDefault();}
+  function move(ev){if(!dragging)return;var p=ev.touches?ev.touches[0]:ev;yaw+=(p.clientX-lx)*0.01;pitch+=(p.clientY-ly)*0.01;if(pitch>1.5)pitch=1.5;if(pitch<-1.5)pitch=-1.5;lx=p.clientX;ly=p.clientY;draw();if(ev.cancelable)ev.preventDefault();}
+  function up(){dragging=false;}
+  cv.addEventListener('mousedown',down);window.addEventListener('mousemove',move);window.addEventListener('mouseup',up);
+  cv.addEventListener('touchstart',down,{passive:false});cv.addEventListener('touchmove',move,{passive:false});window.addEventListener('touchend',up);
+  window.addEventListener('resize',resize);resize();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
+  if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(!es[0].isIntersecting&&playing)set(false);},{threshold:0.1}).observe(cv);
+})();
 </script>
 </body>
 </html>
