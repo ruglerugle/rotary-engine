@@ -56,7 +56,7 @@
 # ファイル構成
 - `design-system.css` — quest-template由来（string-theory から複製し配色を鋼の青×金に差し替え）。ボタン類は背景テーマ色 #7a9cc4→#3d5f88
 - `js/rotary.js` — 共通ジオメトリ（`RE`）。ハウジング・頂点・円弧ローター・部屋の多角形・靴ひも面積・はみ出し判定・canvas ヘルパー・SVG 書き出し
-- **キャッシュ対策**: 各ページは `js/progress.js?v=…`・`js/rotary.js?v=…`・`design-system.css?v=…` のようにバージョン付きで読み込む。JS/CSS を変えたら全ページの `?v=` を新しい値に揃えて上げる（Cloudflare は既定で JS/CSS を4時間キャッシュするため、上げ忘れるとステージ追加などが古いスクリプトで動く）。`_headers` で /js/* と design-system.css は max-age=0 にしてある
+- **キャッシュ対策**: 各ページは `js/progress.js?v=…`・`js/rotary.js?v=…`・`design-system.css?v=…` のようにバージョン付きで読み込む。JS/CSS を変えたら全ページの `?v=` を新しい値に揃えて上げる（Cloudflare は既定で JS/CSS を4時間キャッシュするため、上げ忘れるとステージ追加などが古いスクリプトで動く）。`_headers` で /js/* と design-system.css を max-age=0 にしているが、効くのは rotary-engine-rkv.pages.dev だけ。本番ドメインは habatakijuku.com ドメイン全体の Cloudflare 設定（ブラウザキャッシュ4時間）が優先されるので、`?v=` を上げることが必須
 - `js/progress.js` — 進捗管理・クイズ判定。**クイズの正解は `ANSWERS`**。localStorageキーは `rotaryQuestProgress_v1`、グローバルは `RQ`
 - `stage1.html` 〜 `stage8.html`（共通シェル＋本文。本文の対話は各ページに直書き）。STAGE1〜7 が作図、STAGE8 は発明の歴史（ヴァンケルの密封研究と分類、DKM→KKM、NSU スパイダー1964年が最初の量産車、マツダが悪魔の爪痕を克服しコスモスポーツ1967年）、`index.html`（表紙）、`complete.html`（クリア画面）
 - `images/` — キャラ画像はWebP（string-theory から流用）。`ogp.png`（1200×630）と `favicon.png` は headless Chrome で canvas 描画をキャプチャして生成
