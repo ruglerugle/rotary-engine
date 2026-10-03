@@ -12,20 +12,66 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>STAGE2 中心がずれた軸 ― ロータリーエンジンを作図する</title>
-<meta name="description" content="ロータリーエンジンの偏心軸（エキセントリックシャフト）は、ローターの中心を出力軸の中心からずらして回す。そのずれ「偏心量 e」と、ローター中心から頂点までの「創成半径 R」という2つの寸法で形が決まることを学び、ローター中心の動きを (e cos α, e sin α) と式で書く。なぜ中心をずらす必要があるのかも、ドアの蝶番のたとえで理解する。">
+<title>STAGE2 中心がずれた軸（偏心量と創成半径） ― ロータリーエンジンを作図する</title>
+<meta name="description" content="ロータリーエンジンの偏心軸とは何か。ローターの中心が出力軸から偏心量 e だけずれて回る理由と、形を決める2つの数（偏心量 e・創成半径 R）を、クランク軸との比較や3D図で解説。">
 <link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage2">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ロータリーエンジンを作図する">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="STAGE2 中心がずれた軸 ― ロータリーエンジンを作図する">
+<meta property="og:title" content="STAGE2 中心がずれた軸（偏心量と創成半径） ― ロータリーエンジンを作図する">
 <meta property="og:description" content="出力軸の中心 O からずれて回るローターの中心 C。偏心量 e と創成半径 R、ロータリーエンジンの形を決める2つの数を手に入れる。">
 <meta property="og:url" content="https://rotary-engine.habatakijuku.com/stage2">
 <meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ロータリーエンジンを作図する：繭形のハウジングと三角おむすび形のローター、ハウジングの式 x＝R cos θ＋e cos 3θ">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LearningResource",
+      "name": "STAGE2 中心がずれた軸",
+      "description": "ロータリーエンジンの偏心軸とは何か。ローターの中心が出力軸から偏心量 e だけずれて回る理由と、形を決める2つの数（偏心量 e・創成半径 R）を、クランク軸との比較や3D図で解説。",
+      "url": "https://rotary-engine.habatakijuku.com/stage2",
+      "inLanguage": "ja",
+      "learningResourceType": "learning activity",
+      "educationalLevel": "中学生以上",
+      "isAccessibleForFree": true,
+      "position": 2,
+      "isPartOf": {
+        "@type": "LearningResource",
+        "name": "ロータリーエンジンを作図する",
+        "url": "https://rotary-engine.habatakijuku.com/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "ruglerugle"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ロータリーエンジンを作図する",
+          "item": "https://rotary-engine.habatakijuku.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "STAGE2 中心がずれた軸",
+          "item": "https://rotary-engine.habatakijuku.com/stage2"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="design-system.css?v=20261003c">
 <style>
   .crank-wrap{display:flex;flex-wrap:nowrap;justify-content:center;gap:8px 14px}
@@ -159,49 +205,49 @@
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。出力軸が回った角度を <strong>α（アルファ）</strong>と書くことにすると、C の位置はSTAGE1の円の式そのものだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">半径 e の円の上で角度 α の点だから、<strong>C＝(e cos α, e sin α)</strong> です。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通り。もう1つの寸法を決めよう。ローターの中心 C から3つの頂点までの距離を<strong>創成半径（そうせいはんけい）</strong>といい、記号 <strong>R</strong> で表す。「創成」は「形を生み出す」という意味で、この半径がハウジングの形を生み出すからそう呼ぶ。さて、実際の値を見てみよう。マツダのスポーツカー RX-7 や RX-8 に積まれていたロータリーエンジンに、<strong>13B</strong>（サーティーン・ビー）という名前のものがある。この 13B では、<strong>e＝15 mm、R＝105 mm</strong> だ。この旅では、この2つの数をずっと使う。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">偏心量はたった 15 mm なんですね。R の7分の1しかありません。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">小さく見えるけれど、これがないとエンジンは回らない。なぜ中心をずらすのか、考えてみよう。ドアを思い浮かべてごらん。ドアを開けるとき、蝶番（ちょうつがい）のすぐそばを押しても、ほとんど動かない。蝶番から離れた取っ手を押すと軽く回る。<strong>ものを回すには、回転の中心から離れたところに力をかける必要がある</strong>んだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">ローターは燃えたガスに押されるから、その力を軸の回転に変えたい。もしローターの中心が軸の中心 O とぴったり重なっていたら、蝶番を押しているのと同じで回らない。だから中心を e だけずらして、O から離れた C を押す形にしている、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。ピストンエンジンのクランク軸と同じ仕組みだよ。クランク軸も、中心からずれた腕の先をピストンが押すから回る。ロータリーエンジンでは、ローターがその腕の先に乗っている。腕の長さが e だ。</div>
@@ -223,49 +269,49 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">腕の先の C が円を描くのは分かりました。では、C から R 離れたローターの頂点は、軸が回るとどこを通るんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">では、頂点の位置を式にしてみよう。頂点は C から距離 R のところにある。頂点の向き、つまり C から頂点へ向かう角度を、いったん β（ベータ）と呼んでおく。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">STAGE1の「中心が (a, b) の円」の式と同じです。中心が C＝(e cos α, e sin α) で半径 R だから、頂点は <strong>(e cos α＋R cos β, e sin α＋R sin β)</strong> です。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。あとは β、つまり<strong>ローターの向きが軸の角度 α とどう関係するか</strong>を決めれば、頂点の位置が α だけで書ける。試しに、いちばん単純な場合を考えてみようか。ローターが軸に固定されていて、軸と一緒に同じ向きで回るとしたら、β＝α だね。そのとき頂点はどんな道を描くかな。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">β＝α なら、頂点は (e cos α＋R cos α, e sin α＋R sin α)＝((e＋R) cos α, (e＋R) sin α)。これは<strong>半径 e＋R のただの円</strong>です。ハウジングがただの円になってしまいます。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう、いま計算したのは頂点0、つまり C の向こう側にまっすぐ R 伸びた頂点だね。では、残りの2つの頂点はどうかな。β＝α＋120° の頂点1で、α＝0° のときの位置を計算してごらん。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">α＝0° なら C＝(e, 0) で、頂点1は C から 120° の向きに R 進んだところです。120° の点は、STAGE1 で計算した 60° の点 (1/2, √3/2) を縦軸で左右に折り返した位置なので、cos 120°＝−1/2、sin 120°＝√3/2。だから頂点1＝(e−R/2, R√3/2)。O からの距離は三平方の定理で、<br>(e−R/2)²＋(R√3/2)²＝e²−eR＋R²/4＋3R²/4＝<strong>R²−eR＋e²</strong>。<br>13B の数を入れると 11025−1575＋225＝9675 で、距離は約 <strong>98.4 mm</strong>。頂点0 の 120 mm より 20 mm 以上も内側です。軸と一緒に回るので、この距離は α が変わっても変わりません。頂点1は半径 98.4 mm の円を回る、ということですか？</div>
@@ -335,7 +381,7 @@
       <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通り。頂点2も同じ 98.4 mm だ。ハウジングの壁は、頂点0の通る半径 120 mm の円にするしかない。ところが頂点1と2は、壁から 20 mm 以上離れたまま回ることになる。ローターの頂点は、壁に触れることで隣の部屋との<strong>仕切り</strong>になっているんだ。その仕切りに大きな隙間が開くから、3つの部屋が1つにつながってしまう。しかも、ローター全体が O を中心に車輪のように回っているだけだから、ローターと壁の間の空間は、形も大きさも、回ってもまったく変わらない。エンジンは、部屋を大きくして混合気（空気とガソリンを混ぜた気体）を吸い込み、小さくして圧縮し、燃やして大きくし、小さくして排気する――<strong>部屋の大きさの変化</strong>で動く機械だ。大きさが変わらない部屋では、何も起きない。</div>
@@ -359,14 +405,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">ということは、ローターは軸と<strong>違う速さ</strong>で回らないといけないんですね。実物の映像で見た、おむすびがゆっくり回っているように見えるのは、そのせいですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">いいところに気づいたね。次のステージでは、ローターの回り方を歯車で決める。そこで β と α の関係が出てきて、頂点の道は円ではなく、あの繭形になる。今日は、その準備として2つの数 e と R、そして「C は半径 e の円を描く」ことが手に入った。</div>

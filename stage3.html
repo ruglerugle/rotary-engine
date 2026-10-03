@@ -12,20 +12,66 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>STAGE3 ゆっくり回るローター ― ロータリーエンジンを作図する</title>
-<meta name="description" content="ロータリーエンジンのローターは、出力軸が3回転する間に1回転しかしない。その理由は、ローターの内側の内歯車と、ハウジングに固定された歯車の歯数の比 3:2 にある。歯車の半径が 2e と 3e になる理由、回転する腕に乗って見る考え方で「ローターの角度＝軸の角度÷3」を導き、頂点の位置を式で書く。">
+<title>STAGE3 ゆっくり回るローター（歯車 2:3 と回転比） ― ロータリーエンジンを作図する</title>
+<meta name="description" content="ロータリーエンジンのローターはなぜ軸の1/3の速さで回るのか。固定歯車と内歯車の歯数比 2:3、歯車の半径 2e・3e、回転比 θ＝α/3 を、腕に乗って見る考え方で導く。">
 <link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage3">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ロータリーエンジンを作図する">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="STAGE3 ゆっくり回るローター ― ロータリーエンジンを作図する">
+<meta property="og:title" content="STAGE3 ゆっくり回るローター（歯車 2:3 と回転比） ― ロータリーエンジンを作図する">
 <meta property="og:description" content="軸が3回転する間にローターは1回転。固定歯車とローターの内歯車 2:3 から、θ＝α/3 を自分で導く。">
 <meta property="og:url" content="https://rotary-engine.habatakijuku.com/stage3">
 <meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ロータリーエンジンを作図する：繭形のハウジングと三角おむすび形のローター、ハウジングの式 x＝R cos θ＋e cos 3θ">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LearningResource",
+      "name": "STAGE3 ゆっくり回るローター",
+      "description": "ロータリーエンジンのローターはなぜ軸の1/3の速さで回るのか。固定歯車と内歯車の歯数比 2:3、歯車の半径 2e・3e、回転比 θ＝α/3 を、腕に乗って見る考え方で導く。",
+      "url": "https://rotary-engine.habatakijuku.com/stage3",
+      "inLanguage": "ja",
+      "learningResourceType": "learning activity",
+      "educationalLevel": "中学生以上",
+      "isAccessibleForFree": true,
+      "position": 3,
+      "isPartOf": {
+        "@type": "LearningResource",
+        "name": "ロータリーエンジンを作図する",
+        "url": "https://rotary-engine.habatakijuku.com/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "ruglerugle"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ロータリーエンジンを作図する",
+          "item": "https://rotary-engine.habatakijuku.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "STAGE3 ゆっくり回るローター",
+          "item": "https://rotary-engine.habatakijuku.com/stage3"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="design-system.css?v=20261003c">
 <style>
   .diagram-box svg.gearA,.diagram-box svg.tanB{max-width:min(100%,545px)}
@@ -164,14 +210,14 @@
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。内歯車と、その内側の小さな<strong>外歯車</strong>（歯が外向きに並んだ、ふつうの歯車）が、片側だけで噛み合っている。そして歯数はこう決まっている。<strong>固定歯車の歯数：ローター歯車の歯数＝2：3</strong>。たとえば固定歯車が 20 枚なら、ローター歯車は 30 枚だ。まず、この2つの歯車の大きさを考えてみよう。噛み合う歯車は、歯1枚ぶんの幅（ピッチという）が同じでないと噛み合わない。それから、歯車は大きさの分かる円に置き換えて考えればいい。<strong>内側で接する2つの円では、接している点と2つの円の中心が一直線に並ぶ</strong>。これも使ってごらん。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">歯の幅が同じなら、歯数の比がそのまま円周の比になります。円周は半径に比例するので、半径の比も 2：3 です。固定歯車の半径を 2x、ローター歯車の半径を 3x とおいてみます。2つの円が接している点を P とすると、P と O と C は一直線に並びます。C から P までが 3x、O から P までが 2x で、小さい円は大きい円の内側にあるから、O は C と P の間にあります。だから O と C の距離は 3x−2x＝x。この距離は偏心量 e です。だから x＝e。<strong>固定歯車の半径は 2e、ローター歯車の半径は 3e</strong>、ということですか？</div>
@@ -202,49 +248,49 @@
       <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通り。13B なら 30 mm と 45 mm だ。偏心量 e を決めると、歯車の大きさまで自動的に決まる。さて本題、ローターの回転の速さだ。少し頭を使う場面だから、ゆっくり行こう。出力軸と一緒に回る「腕」を想像してほしい。O から C へ伸びる長さ e の腕だ。ローターの中心はこの腕の先に乗っている。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">腕の先に乗っているだけなら、STAGE2 の β＝α のように、ローターは腕と一緒に回るだけです。歯車があると、それがどう変わるんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">それを見るために、腕に乗った人の目で考えてみよう。メリーゴーラウンドに乗ると、まわりの景色が逆向きに回って見えるね。それと同じで、<strong>腕に乗った人から見ると、動かないはずの固定歯車が、逆向きに回って見える</strong>。軸が1周（α＝360°）すると、腕の上の人には固定歯車が逆向きに1周して見える。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">固定歯車が1周して見えるということは、固定歯車の歯が 20 枚とも、噛み合っている場所を通り過ぎて見える、ということですね。歯車は歯と歯がかみ合っているから、片方の歯が 20 枚通れば、もう片方の歯も 20 枚通るはずです。ローター歯車は 30 枚だから、20÷30＝<strong>3分の2周</strong>、つまり 240° 回って見える。向きは……噛み合っている場所では両方の歯が同じ向きに動くから、固定歯車が逆向きに見えるなら、ローターも腕から見て逆向きに 240° です。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。ここで、腕に乗って見た回転と、地面に立って見た回転の違いを整理しよう。腕そのものは地面から見て 360° 回った。ローターは腕から見て逆向きに 240° 回った。地面から見たローターの回転は、その2つを合わせたものだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">360°−240°＝<strong>120°</strong>。軸が1周する間に、ローターは同じ向きに 120°、つまり<strong>3分の1周</strong>しか回らない。軸の角度を α とすると、ローターの角度は <strong>α/3</strong>、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通り。ローターの角度を θ と書くと、<strong>θ＝α/3</strong>。これがロータリーエンジンの有名な性質、<strong>「出力軸が3回転する間に、ローターは1回転」</strong>の正体だよ。実物のローターがゆっくり回って見えるのは、このためなんだ。</div>
@@ -268,28 +314,28 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">歯数の比が 2：3 なのは、どうしてですか。1：2 や 3：4 ではだめなんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">この比は、ローターの頂点が3つで、ハウジングのふくらみが2つ、という形の組合せから決まっているんだ。ローターが1周する間に、3つの頂点は壁を1周ずつたどる。壁のふくらみ2つとローターの頂点3つがぴったり息を合わせるためには、軸3回転にローター1回転、つまりこの 2：3 が必要になる。その理由は、次のステージで頂点の道を実際に描いてみると納得できるよ。今日はもうひとつ、頂点の座標を完成させておこう。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">STAGE2の式では、頂点は (e cos α＋R cos β, e sin α＋R sin β) で、β はローターの向きでした。ローターの向きが θ＝α/3 なら、1つめの頂点は β＝α/3。ローターは正三角形だから、残り2つの頂点は 120° ずつずれて、β＝α/3＋120°、β＝α/3＋240° です。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。3つの頂点を、それぞれ k＝0, 1, 2 と番号を付けて書くと、こうなる。</div>
@@ -306,14 +352,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">たしかに、式の中に出てくるのは e と R と α だけです。e＝15、R＝105 を入れて α を動かせば、頂点の道が描けるんですね。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">次のステージでそれをやろう。頂点の道こそが、ハウジングの繭形なんだ。</div>

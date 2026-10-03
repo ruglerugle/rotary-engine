@@ -12,20 +12,66 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>STAGE4 頂点が描く曲線 ― ロータリーエンジンを作図する</title>
-<meta name="description" content="ロータリーエンジンのハウジングの繭形は、ローターの頂点が描く軌跡そのもの。頂点の座標の式 x＝R cos θ＋e cos 3θ、y＝R sin θ＋e sin 3θ（ペリトロコイド）から、三平方の定理だけで中心からの距離 r²＝R²＋e²＋2eR cos 2θ を導き、ふくらみが2つになる理由、R/e の値で形がどう変わるかを、自分で動かして確かめる。">
+<title>STAGE4 頂点が描く曲線（ペリトロコイドの式） ― ロータリーエンジンを作図する</title>
+<meta name="description" content="ロータリーエンジンのハウジングの繭形はペリトロコイド。頂点の軌跡 x＝R cos θ＋e cos 3θ を描き、三平方の定理で r²＝R²＋e²＋2eR cos 2θ を導いて、ふくらみが2つになる理由と比 K の役割を解説。">
 <link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage4">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ロータリーエンジンを作図する">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="STAGE4 頂点が描く曲線 ― ロータリーエンジンを作図する">
+<meta property="og:title" content="STAGE4 頂点が描く曲線（ペリトロコイドの式） ― ロータリーエンジンを作図する">
 <meta property="og:description" content="頂点の軌跡がそのままハウジングの繭形になる。三平方の定理で r²＝R²＋e²＋2eR cos 2θ を導き、ふくらみが2つになる理由を知る。">
 <meta property="og:url" content="https://rotary-engine.habatakijuku.com/stage4">
 <meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ロータリーエンジンを作図する：繭形のハウジングと三角おむすび形のローター、ハウジングの式 x＝R cos θ＋e cos 3θ">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LearningResource",
+      "name": "STAGE4 頂点が描く曲線",
+      "description": "ロータリーエンジンのハウジングの繭形はペリトロコイド。頂点の軌跡 x＝R cos θ＋e cos 3θ を描き、三平方の定理で r²＝R²＋e²＋2eR cos 2θ を導いて、ふくらみが2つになる理由と比 K の役割を解説。",
+      "url": "https://rotary-engine.habatakijuku.com/stage4",
+      "inLanguage": "ja",
+      "learningResourceType": "learning activity",
+      "educationalLevel": "中学生以上",
+      "isAccessibleForFree": true,
+      "position": 4,
+      "isPartOf": {
+        "@type": "LearningResource",
+        "name": "ロータリーエンジンを作図する",
+        "url": "https://rotary-engine.habatakijuku.com/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "ruglerugle"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ロータリーエンジンを作図する",
+          "item": "https://rotary-engine.habatakijuku.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "STAGE4 頂点が描く曲線",
+          "item": "https://rotary-engine.habatakijuku.com/stage4"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="design-system.css?v=20261003c">
 <style>
   .diagram-box svg.troch{max-width:min(100%,520px)}
@@ -159,21 +205,21 @@
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">確かめられるよ。頂点1の向きは α/3＋120° だったね。頂点0の式で、α のかわりに α＋360° を入れてみてごらん。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">頂点0の x は e cos α＋R cos(α/3)。α を α＋360° にすると、e cos(α＋360°)＋R cos((α＋360°)/3)。cos は 360° 回ると元に戻るので、最初の項は e cos α のまま。2つめは (α＋360°)/3＝α/3＋120° だから、R cos(α/3＋120°)。これは<strong>頂点1の式と同じ</strong>です。y も同じです。つまり頂点1は、頂点0が軸1周ぶん先に進んだ場所にいる。3つの頂点は<strong>同じ1本の道を、軸1周ずつずれて追いかけている</strong>、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通り。だから壁は1本でいい。この曲線には名前があって、<strong>ペリトロコイド</strong>という。トロコイドというのは「転がる円に付けた点が描く道」のことで、自転車の車輪の反射板が描く波打った道もその仲間だ。ロータリーエンジンでは、ローターの歯車が固定歯車のまわりを転がるから、頂点の道がトロコイドになる。</div>
@@ -203,14 +249,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">ただ、頂点0の式には α と α/3 が混ざっていて、ローターがどれだけ回ったときの点なのか、少し読み取りにくいです。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そうだね。ローターの角度 θ＝α/3 を使って書き直そう。α＝3θ だから、頂点0の座標はこうなる。</div>
@@ -242,21 +288,21 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">点を打っていくと、繭形になりました。でも、なぜふくらみが2つなんでしょう。式には 3θ が入っているので、3つになりそうな気もします。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">いい疑問だね。中心 O から頂点までの距離を調べると分かる。距離を r としよう。O から C までが e、C から頂点 P までが R。O→C の向きは 3θ、C→P の向きは θ だ。ここで、図全体を回しても長さは変わらないことを使う。C→P が真横（右向き）になるように図を回してごらん。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">図全体を θ だけ逆向きに回すと、C→P の向きは θ−θ＝0°、つまり真横。O→C の向きは 3θ−θ＝<strong>2θ</strong> になります。だから C＝(e cos 2θ, e sin 2θ)、P は C から右へ R 進んで (e cos 2θ＋R, e sin 2θ)。O から P までの距離は三平方の定理で、<br>r²＝(e cos 2θ＋R)²＋(e sin 2θ)²<br>＝e²(cos 2θ)²＋2eR cos 2θ＋R²＋e²(sin 2θ)²<br>＝R²＋e²＋2eR cos 2θ。<br>最後は (cos 2θ)²＋(sin 2θ)²＝1 を使いました。</div>
@@ -308,14 +354,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。<strong>r²＝R²＋e²＋2eR cos 2θ</strong>。この式に、ふくらみが2つの理由が全部入っている。cos 2θ がいちばん大きい 1 になるのは 2θ＝0°、360° のとき、つまり θ＝0°、180°。そのとき r²＝R²＋2eR＋e²＝(R＋e)² だから、r＝R＋e。いちばん小さい −1 になるのは θ＝90°、270° で、r＝R−e。θ が1周する間に、距離は<strong>2回大きく、2回小さく</strong>なる。それが2つのふくらみと2つのくびれだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">13B なら、いちばん遠いところが 105＋15＝120 mm、いちばん近いところが 105−15＝90 mm。長いほうの差し渡しが 240 mm、短いほうが 180 mm ですね。</div>
@@ -350,21 +396,21 @@
       <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通り。それから「3θ が入っているのに2つ」の答えも、いま出てきたね。距離を決めていたのは 3θ と θ の<strong>差の 2θ</strong>だった。軸がローターの3倍の速さで回るから、向きの差が2倍の速さで変わる。ふくらみの数は、この差の速さで決まるんだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">ということは、もし軸がローターの4倍の速さで回る機械なら、差は 3θ で、ふくらみが3つの壁になる、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。そういう仲間の機械も考えられていて、そのときローターの頂点は4つになる。頂点の数がふくらみの数より1つ多い、という関係だね。ロータリーエンジンは「ふくらみ2つ、頂点3つ」の組合せで、それが STAGE3 の歯数の比 2：3 に対応している。</div>
@@ -399,14 +445,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">e に対して R をどのくらい大きくするか、つまり R と e の比を変えると、繭形の太り方も変わるはずです。どんな比でもエンジンになりますか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">ならない。R と e の比を <strong>K</strong> と呼ぼう。K＝R/e だ。K が 3 より小さいと、曲線が自分自身と交わってループができてしまい、壁として使えない。K が 3 から 9 の間では、くびれのところが少し内側にへこむ。9 より大きいと、へこみが消えて、楕円に近いなめらかな形になる。実際のエンジンでは K は 6 から 8 くらいが使われていて、13B は 7 だ。K を大きくすると、ローターが丸く太って、部屋をより小さくまで押し縮められる。つまり圧縮が強くできる。けれど、同じ排気量のエンジンを作るには、K が大きいほど R が大きくなって、エンジンそのものが大きく重くなる。逆に K を小さくすると小さく作れるけれど、頂点が壁に当たる角度がきつくなって、密封部品が傷みやすい。そのつり合いで決まっているんだよ。これでハウジングが描けた。次のステージでは、ローターの辺の形を決める。頂点は決まっているけれど、辺をどれだけ膨らませていいかは、ハウジングの形から逆算するんだ。</div>

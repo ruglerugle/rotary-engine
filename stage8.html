@@ -12,20 +12,66 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>STAGE8 開発者たち ― ロータリーエンジンを作図する</title>
-<meta name="description" content="ロータリーエンジンはどうやって生まれたのか。独学の発明家フェリクス・ヴァンケルが何十年もかけた「密封」の研究と回転機械の分類、ハウジングも回る最初のエンジン DKM から、ハウジングを止めたパシュケの KKM への組み替え、そしてマツダが「悪魔の爪痕」を克服してコスモスポーツを世に出すまでを、これまでに学んだ作図の知識でたどる。">
+<title>STAGE8 開発者たち（ヴァンケルと発明の歴史） ― ロータリーエンジンを作図する</title>
+<meta name="description" content="ロータリーエンジンは誰がどうやって発明したのか。フェリクス・ヴァンケルの密封研究と分類、ハウジングも回る最初の DKM、パシュケの KKM、マツダが克服した悪魔の爪痕とコスモスポーツまで。">
 <link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage8">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ロータリーエンジンを作図する">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="STAGE8 開発者たち ― ロータリーエンジンを作図する">
+<meta property="og:title" content="STAGE8 開発者たち（ヴァンケルと発明の歴史） ― ロータリーエンジンを作図する">
 <meta property="og:description" content="形は昔からある曲線。それを選んだヴァンケル、止める場所を変えたパシュケ、最後の傷を消したマツダ。ロータリーエンジン誕生の物語。">
 <meta property="og:url" content="https://rotary-engine.habatakijuku.com/stage8">
 <meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ロータリーエンジンを作図する：繭形のハウジングと三角おむすび形のローター、ハウジングの式 x＝R cos θ＋e cos 3θ">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LearningResource",
+      "name": "STAGE8 開発者たち",
+      "description": "ロータリーエンジンは誰がどうやって発明したのか。フェリクス・ヴァンケルの密封研究と分類、ハウジングも回る最初の DKM、パシュケの KKM、マツダが克服した悪魔の爪痕とコスモスポーツまで。",
+      "url": "https://rotary-engine.habatakijuku.com/stage8",
+      "inLanguage": "ja",
+      "learningResourceType": "learning activity",
+      "educationalLevel": "中学生以上",
+      "isAccessibleForFree": true,
+      "position": 8,
+      "isPartOf": {
+        "@type": "LearningResource",
+        "name": "ロータリーエンジンを作図する",
+        "url": "https://rotary-engine.habatakijuku.com/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "ruglerugle"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ロータリーエンジンを作図する",
+          "item": "https://rotary-engine.habatakijuku.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "STAGE8 開発者たち",
+          "item": "https://rotary-engine.habatakijuku.com/stage8"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="design-system.css?v=20261003c">
 <style>
   .sim-controls{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
@@ -136,35 +182,35 @@
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そうじゃないんだ。彼がまず取り組んだのは、形ではなく<strong>密封</strong>、つまりすき間からガスを漏らさないことだった。1920年代から、回転する弁（回転バルブ）のすき間をふさぐ研究を始めて、戦争中も航空機関係の研究所でその仕事を続けた。回る機械は、往復する機械よりすき間をふさぐのがずっと難しい。そこが全部の鍵だと見抜いていたんだね。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">STAGE2 で、頂点が壁から離れると隣の部屋とつながってしまう、という話をしました。頂点が壁に触れて仕切りになっていても、そこから少しでも漏れたら、部屋を小さくしても混合気は押し縮められません。だから形より先に、仕切りの密封ができないと始まらない、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通り。そしてもう一つの大仕事が、「回る部品でできる機械の形」を片っ端から<strong>分類</strong>することだった。何が回るか、内側と外側のどちらが動くか、ふくらみと頂点はいくつか。組合せを表にして、密封できそうなものだけを残していったんだ。じつは、あの繭形の曲線そのものは、彼が発明したものではない。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">STAGE4 のトロコイドですね。転がる円に付けた点が描く道は、自転車の反射板の道のように、もともと知られていた曲線だった、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。トロコイドの仲間は、何百年も前から数学者が調べていた。ヴァンケルの仕事は、無数の組合せの中から「ふくらみ2つ、頂点3つ」の組を、密封できる現実的な機械として選び出したことなんだ。STAGE4 で見た「軸がローターの4倍の速さ」の仲間も、彼の表にはちゃんと載っている。</div>
@@ -204,42 +250,42 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">それで、最初に動いたのが、この旅で描いてきた形なんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">それが違うんだ。ヴァンケルはドイツの自動車会社 <strong>NSU</strong> と組んで、1957年に最初のエンジン <strong>DKM 54</strong> を動かした。これは、ローターだけでなく<strong>ハウジングも回る</strong>方式だった。ローターもハウジングも、それぞれ動かない軸のまわりで回る。偏心軸のように、中心がぐるぐる動く部品はないんだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">ハウジングに乗って見ると、今のエンジンと同じ動きになっていないといけないはずです。STAGE3 の「腕に乗って見る」と同じ考え方で考えてみます。DKM ではローターの中心は止まっているので、ハウジングが1周すると、ハウジングから見たローターの中心は、逆向きに1周して見えます。今のエンジンでは、中心が1周するとローターは同じ向きに 1/3 周するので、逆向きに1周なら、ハウジングから見てローターは逆向きに 120° 回ります。地面から見ると 360°−120°＝240°。ハウジングが1周する間にローターは 2/3 周、つまり<strong>速さの比は 3：2</strong>、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通り。DKM では、ハウジングとローターが同じ向きに 3：2 の速さで回っていた。中心がぶれないので、とても滑らかに速く回れたんだ。ただ、困ったことがあった。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">STAGE7 で、点火プラグはハウジングの壁に付けました。ハウジングが回るなら、プラグも一緒に回ってしまいます。回っている部品に電気を送るのは大変そうです。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。点火も、燃料と空気の出入りも、冷やすのも大変で、部品を見るだけでもエンジンを分解しなければならなかった。そこで NSU の技術者 <strong>ハンス・ディーター・パシュケ</strong>が、ハウジングを止めて、ローターを偏心軸で振り回す形に組み替えた。1958年に動いたこの <strong>KKM</strong> が、この旅で描いてきたロータリーエンジンなんだ。ヴァンケル本人はこれを「競走馬を農耕馬にした」と嫌ったと伝えられているけれど、その後に使われたのは、こちらの形だった。</div>
@@ -261,28 +307,28 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">形は同じで、どこを止めてどこを回すかを変えたんですね。STAGE2 で学んだ偏心軸は、この組み替えで生まれたんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。ハウジングを止めた代わりに、ローターの中心を動かす部品が必要になった。それが偏心軸だ。1964年には NSU が、ロータリーエンジンを載せた世界で最初の量産車「<strong>ヴァンケルスパイダー</strong>」を売り出した。ただ、大きな問題が残っていた。走っているうちに、ハウジングの壁に、波のような傷が並んでしまうんだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">STAGE1 から、頂点はいつも壁に触れながら動く、と見てきました。触れているところが、少しずつ削れてしまうんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">少し違う。原因は、頂点に付いた<strong>アペックスシールの振動</strong>だった。ものすごい速さで滑るシールが細かく震え、跳ねるように壁を叩くので、一定の間隔で波のような傷が並ぶ。日本のマツダの技術者たちは、これを「<strong>悪魔の爪痕</strong>」と呼んだ。マツダは1961年に NSU と契約して開発に加わり、山本健一さんを中心とする技術者たちが、シールに穴をあけて震えにくい形にしたり、アルミニウムをしみこませた炭素という新しい材料を使ったりして、この傷を克服した。そして1967年、2つのローターをもつ「<strong>コスモスポーツ</strong>」を世に出したんだ。</div>
@@ -316,14 +362,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">まとめると、曲線は昔から知られていたもので、それを密封できる機械として選んだのがヴァンケルさん、止める場所を変えたのがパシュケさん、最後の傷を消したのがマツダの人たち。1人のひらめきではなく、何十年もかけて何人もの人がつないだ、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そうだね。そして、きみがこの旅でやったことは、その人たちがたどり着いた形を、たった2つの数 e と R から、自分の手で描き直すことだった。ヴァンケルが表を作って探した形の骨格は、cos と sin と三平方の定理で全部説明できた。これで本当に旅は終わりだ。お疲れさま。</div>

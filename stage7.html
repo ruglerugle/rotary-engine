@@ -12,20 +12,66 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>STAGE7 完成図を描く ― ロータリーエンジンを作図する</title>
-<meta name="description" content="これまでの式をすべて使い、偏心量 e と創成半径 R を自分で決めてロータリーエンジンの完成図を描く。固定歯車（半径 2e）とローター歯車（半径 3e）、偏心軸、部屋がいちばん小さくなるくびれ側の2本の点火プラグ、反対側のくびれをはさむ排気口と吸気口の位置を決め、図を SVG として保存できる作図ツール付き。近似で省いた実物との違いもまとめる。">
+<title>STAGE7 完成図を描く（作図ツール・SVG保存） ― ロータリーエンジンを作図する</title>
+<meta name="description" content="ロータリーエンジンの完成図を自分の寸法で作図。歯車・偏心軸・点火プラグ・吸気口・排気口の位置を決め、e と R を入れるだけで描ける作図ツールで SVG 保存もできる。">
 <link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage7">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ロータリーエンジンを作図する">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="STAGE7 完成図を描く ― ロータリーエンジンを作図する">
+<meta property="og:title" content="STAGE7 完成図を描く（作図ツール・SVG保存） ― ロータリーエンジンを作図する">
 <meta property="og:description" content="e と R を決めるだけで、ハウジング・ローター・歯車・点火プラグ・吸排気口まで、ロータリーエンジンの完成図が式から出てくる。SVG で保存できる。">
 <meta property="og:url" content="https://rotary-engine.habatakijuku.com/stage7">
 <meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ロータリーエンジンを作図する：繭形のハウジングと三角おむすび形のローター、ハウジングの式 x＝R cos θ＋e cos 3θ">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LearningResource",
+      "name": "STAGE7 完成図を描く",
+      "description": "ロータリーエンジンの完成図を自分の寸法で作図。歯車・偏心軸・点火プラグ・吸気口・排気口の位置を決め、e と R を入れるだけで描ける作図ツールで SVG 保存もできる。",
+      "url": "https://rotary-engine.habatakijuku.com/stage7",
+      "inLanguage": "ja",
+      "learningResourceType": "learning activity",
+      "educationalLevel": "中学生以上",
+      "isAccessibleForFree": true,
+      "position": 7,
+      "isPartOf": {
+        "@type": "LearningResource",
+        "name": "ロータリーエンジンを作図する",
+        "url": "https://rotary-engine.habatakijuku.com/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "ruglerugle"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ロータリーエンジンを作図する",
+          "item": "https://rotary-engine.habatakijuku.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "STAGE7 完成図を描く",
+          "item": "https://rotary-engine.habatakijuku.com/stage7"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="design-system.css?v=20261003c">
 <style>
   .pair-wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:6px 14px}
@@ -143,42 +189,42 @@
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">STAGE6の面積の変化を思い出そう。部屋がいちばん小さくなる場所は、ハウジングの2つの<strong>くびれ</strong>だった。1つの部屋は、上のくびれで小さくなり、次に下のくびれで小さくなる。4行程のうち、小さくなる瞬間は「圧縮の終わり」と「排気の終わり」の2回。だから、<strong>片方のくびれを圧縮の終わり（点火）、もう片方を排気の終わり（吸排気）</strong>に割り当てる。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">では点火プラグは、片方のくびれのところに付ける。部屋がいちばん小さくなった瞬間に火花を飛ばせるように、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。実物では、くびれの部分の部屋は細長く伸びた形になるから、火が端まで届きやすいように<strong>プラグを2本</strong>、少し離して付ける。ローターの進む向きで先にある方を<strong>リーディング</strong>（先行）、後ろの方を<strong>トレーリング</strong>（後行）と呼ぶ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">点火の側は決まりました。混合気の出入り口は、もう片方のくびれ、排気の終わりの側ですね。でも、入口と出口を同じくびれのそばに付けたら、吸い込んだばかりの混合気が、そのまま出口から出ていってしまいませんか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">いい疑問だね。だから吸気口と排気口は、反対側のくびれの両脇に、<strong>順番を決めて</strong>置く。部屋は排気の行程で小さくなりながらくびれに近づく。だから、回転の向きで見て<strong>くびれの手前に排気口</strong>を開けておけば、燃えかすが押し出される。くびれを過ぎると部屋は大きくなり始めるから、<strong>くびれの先に吸気口</strong>を開けておけば、新しい混合気が吸い込まれる。排気口はハウジングの壁そのものに穴を開け（ペリフェラルポート）、吸気口は横のふたに開ける（サイドポート）ことが多い。図では、排気口を壁の切れ目、吸気口を壁ぎわの楕円で描こう。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">ローターが反時計回りに回るなら、部屋は右→上→左→下→右の順に動きます。上のくびれで点火するなら、下のくびれの手前は左下、先は右下。だから<strong>排気口は左下、吸気口は右下</strong>、ということですか？</div>
@@ -197,7 +243,7 @@
       <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通り。これで、式で決まる部品は全部そろった。ここから先は、自分の寸法で描いてみる番だよ。</div>
@@ -233,14 +279,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">e と R の2つを決めるだけで、本当に全部の形が出てきました。作図の手順を、最初から通しで整理してもいいですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">ぜひそうしよう。旅の地図として、手順をまとめておくよ。</div>
@@ -263,14 +309,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">最初に「近似」と断っていましたが、実物と違うところを、まとめて教えてください。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">主なものは3つだ。1つめ、実物のハウジングの壁は、頂点の軌跡そのものではなく、アペックスシールの厚みのぶんだけ<strong>外側に平行にずらした曲線</strong>になっている。2つめ、ローターの辺は包絡線に近い曲線で、しかも<strong>燃焼室のくぼみ</strong>が掘ってある。だから圧縮比は今日の計算より低い。3つめ、実物の歯車には歯があり、軸には軸受けや冷却の通り道があって、図はもっと込み入っている。でも、<strong>形の骨格はすべて今日の式のとおり</strong>だ。式が分かっていれば、そういう補正は「骨格に肉を付ける」だけの話になる。</div>
@@ -303,14 +349,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">最初は、あのおむすびの形は誰かが手で描いて決めたものだと思っていました。2つの数を決めただけで、壁もローターも歯車も、部屋の大きさまで全部出てくるとは思いませんでした。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そうだね。これで作図の旅は終わりだ。おむすびがなぜ回るのか、なぜあの繭形なのか、その形をどう決めればいいのか。全部、cos と sin と三平方の定理で説明できた。最後のステージでは、この形を生み出した開発者たちの話をしよう。</div>

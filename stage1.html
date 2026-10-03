@@ -12,20 +12,66 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>STAGE1 おむすびは、なぜ回る ― ロータリーエンジンを作図する</title>
-<meta name="description" content="ロータリーエンジンは、三角おむすび形のローターが繭形のハウジングの中で回るエンジン。その形を定規やコンパスではなく「式」で描くための最初の道具として、点を数の組（座標）で表す考え方と、角度から座標を取り出す cos・sin（複素数の極形式で学んだもの）を思い出して、円を式で描く練習をする。">
+<title>STAGE1 おむすびは、なぜ回る（座標と cos・sin） ― ロータリーエンジンを作図する</title>
+<meta name="description" content="ロータリーエンジンの形を数学の式で描く第1歩。ハウジング・ローター・偏心軸の名前と、角度から座標を取り出す cos・sin、円を式で描く方法（媒介変数）を、図と対話で中学生にもわかるように解説。">
 <link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage1">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ロータリーエンジンを作図する">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="STAGE1 おむすびは、なぜ回る ― ロータリーエンジンを作図する">
+<meta property="og:title" content="STAGE1 おむすびは、なぜ回る（座標と cos・sin） ― ロータリーエンジンを作図する">
 <meta property="og:description" content="三角おむすびのローターと繭形のハウジング。それを式で描くための最初の道具、角度から座標を取り出す cos・sin を学び、円を式で描く。">
 <meta property="og:url" content="https://rotary-engine.habatakijuku.com/stage1">
 <meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ロータリーエンジンを作図する：繭形のハウジングと三角おむすび形のローター、ハウジングの式 x＝R cos θ＋e cos 3θ">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LearningResource",
+      "name": "STAGE1 おむすびは、なぜ回る",
+      "description": "ロータリーエンジンの形を数学の式で描く第1歩。ハウジング・ローター・偏心軸の名前と、角度から座標を取り出す cos・sin、円を式で描く方法（媒介変数）を、図と対話で中学生にもわかるように解説。",
+      "url": "https://rotary-engine.habatakijuku.com/stage1",
+      "inLanguage": "ja",
+      "learningResourceType": "learning activity",
+      "educationalLevel": "中学生以上",
+      "isAccessibleForFree": true,
+      "position": 1,
+      "isPartOf": {
+        "@type": "LearningResource",
+        "name": "ロータリーエンジンを作図する",
+        "url": "https://rotary-engine.habatakijuku.com/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "ruglerugle"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ロータリーエンジンを作図する",
+          "item": "https://rotary-engine.habatakijuku.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "STAGE1 おむすびは、なぜ回る",
+          "item": "https://rotary-engine.habatakijuku.com/stage1"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="design-system.css?v=20261003c">
 <style>
   .diagram-box svg.deg60{max-width:min(100%,400px)}
@@ -133,7 +179,7 @@
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">それがこの旅の主題なんだ。ゴールを先に言っておこう。<strong>ハウジングの繭形も、ローターのおむすび形も、数学の式だけで描けるようになる</strong>。定規で写し取るのではなく、たった2つの数（部品の寸法）を決めれば、あとは計算で形が出てくる。そういう作図だよ。まず部品の名前を3つ覚えてほしい。外側の繭形の壁を<strong>ハウジング</strong>、中で回る三角形を<strong>ローター</strong>、ローターの真ん中を貫いて回転を外に取り出す軸を<strong>偏心軸（へんしんじく）</strong>という。英語ではエキセントリックシャフトだ。</div>
@@ -154,63 +200,63 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">「偏心」は、心（中心）が偏（かたよ）っている、という意味ですか？ 軸なのに中心がずれているなんて、変な名前です。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通りの意味で、そこが仕掛けの心臓部なんだけれど、それは次のステージで話そう。今日は道具の準備だ。「式で描く」とはどういうことか、いちばん簡単な図形、<strong>円</strong>で練習する。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">円なら、コンパスで描けます。式で描くというのは、どういうことですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">コンパスは「中心から同じ距離の点を全部たどる」道具だね。式で描くときも考え方は同じで、<strong>曲線を「点の集まり」と見て、その1つ1つの点の位置を式で作る</strong>。点の位置は、横の位置 x と縦の位置 y の数の組 (x, y)、つまり<strong>座標</strong>で表す。式で座標を次々に作ってグラフ用紙に打っていけば、どんな曲線でも描けるし、コンピュータに描かせることもできる。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">円の上の点の座標を、どうやって式にするんですか？ 中心から同じ距離、というのは分かりますが、「距離が同じ」だけでは x と y がいくつか決まりません。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">いい質問だね。<strong>角度</strong>を使うんだ。中心から真横（右向き）に線を引いて、そこから反時計回りに何度回ったところか、で円の上の点を指定する。この角度を θ（シータ）と呼ぼう。角度が決まれば点は1つに決まる。あとは「角度 θ から座標 (x, y) を取り出す道具」があればいい。じつは、その道具にはもう出会っているはずだよ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">あ、思い出しました。<a href="https://complex-number.habatakijuku.com/stage5" target="_blank" rel="noopener" style="color:var(--gold-dark);text-decoration:underline">『本当はおもしろい複素数の世界』</a>の極形式の回で、<strong>cos</strong> と <strong>sin</strong> を教わりました。原点から角度 θ の方角へ長さ1の矢印を引いたとき、その先端の横の位置が cos θ、縦の位置が sin θ。矢印の長さが r なら、先端の位置は全部 r 倍して横 r cos θ、縦 r sin θ でした。だから、原点を中心とする半径 r の円の上で角度 θ の点は <strong>(r cos θ, r sin θ)</strong> と書ける、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">よく覚えていたね。その通りだ。この旅では円の言葉で言い直しておこう。<strong>半径1の円</strong>の上で、角度 θ の点の<strong>横座標が cos θ、縦座標が sin θ</strong>。たとえば θ＝0° なら点は真横の (1, 0) にあるから、cos 0°＝1、sin 0°＝0。θ＝90° なら点は真上の (0, 1) だから、cos 90°＝0、sin 90°＝1。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">θ＝60° なら、どうなりますか。中心と、真横の点 (1, 0) と、60° の点の3つを結ぶと、2辺が半径1で、間の角が 60° だから……正三角形です。正三角形を真ん中で半分に折ると、底辺の半分は 1/2。だから横座標は cos 60°＝1/2。縦座標は三平方の定理で、1²＝(1/2)²＋y² から y²＝3/4、y＝√3/2 です。つまり sin 60°＝√3/2、小数にすると約 0.866、ということですか？</div>
@@ -245,21 +291,21 @@
       <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。cos や sin の値は、そうやって図形から求められる角度もあるし、そうでない角度は電卓やコンピュータが計算してくれる。大事なのは意味のほうだよ。それから、いま使った三平方の定理は、どの角度でも成り立つ。半径1の円の上の点だから、<strong>(cos θ)²＋(sin θ)²＝1</strong>。この関係はあとで何度も使う。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">すると「式で円を描く」というのは、θ を 0° から 360° まで少しずつ変えながら、点 (r cos θ, r sin θ) を次々に打っていくこと、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通り。それが「円を式で描く」の全部だ。このように、動かす数（ここでは θ）のことを<strong>媒介変数（ばいかいへんすう）</strong>、あるいはパラメータという。旅の間じゅう、この「パラメータを動かして点を打つ」やり方で形を描いていくよ。</div>
@@ -284,14 +330,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">円の中心が原点ではなくて、たとえば (3, 2) にあるときは、どうすればいいですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">中心をずらすだけだから、座標に足せばいい。中心が (a, b) の半径 r の円の上の点は、<strong>(a＋r cos θ, b＋r sin θ)</strong> だ。じつは、これが次のステージの主役になる。ロータリーエンジンでは、<strong>ローターの中心そのものが動く</strong>んだ。動く中心に、さらに角度を足して頂点の位置を作る。今日の道具だけで、それが全部書けるよ。</div>
@@ -332,14 +378,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">中心が動いても、足し算で追いかけられるんですね。ひとつ気になるのですが、実物のエンジンも、本当に式のとおりの形をしているんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">いい質問だね。そこは、旅の約束として先に言っておこう。ここで描く形は<strong>「理屈の上での形」</strong>だ。実物のエンジンでは、ローターの頂点に付いている密封部品（アペックスシール）の厚みのぶん壁を少し外側にずらしたり、ローターの面に、燃料が燃える部屋（燃焼室）になるくぼみを掘ったりと、細かな補正が入る。この旅ではそういう補正は省いて、<strong>形の骨格を式から出すこと</strong>に集中する。そう断ったうえで、驚くほど実物に近い図が出てくるのを見てもらおう。</div>

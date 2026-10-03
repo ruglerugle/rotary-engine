@@ -12,20 +12,66 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>STAGE6 3つの部屋、4つの行程 ― ロータリーエンジンを作図する</title>
-<meta name="description" content="ローターの辺とハウジングの間にできる3つの部屋（作動室）の面積を、多角形に近似して原点と各辺で作る三角形の和（靴ひも公式）で計算する。面積×幅で体積を出し、最大と最小の差から排気量 3√3eRb＝654 cc（13B）が出てくること、吸気・圧縮・爆発・排気の4行程が軸270°ずつ進み、軸1回転ごとに爆発が起きる理由を学ぶ。">
+<title>STAGE6 3つの部屋、4つの行程（排気量の計算） ― ロータリーエンジンを作図する</title>
+<meta name="description" content="ロータリーエンジンの排気量の計算。3つの部屋の面積を靴ひも公式で求め、マツダ13Bの排気量 654cc を式から再現。吸気・圧縮・爆発・排気の4行程が軸270°ずつ進む仕組みも図解。">
 <link rel="canonical" href="https://rotary-engine.habatakijuku.com/stage6">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ロータリーエンジンを作図する">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="STAGE6 3つの部屋、4つの行程 ― ロータリーエンジンを作図する">
+<meta property="og:title" content="STAGE6 3つの部屋、4つの行程（排気量の計算） ― ロータリーエンジンを作図する">
 <meta property="og:description" content="3つの部屋の面積を式で計算すると、最大と最小の差からマツダ13Bの排気量 654 cc がそのまま出てくる。4行程は軸270°ずつ。">
 <meta property="og:url" content="https://rotary-engine.habatakijuku.com/stage6">
 <meta property="og:image" content="https://rotary-engine.habatakijuku.com/images/ogp.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ロータリーエンジンを作図する：繭形のハウジングと三角おむすび形のローター、ハウジングの式 x＝R cos θ＋e cos 3θ">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LearningResource",
+      "name": "STAGE6 3つの部屋、4つの行程",
+      "description": "ロータリーエンジンの排気量の計算。3つの部屋の面積を靴ひも公式で求め、マツダ13Bの排気量 654cc を式から再現。吸気・圧縮・爆発・排気の4行程が軸270°ずつ進む仕組みも図解。",
+      "url": "https://rotary-engine.habatakijuku.com/stage6",
+      "inLanguage": "ja",
+      "learningResourceType": "learning activity",
+      "educationalLevel": "中学生以上",
+      "isAccessibleForFree": true,
+      "position": 6,
+      "isPartOf": {
+        "@type": "LearningResource",
+        "name": "ロータリーエンジンを作図する",
+        "url": "https://rotary-engine.habatakijuku.com/"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "ruglerugle"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ロータリーエンジンを作図する",
+          "item": "https://rotary-engine.habatakijuku.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "STAGE6 3つの部屋、4つの行程",
+          "item": "https://rotary-engine.habatakijuku.com/stage6"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="design-system.css?v=20261003c">
 <style>
   .pair-wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:6px 14px}
@@ -131,49 +177,49 @@
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">それを式で計算しよう。部屋には奥行きがある。ローターとハウジングの幅を b とすると、この旅でずっと使っているマツダのエンジン 13B では b＝80 mm だ。奥行きはどこでも同じだから、<strong>体積＝断面の面積×幅 b</strong>。だから面積が分かればいい。ところが部屋の形は、曲線に囲まれた三日月のような形で、公式で一発というわけにはいかない。そこで、この旅の約束どおり近似を使う。<strong>曲線を細かい点で結んだ多角形とみなして、多角形の面積を計算する</strong>んだ。点を細かくとれば、いくらでも本物の面積に近づく。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">多角形の面積は、三角形に分ければ計算できますね。でも、頂点が何百個もある多角形を三角形に分けて、ひとつひとつ底辺と高さを測るのは大変です。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そこで便利な式がある。原点 O と2つの点 P＝(x₁, y₁)、Q＝(x₂, y₂) で作る三角形の面積は、<strong>(x₁y₂−x₂y₁)÷2</strong> で出せる。P から Q へ反時計回りに回るときに正、時計回りなら負になる、符号付きの面積だ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">確かめてみます。P＝(4, 0)、Q＝(0, 3) なら、(4×3−0×0)÷2＝6。底辺4、高さ3の直角三角形の面積は 4×3÷2＝6 で、合っています。斜めの位置にある点でも、この式でいいんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">いい。たとえば P＝(4, 1)、Q＝(1, 3) で確かめてごらん。O・P・Q をすっぽり囲む、横 4・縦 3 の長方形から、まわりにできる3つの直角三角形を引けばいい。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">長方形は 4×3＝12。引く三角形は、O と P の間の下の三角形が 4×1÷2＝2、O と Q の間の左の三角形が 1×3÷2＝1.5、P と Q の間の右上の三角形が (4−1)×(3−1)÷2＝3。だから 12−2−1.5−3＝5.5。式のほうは (4×3−1×1)÷2＝11÷2＝5.5。合いました。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。数のかわりに x₁, y₁, x₂, y₂ のまま同じ引き算をしても、いつでもこの式になる。さて、多角形の頂点を反時計回りに P₁, P₂, P₃, … と並べて、隣どうしの2点と原点で作る三角形の符号付き面積を全部足すと、多角形の面積になる。原点が多角形の外にあってもかまわない。はみ出した三角形は負の面積として数えられて、打ち消し合うからだ。座標を2列に並べて斜めに掛け算する様子が靴ひもを通す形に似ているので、<strong>靴ひも公式</strong>と呼ばれている。</div>
@@ -232,42 +278,42 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">輪郭の点なら全部、座標で書けます。壁の曲線の点は STAGE4 のハウジングの式で、辺の円弧の点は STAGE5 で決めた円弧で出せるので。あとはこの式に入れるだけですね。13B の寸法だと、部屋の面積はどのくらいになるんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">13B の寸法（e＝15、R＝105）で、軸の角度 α を 1° ずつ変えながら、そのたびに1つの部屋の輪郭を細かい点で結んで靴ひも公式で面積を出す。これを 0° から 1080° まで繰り返すと、面積はいちばん大きいときが約 8800 mm²、いちばん小さいときが約 630 mm² になる。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">幅 80 mm を掛けると、いちばん大きいときの体積が 8800×80＝704,000 mm³。1 cm³ は 1000 mm³ だから、約 704 cm³。小さいときは 630×80＝50,400 mm³ で約 50 cm³。<strong>差は約 654 cm³</strong> です。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その差が、部屋が1回に吸い込める混合気の量、つまり<strong>排気量</strong>だ。マツダ 13B の排気量は、公式には 1つの部屋あたり <strong>654 cc</strong>（cc は cm³ のこと。ローター2つで 1308 cc）。近似の計算で、実物の数字がそのまま出てきたね。じつは 13B という名前の「13」も、この 1308 cc、つまり約 1.3 リットルから来ているんだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">ぴったりですね。辺を円弧で近似したのに、ずれないんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">いいところに気づいたね。じつは排気量は、辺の形によらないんだ。部屋の面積は「壁までの面積」から「辺がふくらんだ分」を引いたものだけれど、ふくらんだ分はいちばん大きいときも小さいときも同じ量だけ引かれている。だから差をとると消える。そして残る差は、計算が少し長いので結果だけ言うと、<strong>3√3×e×R×b</strong> になる。</div>
@@ -301,14 +347,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">3×1.732×15×105×80 ≈ 654,700 mm³ で、約 655 cm³。多角形で数えた約 654 cm³ と、ほぼ同じです。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">もう1つ、大切な数がある。いちばん大きい体積といちばん小さい体積の比を<strong>圧縮比</strong>という。混合気をどれだけ押し縮めるかの倍率だ。いまの計算では 704÷50 で約 14 になる。ただし実物の 13B の圧縮比は 9〜10 だ。ここは近似が実物とずれるところで、実物のローターの辺には燃焼室になる<strong>くぼみ</strong>が掘ってあって、いちばん小さいときの体積をわざと増やしている。圧縮比が高すぎると、点火する前に混合気が勝手に燃え出す「異常燃焼」が起きるからね。</div>
@@ -332,14 +378,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">面積を角度ごとに計算してみると、1つの部屋は軸が 270° 進むごとに、大きい・小さいを交互にくり返しています。1080° で元に戻る。ということは、大きくなる・小さくなる・大きくなる・小さくなる、の4回で1周ですね。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">そう。その4回が、エンジンの<strong>4つの行程</strong>にあたる。小さい部屋が大きくなりながら混合気を吸い込む<strong>吸気</strong>。次に小さくなりながら押し縮める<strong>圧縮</strong>。いちばん小さくなったところで火花を飛ばし、燃えて膨らむ力でローターを押す<strong>爆発（膨張）</strong>。最後に小さくなりながら燃えかすを押し出す<strong>排気</strong>。1つの部屋がこの4行程を終えるのに、軸は 270°×4＝1080°、つまり<strong>3回転</strong>する。</div>
@@ -387,14 +433,14 @@
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name student">うさ美</div>
           </div>
           <div class="dialog-bubble">部屋は3つあって、それぞれ 360° ずつずれています。だから軸が1回転するあいだに、3つの部屋のどれか1つが必ず爆発の行程に入る。<strong>軸1回転につき爆発が1回</strong>、ということですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt="" loading="lazy" decoding="async"></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">その通り。ピストン式の4行程エンジンでは、1つの筒あたり、軸2回転に1回しか爆発しない。ロータリーエンジンは、ローター1つで軸1回転に1回。同じ排気量なら、ピストンエンジンの2倍の頻度で力を出せる計算になる。小さくて軽いのに力強い、と言われる理由の1つだよ。これで、形だけでなく動きも式で説明できた。次はいよいよ最後、細かい部品を描き足して完成図にしよう。</div>
