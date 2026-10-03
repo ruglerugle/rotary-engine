@@ -1,0 +1,4 @@
+/js/*
+  Cache-Control: public, max-age=0, must-revalidate
+/design-system.css
+  Cache-Control: public, max-age=0, must-revalidate
