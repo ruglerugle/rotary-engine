@@ -21,7 +21,8 @@
     4: [1, 0, 2],
     5: [2, 1, 0],
     6: [0, 2, 1],
-    7: [1, 0, 2]
+    7: [1, 0, 2],
+    8: [1, 0, 2]
   };
 
   var STAGES = [
@@ -31,7 +32,8 @@
     { n: 4, file: "stage4.html", title: "頂点が描く曲線", sub: "ハウジング＝ペリトロコイド" },
     { n: 5, file: "stage5.html", title: "ローターを削り出す", sub: "はみ出さない最大の形と円弧近似" },
     { n: 6, file: "stage6.html", title: "3つの部屋、4つの行程", sub: "面積の計算と排気量" },
-    { n: 7, file: "stage7.html", title: "完成図を描く", sub: "歯車・吸排気口・点火プラグ" }
+    { n: 7, file: "stage7.html", title: "完成図を描く", sub: "歯車・吸排気口・点火プラグ" },
+    { n: 8, file: "stage8.html", title: "思いついた人たち", sub: "ヴァンケル・パシュケ・マツダ" }
   ];
 
   function getCleared() {

@@ -1,6 +1,6 @@
 # このリポジトリについて
 
-ロータリーエンジン（ヴァンケル型）の形を、偏心量 e と創成半径 R の2つの数から「数学の式だけで」描けるようになる全7ステージの学習クエストサイト「ロータリーエンジンを作図する（ROTARY QUEST）」。
+ロータリーエンジン（ヴァンケル型）の形を、偏心量 e と創成半径 R の2つの数から「数学の式だけで」描けるようになる全8ステージの学習クエストサイト「ロータリーエンジンを作図する（ROTARY QUEST）」。
 公開URL（予定）: https://rotary-engine.habatakijuku.com/ （Cloudflare Pages）
 
 **このサイトの主役は「作図」**。読者が最後に自分の寸法で完成図（SVG）を描けることをゴールにし、各ステージの式はすべて STAGE7 の作図ツールにつながる。**近似でよい**（実物のアペックスシール厚みぶんの平行曲線、ローターのくぼみ、歯・軸受け等の細部は省く）と STAGE1 で読者に断っている。
@@ -57,7 +57,7 @@
 - `design-system.css` — quest-template由来（string-theory から複製し配色を鋼の青×金に差し替え）。ボタン類は背景テーマ色 #7a9cc4→#3d5f88
 - `js/rotary.js` — 共通ジオメトリ（`RE`）。ハウジング・頂点・円弧ローター・部屋の多角形・靴ひも面積・はみ出し判定・canvas ヘルパー・SVG 書き出し
 - `js/progress.js` — 進捗管理・クイズ判定。**クイズの正解は `ANSWERS`**。localStorageキーは `rotaryQuestProgress_v1`、グローバルは `RQ`
-- `stage1.html` 〜 `stage7.html`（共通シェル＋本文。本文の対話は各ページに直書き）、`index.html`（表紙）、`complete.html`（クリア画面）
+- `stage1.html` 〜 `stage8.html`（共通シェル＋本文。本文の対話は各ページに直書き）。STAGE1〜7 が作図、STAGE8 は発明の歴史（ヴァンケルの密封研究と分類、DKM→KKM、NSU スパイダー1964年が最初の量産車、マツダが悪魔の爪痕を克服しコスモスポーツ1967年）、`index.html`（表紙）、`complete.html`（クリア画面）
 - `images/` — キャラ画像はWebP（string-theory から流用）。`ogp.png`（1200×630）と `favicon.png` は headless Chrome で canvas 描画をキャプチャして生成
 - 各ステージのシミュレータは `<canvas>` ＋ `RE.canvas()`。`prefers-reduced-motion` では自動再生しない（ボタン操作のみ）
 
