@@ -33,7 +33,7 @@
     { n: 5, file: "stage5.html", title: "ローターを削り出す", sub: "はみ出さない最大の形と円弧近似" },
     { n: 6, file: "stage6.html", title: "3つの部屋、4つの行程", sub: "面積の計算と排気量" },
     { n: 7, file: "stage7.html", title: "完成図を描く", sub: "歯車・吸排気口・点火プラグ" },
-    { n: 8, file: "stage8.html", title: "思いついた人たち", sub: "ヴァンケル・パシュケ・マツダ" }
+    { n: 8, file: "stage8.html", title: "開発者たち", sub: "ヴァンケル・パシュケ・マツダ" }
   ];
 
   function getCleared() {
